@@ -12,9 +12,27 @@ This is a reproducible engineering portfolio under validation. Read the
 results, evidence and next command. A passing component demonstration establishes its
 stated scope; outstanding integration and deployment requirements remain visible.
 
+## Verified snapshot
+
+The clean application commit `c7b8a793f34795f3d2de148c1c5c211845e8b222` passed 262 core
+checks, all 18 fixture demo entrypoints, 14 desktop/mobile fixture browser cases and one
+actual local-model browser case. Its full local release passed 144/144; the deliberately
+degraded full run failed 48 cases and was rejected. The small audit passed 8/8.
+
+The separate P09 CLI dependency correction at
+`9f8e0fdf41f3a170004c297c24b18ab01da7f25b` passed a genuine tiny SFT/DPO reproduction;
+model-quality promotion remained rejected. The later documentation commit records these
+runs and is not a separately tested deployment candidate.
+
+Measured limits include 10k-document hybrid recall@1 of 0.21 with the default feature hashes,
+0% held-out training exact match, a timed-out local research run, and unavailable vLLM IPC
+and hostile-code isolation. External SaaS/cluster/upstream acceptance remains incomplete.
+The production dependency gate is blocked by reported advisories and scanner coverage gaps.
+Read [VERIFICATION.md](docs/VERIFICATION.md) for measured values, evidence and next actions.
+
 ## Start locally
 
-Requires Python 3.12, uv, and Node.js 24 for the UI. The commands below use the checked-in
+Verified on Linux/POSIX with Python 3.12, uv, and Node.js 24 for the UI. The commands below use the checked-in
 lockfiles. The complete test suite also needs `redis-server` on `PATH` for actual memory
 and broker crash/recovery tests (on Ubuntu: `sudo apt-get install redis-server`). Redis is
 started on temporary loopback ports by the tests. Model downloads are a separate explicit step.

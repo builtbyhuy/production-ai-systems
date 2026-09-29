@@ -1,6 +1,6 @@
 # Eighteen-project acceptance ledger
 
-All18 implementation tracks are present. Local acceptance is intentionally limited to the documented workload and downstream contracts. No overall production deployment is accepted.
+All 18 implementation tracks are present. Results below separate implemented code, measured local contracts, model quality and unexecuted integrations. The complete portfolio is not accepted for production deployment.
 
 Implementation and evidence are separate. `implemented` means the declared code and
 configuration exist; it does not mean the full project is accepted or deployed.
@@ -13,18 +13,18 @@ metadata. They are not retroactively relabeled as clean-commit runs.
 
 | Project | Implementation | Evidence exercised | Acceptance | Remaining requirement |
 |---|---|---|---|---|
-| [P01 · RAG with citations](../projects/01-rag-citations/README.md) | implemented | fixture + actual models/storage | PASS within local acceptance scope | None for measured local lifecycle; final144-case regression recorded separately in P04. |
+| [P01 · RAG with citations](../projects/01-rag-citations/README.md) | implemented | fixture + actual models/storage | PASS within local acceptance scope | None for the measured local lifecycle; broad-domain grounding and scanned PDFs remain outside this acceptance scope. |
 | [P02 · Model router](../projects/02-model-router/README.md) | implemented | fixture + actual two-model comparison | PARTIAL | No connected invoice comparison or measured paid-provider savings. |
 | [P03 · Multi-agent research](../projects/03-multi-agent-research/README.md) | implemented | real CrewAI + actual-model failed attempt | INCOMPLETE | Small-model run timed out; live web and general research quality unverified; isolated dependency advisories. |
-| [P04 · Evaluation harness](../projects/04-eval-harness/README.md) | implemented | fixture + actual-model baseline | INCOMPLETE pending final gate and connected checks | Final clean-commit rerun pending; LangSmith account unavailable; isolated evaluator advisories. |
+| [P04 · Evaluation harness](../projects/04-eval-harness/README.md) | implemented | fixture + clean-commit actual local release/degraded/audit | PARTIAL: local regression accepted | LangSmith integration not run; two evaluator packages retain reported advisories; narrow synthetic exact metrics do not establish general quality. |
 | [P05 · Observability](../projects/05-observability/README.md) | implemented | native monitoring deployment profile | PASS within declared native drill scope | Container deployment, mature anomaly baseline and paid invoice reconciliation unverified. |
 | [P06 · Security middleware](../projects/06-security-guardrails/README.md) | implemented | fixture + actual Guardrails and HTTP | INCOMPLETE | Untrusted-code sandbox unavailable; isolated Guardrails dependency advisories. |
 | [P07 · Local-first environment](../projects/07-local-first/README.md) | implemented | actual models/storage + native offline | PARTIAL | Docker unavailable; Compose build/launch/offline acceptance not executed. |
 | [P08 · Streaming copilot](../projects/08-streaming-ui/README.md) | implemented | API + desktop/mobile + actual-model browser | PASS within local UI scope | Provider cancellation is adapter-limited; process-crash pending-message reconciliation and hosted operation remain open. |
-| [P09 · LoRA SFT/DPO](../projects/09-lora-training/README.md) | implemented | actual CPU training smoke | INCOMPLETE | Random tiny model has0% exact match and insufficient held-out samples; dependency advisories; substantive model/compute not provisioned. |
+| [P09 · LoRA SFT/DPO](../projects/09-lora-training/README.md) | implemented | actual CPU training smoke | INCOMPLETE | Tiny random model remains0% exact match; retention gate rejected. Larger independent evaluation, useful training, crash-resume and dependency remediation remain. |
 | [P10 · Multi-tenant SaaS](../projects/10-multi-tenant-saas/README.md) | implemented | local + real SDK contracts | INCOMPLETE | No Supabase test project/two real JWTs or Stripe test account/customer/meter mapping. |
 | [P11 · CI/CD and rollout](../projects/11-cicd/README.md) | implemented | contract tests + parsed configuration | INCOMPLETE | No GitHub repository/Actions execution, Docker/cluster/registry target; isolated dependency advisories prevent whole-repo supply-chain pass. |
-| [P12 · Vector database](../projects/12-vector-database/README.md) | implemented | actual Qdrant local100docs/300queries | PARTIAL | Server/HNSW/scale/load profiles unexecuted; benchmark embeddings are feature-hash fixtures. |
+| [P12 · Vector database](../projects/12-vector-database/README.md) | implemented | actual Qdrant local; synthetic hash embeddings at100/1000/10000 docs | PARTIAL | 10k hybrid recall@1=.21; semantic-model, Qdrant server/HNSW and concurrent-load acceptance not run. |
 | [P13 · Agent memory](../projects/13-agent-memory/README.md) | implemented | actual Redis/Qdrant + four model calls | PASS within small local acceptance scope | General-task quality/semantic recall and larger workloads unverified. |
 | [P14 · Inference server](../projects/14-inference-server/README.md) | implemented | mock contracts + actual CLI/startup attempt | INCOMPLETE | AF_UNIX creation denied before actual serving; no GPU/cluster for comparisons. |
 | [P15 · Human approval](../projects/15-human-approval/README.md) | implemented | actual LangGraph/SQLite + UI | PARTIAL | Grounding0.85 review rule is uncalibrated; external providers need a separately verified idempotency/reconciliation contract. |
@@ -39,8 +39,9 @@ PDF extraction, immutable page/span/version provenance, LangGraph, sqlite-vec/FT
 - **PASS — Cross-page, abstention, conflicts, injection and lifecycle**: 13/13 actual local lifecycle checks after constrained-selection prompt correction; original failed7/13 preserved. Evidence: [local-sqlite-selection-v2.json](../projects/01-rag-citations/evidence/local-sqlite-selection-v2.json).
 - **PASS — Retrieval comparison**: 16 frozen queries: lexical recall@5=.9375; dense/hybrid/rerank=1.0. Reranking increased latency without a ranking gain. Evidence: [local-retrieval.json](../projects/01-rag-citations/evidence/local-retrieval.json).
 - **PASS — Versioned citations and tenant/deletion checks**: Real SQLite and LanceDB contracts; physical pages and exact complete source spans enforced. Scanned PDFs are explicitly unsupported. Evidence: [contract-tests.json](../projects/07-local-first/evidence/contract-tests.json).
+- **PASS — Integrated clean-commit regression**: 144/144 local-profile cases at c7b8; 56 actual Qwen responses, 16 deterministic summaries, 72 contract/abstention cases. See P04 for full scope. Evidence: [release-local-final.json](../artifacts/evals/release-local-final.json).
 
-**Next action:** Rerun the unchanged local release gate against the frozen source; retain corpus-size and extractive-policy limits.
+**Next action:** Use the frozen source as a baseline for a larger independently reviewed corpus; keep the initial development thresholds and extractive-summary policy explicit.
 
 ```bash
 .venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais eval --profile local --suite release --output artifacts/evals/release-local.json
@@ -66,7 +67,7 @@ LiteLLM routing, capability/context constraints, bounded fallback and circuit br
 
 Four substantive CrewAI roles and tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.
 
-- **PASS — Actual CrewAI orchestration and rejection/approval paths**: Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic. Evidence: [crewai-tests.json](../artifacts/stateful/crewai-tests.json), [p03-fixture.json](../artifacts/stateful/p03-fixture.json).
+- **PASS — Actual CrewAI orchestration and rejection/approval paths**: Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic. Final clean-commit five-test run passed; upstream callback-serialization warnings limit native framework checkpoint claims. Evidence: [crewai-tests.json](../artifacts/final/crewai-tests.json), [p03-fixture.json](../artifacts/stateful/p03-fixture.json).
 - **FAIL — Actual local model completing research**: Qwen1.5B received one response, timed out on call2 after70.02s, executed zero tools; no fixture fallback. Evidence: [p03-local-attempt.json](../artifacts/stateful/p03-local-attempt.json).
 - **NOT RUN — Authorized live web acquisition**: Bounded pinned HTTPS adapter and controlled-transport contract exist; no live source run.
 
@@ -81,12 +82,13 @@ Four substantive CrewAI roles and tools, evidence-linked fact checking, contradi
 
 144 frozen distinct scenarios, source-separated dev/release/audit data, real DeepEval/RAGAS exact metrics, local reports/trends, optional LangSmith upload and a strict complete-profile gate.
 
-- **PASS — Coverage and real metric execution**: 144 cases across9 categories, plus8 development and8 audit; actual DeepEval custom support and RAGAS exact/string metrics. No model judge. Evidence: [release-fixture-final-debug.json](../artifacts/evals/release-fixture-final-debug.json).
+- **PASS — Coverage and real metric execution**: 144 cases across9 categories, plus8 development and8 audit; actual DeepEval custom support and RAGAS exact/string metrics. No model judge. Evidence: [release-local-final.json](../artifacts/evals/release-local-final.json), [release-local-final.metrics.json](../artifacts/evals/release-local-final.metrics.json).
 - **FAIL — First actual local release**: 132/144, twelve summary omissions, no errors/skips. Strict thresholds retained; explicit excerpt-summary route now implemented. Evidence: [release-local-first.json](../artifacts/evals/release-local-first.json).
-- **NOT RUN — Final clean-commit release and deliberately degraded candidate**: Must execute full144 actual local cases in each candidate; fixture cannot substitute.
+- **PASS — Final clean-commit release and deliberately degraded candidate**: At c7b8, positive144/144 (p95 6366.34ms); degraded96/144 with48 quality failures (p95 6630.03ms), zero errors/skips in either run. Independent P11 binding accepted positive and rejected negative. Evidence: [release-local-final.json](../artifacts/evals/release-local-final.json), [degraded-local-final.json](../artifacts/evals/degraded-local-final.json), [release-binding.json](../artifacts/final/release-binding.json), [degraded-binding.json](../artifacts/final/degraded-binding.json).
 - **NOT RUN — LangSmith real dataset/run integration**: Adapter exists, account/key/target not configured.
+- **PASS — Small audit execution and exposure disclosure**: 8/8 actual local responses at c7b8, p95 6508.33ms. First actual audit run; same-build synthetic data previously accessed for test/exclusion checks, not an independently blind holdout. Evidence: [audit-local-final.json](../artifacts/evals/audit-local-final.json), [audit-exposures.jsonl](../artifacts/evals/audit-exposures.jsonl).
 
-**Next action:** Run the final144-case local release, same full degraded suite and8-case audit; preserve exact profiles and disclosures.
+**Next action:** Preserve c7b8 as the tested baseline; resolve evaluator advisories and run an authorized LangSmith integration. Any new deployment candidate must rerun the full gate.
 
 ```bash
 .venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais eval --profile local --suite release --output artifacts/evals/release-local-final.json
@@ -112,7 +114,7 @@ OpenTelemetry instrumentation, bounded labels/redaction, provisioned Prometheus/
 
 Actual Guardrails isolated validation, server-resolved identities, PII filtering, tool/argument policy, DNS-pinned bounded HTTPS and cross-instance admission; rootless Docker execution adapter fails closed.
 
-- **PASS — Real schema/output enforcement and shared limits**: Three Guardrails tests;24 requests across two FastAPI instances admit3 and return21 real429 responses; missing validator fails closed. Evidence: [p06-guardrails-real.json](../artifacts/p06-guardrails-real.json).
+- **PASS — Real schema/output enforcement and shared limits**: Three Guardrails tests;24 requests across two FastAPI instances admit3 and return21 real429 responses; missing validator fails closed. Evidence: [p06-guardrails-real.json](../artifacts/p06-guardrails-real.json), [guardrails-tests.json](../artifacts/final/guardrails-tests.json).
 - **PASS — Injection detector measurement**: Measured twelve examples: TP5,FN2,FP1,TN4. This records two missed attacks and one false alarm; not a comprehensive defense. Evidence: [p06-guardrails-real.json](../artifacts/p06-guardrails-real.json).
 - **NOT RUN — Sandbox filesystem/network/CPU/RAM/time/output isolation**: No Docker daemon; namespace/netlink operations denied. Execution stays disabled; no host-subprocess substitute.
 
@@ -142,9 +144,9 @@ Native CPU Ollama and safetensors CrossEncoder, revision/hash locking, selectabl
 
 Next.js/AI SDK and FastAPI PDF upload, source inspection, auth/tenant boundaries, persistent conversations, approved actions, stable replay IDs, cancellation and error recovery with accessibility checks.
 
-- **PASS — API and browser failure/recovery contracts**: 20 API tests;14/14 desktop/mobile browser checks, zero skips/flaky; API demonstration15/15. Evidence: [browser-evidence.json](../artifacts/ui/browser-evidence.json), [p08-api-demo.json](../artifacts/p08-api-demo.json).
-- **PASS — Actual PDF-to-model-to-page browser path**: One real local smoke passed. First display14,042ms; server first delivery14,024.104ms; providerTTFT unavailable because output is validated before delivery. Evidence: [browser-evidence.json](../artifacts/ui/local/browser-evidence.json), [local-smoke-measurements.json](../artifacts/ui/local/local-smoke-measurements.json).
-- **PASS — Citation interaction and keyboard/modal behavior**: Original physical page2 opens and complete cited source span displays; human-readable exact approval action. Evidence: [desktop-local-source.png](../artifacts/ui/local/desktop-local-source.png).
+- **PASS — API and browser failure/recovery contracts**: 262 integrated core checks include20 API tests; fixture browser14/14 at1440x960/390x844, zero skips/flaky cases, clean c7b8. Evidence: [core-tests.json](../artifacts/final/core-tests.json), [browser-evidence.json](../artifacts/ui/browser-evidence.json).
+- **PASS — Actual PDF-to-model-to-page browser path**: Clean c7b8 actual local browser1/1: browser first checked display14785ms, server14766.393ms, providerTTFT null. Next buildp57JVxelz6CAGXQnnOrB3. Synthetic test identity; actual model and Guardrails. Evidence: [browser-evidence.json](../artifacts/ui/local/browser-evidence.json), [local-smoke-measurements.json](../artifacts/ui/local/local-smoke-measurements.json).
+- **PASS — Citation interaction and keyboard/modal behavior**: Both viewport keyboard/modal contracts pass; actual local extracted page2 source and authenticated PDF blob/page-fragment link verified. Browser PDF renderer itself not inspected by the test. Evidence: [desktop-local-source.png](../artifacts/ui/local/desktop-local-source.png).
 
 **Next action:** Launch the documented API/UI and rerun the browser profiles; preserve first-display versus provider-TTFT distinction.
 
@@ -160,6 +162,7 @@ Original licensed data, source-disjoint splits, genuine PEFT/TRL SFT and DPO, ch
 - **PASS — Genuine training and exact adapter reload**: 39,456 base parameters/1,024 LoRA;3SFT+3DPO steps; both adapters changed, frozen base retained; reload maximum logit difference0. Evidence: [training-result.json](../artifacts/p09-smoke/training-result.json).
 - **FAIL — Before/after domain/general comparison and retention**: Base/SFT/DPO exact match all0%; six held-out cases per suite below declared minimum20; retention rejected. Evidence: [training-result.json](../artifacts/p09-smoke/training-result.json).
 - **NOT RUN — Substantive training quality and checkpoint/resume**: Small smoke establishes mechanics, not a useful tuned model; full compute/data/profile remains separate.
+- **PASS — Common CLI in the declared isolated training environment**: Missing Pydantic declaration reproduced before training; dependency-only fix committed separately as9f8e. Generic local CLI then completed genuine3-step SFT+3-step DPO with clean source and retention still rejected. Evidence: [p09-local.log](../artifacts/final/p09-local.log), [p09-cli-command.json](../artifacts/final/p09-cli-command.json), [run.json](../artifacts/final/p09-cli/run.json).
 
 **Next action:** Select a licensed pretrained model and reviewed larger held-out source groups, resolve supported runtime advisories, then execute the same stages and retention gate.
 
@@ -187,8 +190,8 @@ Server-derived memberships and roles, tenant-scoped resource contracts, append-o
 
 Pinned GitHub Actions, frozen runtime gates, immutable image/bundle validation, default-disabled capability/emergency flags, ArgoCD/Rollouts/Prometheus configuration and explicit recovery ownership.
 
-- **PASS — Release validation and runtime emergency control**: Missing/dirty/incomplete evidence rejected; model/data/dependency binding enforced; no-data/NaN and insufficient canary observations block. Flags read durable state on each new admission. Evidence: [test_operations.py](../tests/test_operations.py), [test_operations_inference.py](../tests/test_operations_inference.py).
-- **FAIL — Dependency scans**: Core and UIproduction scans report0advisories; evaluator/security/research/training runtimes have reported advisories. No ignore rule was added. Evidence: [pip-audit-verified.json](../artifacts/pip-audit-verified.json), [npm-audit-production.json](../artifacts/npm-audit-production.json), [AUDIT.md](../docs/dependencies/AUDIT.md).
+- **PASS — Release validation and runtime emergency control**: Clean c7b8 positive full144 accepted with report SHA; same full degraded144 rejected for48 failures. Durable flags enforce emergency-disable on new admissions; no-data canary rejected. Evidence: [test_operations.py](../tests/test_operations.py), [test_operations_inference.py](../tests/test_operations_inference.py), [release-binding.json](../artifacts/final/release-binding.json), [degraded-binding.json](../artifacts/final/degraded-binding.json).
+- **FAIL — Dependency scans**: Core audit queried162 of164 entries and reported0 findings, with editable project/CPU Torch skipped; npm production reported0. Eval2, Guardrails4, CrewAI1, training3 and inference1 affected packages remain. Five inference CPU wheels unmatched. Whole production gate not passed. Evidence: [pip-audit-verified.json](../artifacts/pip-audit-verified.json), [pip-audit-eval-final.json](../artifacts/pip-audit-eval-final.json), [pip-audit-security.json](../artifacts/pip-audit-security.json), [pip-audit-research.json](../artifacts/pip-audit-research.json), [pip-audit-training-final.json](../artifacts/pip-audit-training-final.json), [pip-audit-inference.json](../artifacts/pip-audit-inference.json), [npm-audit-production.json](../artifacts/npm-audit-production.json).
 - **NOT RUN — Actual image build, Actions, promotion and rollback**: Templates/tests are not cluster proof; use one pinned-node POSIX volume for this SQLite functional deployment. Evidence: [ROLLOUT_RUNBOOK.md](../projects/11-cicd/ROLLOUT_RUNBOOK.md).
 
 **Next action:** Resolve dependency findings, provision a protected self-hosted model runner and test cluster/immutable images, then run passing, degraded and missing-data rollout drills in the runbook.
@@ -205,8 +208,9 @@ Qdrant dense/sparse/hybrid retrieval, tenant filtering, version authority/tombst
 - **PASS — Actual store comparison and fresh restore**: 100 documents/300 queries; denseRecall@1=.71, sparse/hybrid1.0. Restored100documents/vectors; version/deletion/tenant checks pass. Evidence: [p12-fixture.json](../artifacts/stateful/p12-fixture.json).
 - **PASS — Embedding cache and consistency**: 100cache hits/200misses in the recorded fixture-embedding run; derived indexes never override source tombstones. Evidence: [p12-fixture.json](../artifacts/stateful/p12-fixture.json).
 - **NOT RUN — Large-index HNSW/server performance**: Qdrant client local mode uses exact search; measured small-corpus timings are not scalable ANN performance.
+- **PASS — Measured local scale experiment**: 1000 and10000 actual docs,300 query invocations each. Dense recall@1=.12/.01; sparse1.0/1.0; hybrid1.0/.21, hybrid p95=31.45/317.93ms. Worker HWM99,213,312/143,163,392bytes; parent live RSS guard unavailable. This records the observed hybrid quality limitation, not semantic or HNSW acceptance. Evidence: [scale-report.json](../artifacts/p12-scale/scale-report.json), [worker-1000.json](../artifacts/p12-scale/worker-1000.json), [worker-10000.json](../artifacts/p12-scale/worker-10000.json), [resource-verification.json](../artifacts/p12-scale/resource-verification.json).
 
-**Next action:** Provision a named Qdrant server and real embedding profile; run declared larger corpus/concurrency/cache/index comparisons and fresh restore.
+**Next action:** Predeclare a quality/resource target, then compare candidate depth, fusion and embedding configurations on the preserved10k workload before attempting server/HNSW load.
 
 ```bash
 .venv/bin/python -m pais demo 12 --profile fixture --output artifacts/p12-local-store.json
@@ -233,7 +237,7 @@ Actual Redis buffers and Qdrant, authoritative memory versions/provenance/confid
 vLLM CPU provisioning/profile, bounded admission gateway, readiness/warmup, streaming/cancellation/drain/load harness, resource/cleanup supervisor and a CPU Kubernetes template and separate GPU JSON profiles.
 
 - **PASS — Admission/gateway/supervisor contracts**: Eleven tests pass; fixture four checks have zero model calls. Four Kubernetes YAML documents parse; no API-schema/cluster validation. Evidence: [EVIDENCE.json](../projects/14-inference-server/EVIDENCE.json).
-- **FAIL — Actual CPU serving**: CLI/help/flags verified; server exit1 before readiness from denied ZeroMQ IPC. Follow-up preflight exits2 on AF_UNIX errno1; zero generation calls. Evidence: [report.json](../artifacts/p14-cpu-functional-first/report.json), [p14-local-final-preflight.json](../artifacts/p14-local-final-preflight.json).
+- **FAIL — Actual CPU serving**: CLI/help/flags verified; server exit1 before readiness from denied ZeroMQ IPC. Follow-up preflight exits2 on AF_UNIX errno1; zero generation calls. Evidence: [report.json](../artifacts/p14-cpu-functional-first/report.json), [p14-local-final-preflight.json](../artifacts/p14-local-final-preflight.json), [p14-local-blocked.json](../artifacts/final/p14-local-blocked.json).
 - **NOT RUN — Load/batching/cache/quantization and instance recovery**: Separate random39,456parameter one-head derivative; no trained-adapter quality or serving-performance evidence.
 
 **Next action:** Use a host permitting AF_UNIX IPC, provision the exact CPU runtime and model derivative, run the functional supervisor, then separately qualify cluster/cache/batching/quantization profiles.
@@ -262,7 +266,7 @@ LangGraph interrupts and durable approval/checkpoint state bound to trusted tena
 
 Signed FastAPI webhook adapter, durable acceptance/outbox, Celery/Redis, leases, bounded backoff/jitter, cancellation/dead/uncertain state and reviewed replay with explicit idempotent local effects.
 
-- **PASS — Broker/worker crash and downstream replay recovery**: AOF Redis SIGKILL/restart retains queued job; worker exits71 after effect commit; replacement worker produces one visible effect and succeeds on second attempt. Evidence: [p16-local.json](../artifacts/stateful/p16-local.json).
+- **PASS — Broker/worker crash and downstream replay recovery**: AOF Redis SIGKILL/restart retains queued job; worker exits71 after effect commit; replacement worker produces one visible effect and succeeds on second attempt. Repeated at clean c7b8: AOF restart retained queue, worker exited71 after effect, recovery kept one visible effect across two attempts. Evidence: [p16-local.json](../artifacts/stateful/p16-local.json), [p16-native.json](../artifacts/final/p16-native.json).
 - **PASS — Bounded retries, poison isolation and reviewed replay**: Transient job succeeds after2attempts; poison dead-letters while healthy job continues; authorized replay succeeds; four effects belong to four distinct jobs. Evidence: [p16-local.json](../artifacts/stateful/p16-local.json).
 - **PASS — Signed duplicate webhook/outbox and authorization**: Durable uniqueness and tenant/trace binding, invalid signatures rejected, published job retries safe. Evidence: [test_jobs.py](../tests/test_jobs.py).
 
@@ -293,7 +297,7 @@ Signed FastAPI webhook adapter, durable acceptance/outbox, Celery/Redis, leases,
 
 Current LangGraph checkpoint-sqlite transaction defect reproduction, small rollback patch, hash-pinned MIT source snapshot, byte-identical RED/GREEN tests and concrete English PR draft.
 
-- **PASS — Original issue and correction**: Baseline3fail/1pass; patched4regressions+9upstream saver checks=13pass. Commit07b33185eab893be2ed031eedae52f09314bf77c. Evidence: [p18-demo.json](../artifacts/p18-demo.json), [upstream-verification.json](../artifacts/p18-outputs/upstream-verification.json).
+- **PASS — Original issue and correction**: Baseline3fail/1pass; patched4regressions+9upstream saver checks=13pass. Commit07b33185eab893be2ed031eedae52f09314bf77c. Evidence: [p18-demo.json](../artifacts/p18-demo.json), [upstream-verification.json](../artifacts/p18-outputs/upstream-verification.json), [upstream-verification.json](../artifacts/final/demos/p18-outputs/upstream-verification.json).
 - **NOT RUN — Full upstream format/lint/test**: Focused synchronous saver checks passed; complete upstream development environment not executed.
 - **NOT RUN — PR submitted, maintainer response, merge**: Patch and PR draft prepared; no issue/assignment/submission/merge fabricated. Evidence: [PROPOSED_PR.md](../projects/18-upstream-contribution/PROPOSED_PR.md).
 

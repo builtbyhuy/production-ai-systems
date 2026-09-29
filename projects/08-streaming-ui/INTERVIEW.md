@@ -24,7 +24,7 @@
 Repeat the question in the documented local browser runner to show real inference. Keep
 the explicit test-identity switch separate from `PAIS_PROFILE=local`, and point to the
 mandatory Guardrails interpreter. The saved smoke used Qwen with a recorded digest and
-displayed the checked answer after 14,042 ms. Explain why that timing includes retrieval,
+displayed the checked answer after 14,785 ms. Explain why that timing includes retrieval,
 generation, and validation, and why a successful single question is not a quality benchmark.
 
 ## Questions you should answer without hand-waving

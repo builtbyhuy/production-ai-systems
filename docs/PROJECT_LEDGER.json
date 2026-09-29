@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "updated_at": "2026-09-29",
-  "scope": "All18 implementation tracks are present. Local acceptance is intentionally limited to the documented workload and downstream contracts. No overall production deployment is accepted.",
-  "source_candidate": null,
+  "scope": "All 18 implementation tracks are present. Results below separate implemented code, measured local contracts, model quality and unexecuted integrations. The complete portfolio is not accepted for production deployment.",
+  "source_candidate": "c7b8a793f34795f3d2de148c1c5c211845e8b222",
   "projects": [
     {
       "id": "P01",
@@ -12,8 +12,8 @@
       "implementation_scope": "PDF extraction, immutable page/span/version provenance, LangGraph, sqlite-vec/FTS5 fusion, actual CrossEncoder, constrained source selection, explicit excerpt summaries and abstention.",
       "evidence_level": "fixture + actual models/storage",
       "overall_acceptance": "PASS within local acceptance scope",
-      "blocker": "None for measured local lifecycle; final144-case regression recorded separately in P04.",
-      "next_action": "Rerun the unchanged local release gate against the frozen source; retain corpus-size and extractive-policy limits.",
+      "blocker": "None for the measured local lifecycle; broad-domain grounding and scanned PDFs remain outside this acceptance scope.",
+      "next_action": "Use the frozen source as a baseline for a larger independently reviewed corpus; keep the initial development thresholds and extractive-summary policy explicit.",
       "next_command": ".venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais eval --profile local --suite release --output artifacts/evals/release-local.json",
       "criteria": [
         {
@@ -38,6 +38,14 @@
           "result": "Real SQLite and LanceDB contracts; physical pages and exact complete source spans enforced. Scanned PDFs are explicitly unsupported.",
           "evidence": [
             "projects/07-local-first/evidence/contract-tests.json"
+          ]
+        },
+        {
+          "criterion": "Integrated clean-commit regression",
+          "status": "pass",
+          "result": "144/144 local-profile cases at c7b8; 56 actual Qwen responses, 16 deterministic summaries, 72 contract/abstention cases. See P04 for full scope.",
+          "evidence": [
+            "artifacts/evals/release-local-final.json"
           ]
         }
       ]
@@ -93,9 +101,9 @@
         {
           "criterion": "Actual CrewAI orchestration and rejection/approval paths",
           "status": "pass",
-          "result": "Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic.",
+          "result": "Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic. Final clean-commit five-test run passed; upstream callback-serialization warnings limit native framework checkpoint claims.",
           "evidence": [
-            "artifacts/stateful/crewai-tests.json",
+            "artifacts/final/crewai-tests.json",
             "artifacts/stateful/p03-fixture.json"
           ]
         },
@@ -121,10 +129,10 @@
       "readme": "projects/04-eval-harness/README.md",
       "implementation": "implemented",
       "implementation_scope": "144 frozen distinct scenarios, source-separated dev/release/audit data, real DeepEval/RAGAS exact metrics, local reports/trends, optional LangSmith upload and a strict complete-profile gate.",
-      "evidence_level": "fixture + actual-model baseline",
-      "overall_acceptance": "INCOMPLETE pending final gate and connected checks",
-      "blocker": "Final clean-commit rerun pending; LangSmith account unavailable; isolated evaluator advisories.",
-      "next_action": "Run the final144-case local release, same full degraded suite and8-case audit; preserve exact profiles and disclosures.",
+      "evidence_level": "fixture + clean-commit actual local release/degraded/audit",
+      "overall_acceptance": "PARTIAL: local regression accepted",
+      "blocker": "LangSmith integration not run; two evaluator packages retain reported advisories; narrow synthetic exact metrics do not establish general quality.",
+      "next_action": "Preserve c7b8 as the tested baseline; resolve evaluator advisories and run an authorized LangSmith integration. Any new deployment candidate must rerun the full gate.",
       "next_command": ".venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais eval --profile local --suite release --output artifacts/evals/release-local-final.json",
       "criteria": [
         {
@@ -132,7 +140,8 @@
           "status": "pass",
           "result": "144 cases across9 categories, plus8 development and8 audit; actual DeepEval custom support and RAGAS exact/string metrics. No model judge.",
           "evidence": [
-            "artifacts/evals/release-fixture-final-debug.json"
+            "artifacts/evals/release-local-final.json",
+            "artifacts/evals/release-local-final.metrics.json"
           ]
         },
         {
@@ -145,15 +154,29 @@
         },
         {
           "criterion": "Final clean-commit release and deliberately degraded candidate",
-          "status": "not_run",
-          "result": "Must execute full144 actual local cases in each candidate; fixture cannot substitute.",
-          "evidence": []
+          "status": "pass",
+          "result": "At c7b8, positive144/144 (p95 6366.34ms); degraded96/144 with48 quality failures (p95 6630.03ms), zero errors/skips in either run. Independent P11 binding accepted positive and rejected negative.",
+          "evidence": [
+            "artifacts/evals/release-local-final.json",
+            "artifacts/evals/degraded-local-final.json",
+            "artifacts/final/release-binding.json",
+            "artifacts/final/degraded-binding.json"
+          ]
         },
         {
           "criterion": "LangSmith real dataset/run integration",
           "status": "not_run",
           "result": "Adapter exists, account/key/target not configured.",
           "evidence": []
+        },
+        {
+          "criterion": "Small audit execution and exposure disclosure",
+          "status": "pass",
+          "result": "8/8 actual local responses at c7b8, p95 6508.33ms. First actual audit run; same-build synthetic data previously accessed for test/exclusion checks, not an independently blind holdout.",
+          "evidence": [
+            "artifacts/evals/audit-local-final.json",
+            "artifacts/evals/audit-exposures.jsonl"
+          ]
         }
       ]
     },
@@ -215,7 +238,8 @@
           "status": "pass",
           "result": "Three Guardrails tests;24 requests across two FastAPI instances admit3 and return21 real429 responses; missing validator fails closed.",
           "evidence": [
-            "artifacts/p06-guardrails-real.json"
+            "artifacts/p06-guardrails-real.json",
+            "artifacts/final/guardrails-tests.json"
           ]
         },
         {
@@ -286,16 +310,16 @@
         {
           "criterion": "API and browser failure/recovery contracts",
           "status": "pass",
-          "result": "20 API tests;14/14 desktop/mobile browser checks, zero skips/flaky; API demonstration15/15.",
+          "result": "262 integrated core checks include20 API tests; fixture browser14/14 at1440x960/390x844, zero skips/flaky cases, clean c7b8.",
           "evidence": [
-            "artifacts/ui/browser-evidence.json",
-            "artifacts/p08-api-demo.json"
+            "artifacts/final/core-tests.json",
+            "artifacts/ui/browser-evidence.json"
           ]
         },
         {
           "criterion": "Actual PDF-to-model-to-page browser path",
           "status": "pass",
-          "result": "One real local smoke passed. First display14,042ms; server first delivery14,024.104ms; providerTTFT unavailable because output is validated before delivery.",
+          "result": "Clean c7b8 actual local browser1/1: browser first checked display14785ms, server14766.393ms, providerTTFT null. Next buildp57JVxelz6CAGXQnnOrB3. Synthetic test identity; actual model and Guardrails.",
           "evidence": [
             "artifacts/ui/local/browser-evidence.json",
             "artifacts/ui/local/local-smoke-measurements.json"
@@ -304,7 +328,7 @@
         {
           "criterion": "Citation interaction and keyboard/modal behavior",
           "status": "pass",
-          "result": "Original physical page2 opens and complete cited source span displays; human-readable exact approval action.",
+          "result": "Both viewport keyboard/modal contracts pass; actual local extracted page2 source and authenticated PDF blob/page-fragment link verified. Browser PDF renderer itself not inspected by the test.",
           "evidence": [
             "artifacts/ui/local/desktop-local-source.png"
           ]
@@ -319,7 +343,7 @@
       "implementation_scope": "Original licensed data, source-disjoint splits, genuine PEFT/TRL SFT and DPO, checkpoint/export/reload, source exclusion and prospective domain/general retention checks.",
       "evidence_level": "actual CPU training smoke",
       "overall_acceptance": "INCOMPLETE",
-      "blocker": "Random tiny model has0% exact match and insufficient held-out samples; dependency advisories; substantive model/compute not provisioned.",
+      "blocker": "Tiny random model remains0% exact match; retention gate rejected. Larger independent evaluation, useful training, crash-resume and dependency remediation remain.",
       "next_action": "Select a licensed pretrained model and reviewed larger held-out source groups, resolve supported runtime advisories, then execute the same stages and retention gate.",
       "next_command": ".venv/bin/python -m pais demo 09 --profile local --output artifacts/p09-local.json",
       "criteria": [
@@ -344,6 +368,16 @@
           "status": "not_run",
           "result": "Small smoke establishes mechanics, not a useful tuned model; full compute/data/profile remains separate.",
           "evidence": []
+        },
+        {
+          "criterion": "Common CLI in the declared isolated training environment",
+          "status": "pass",
+          "result": "Missing Pydantic declaration reproduced before training; dependency-only fix committed separately as9f8e. Generic local CLI then completed genuine3-step SFT+3-step DPO with clean source and retention still rejected.",
+          "evidence": [
+            "artifacts/final/p09-local.log",
+            "artifacts/final/p09-cli-command.json",
+            "artifacts/final/p09-cli/run.json"
+          ]
         }
       ]
     },
@@ -396,20 +430,26 @@
         {
           "criterion": "Release validation and runtime emergency control",
           "status": "pass",
-          "result": "Missing/dirty/incomplete evidence rejected; model/data/dependency binding enforced; no-data/NaN and insufficient canary observations block. Flags read durable state on each new admission.",
+          "result": "Clean c7b8 positive full144 accepted with report SHA; same full degraded144 rejected for48 failures. Durable flags enforce emergency-disable on new admissions; no-data canary rejected.",
           "evidence": [
             "tests/test_operations.py",
-            "tests/test_operations_inference.py"
+            "tests/test_operations_inference.py",
+            "artifacts/final/release-binding.json",
+            "artifacts/final/degraded-binding.json"
           ]
         },
         {
           "criterion": "Dependency scans",
           "status": "fail",
-          "result": "Core and UIproduction scans report0advisories; evaluator/security/research/training runtimes have reported advisories. No ignore rule was added.",
+          "result": "Core audit queried162 of164 entries and reported0 findings, with editable project/CPU Torch skipped; npm production reported0. Eval2, Guardrails4, CrewAI1, training3 and inference1 affected packages remain. Five inference CPU wheels unmatched. Whole production gate not passed.",
           "evidence": [
             "artifacts/pip-audit-verified.json",
-            "artifacts/npm-audit-production.json",
-            "docs/dependencies/AUDIT.md"
+            "artifacts/pip-audit-eval-final.json",
+            "artifacts/pip-audit-security.json",
+            "artifacts/pip-audit-research.json",
+            "artifacts/pip-audit-training-final.json",
+            "artifacts/pip-audit-inference.json",
+            "artifacts/npm-audit-production.json"
           ]
         },
         {
@@ -428,10 +468,10 @@
       "readme": "projects/12-vector-database/README.md",
       "implementation": "implemented",
       "implementation_scope": "Qdrant dense/sparse/hybrid retrieval, tenant filtering, version authority/tombstones, configuration-keyed caches, reindexing, portable checksummed backup and fresh restore.",
-      "evidence_level": "actual Qdrant local100docs/300queries",
+      "evidence_level": "actual Qdrant local; synthetic hash embeddings at100/1000/10000 docs",
       "overall_acceptance": "PARTIAL",
-      "blocker": "Server/HNSW/scale/load profiles unexecuted; benchmark embeddings are feature-hash fixtures.",
-      "next_action": "Provision a named Qdrant server and real embedding profile; run declared larger corpus/concurrency/cache/index comparisons and fresh restore.",
+      "blocker": "10k hybrid recall@1=.21; semantic-model, Qdrant server/HNSW and concurrent-load acceptance not run.",
+      "next_action": "Predeclare a quality/resource target, then compare candidate depth, fusion and embedding configurations on the preserved10k workload before attempting server/HNSW load.",
       "next_command": ".venv/bin/python -m pais demo 12 --profile fixture --output artifacts/p12-local-store.json",
       "criteria": [
         {
@@ -455,6 +495,17 @@
           "status": "not_run",
           "result": "Qdrant client local mode uses exact search; measured small-corpus timings are not scalable ANN performance.",
           "evidence": []
+        },
+        {
+          "criterion": "Measured local scale experiment",
+          "status": "pass",
+          "result": "1000 and10000 actual docs,300 query invocations each. Dense recall@1=.12/.01; sparse1.0/1.0; hybrid1.0/.21, hybrid p95=31.45/317.93ms. Worker HWM99,213,312/143,163,392bytes; parent live RSS guard unavailable. This records the observed hybrid quality limitation, not semantic or HNSW acceptance.",
+          "evidence": [
+            "artifacts/p12-scale/scale-report.json",
+            "artifacts/p12-scale/worker-1000.json",
+            "artifacts/p12-scale/worker-10000.json",
+            "artifacts/p12-scale/resource-verification.json"
+          ]
         }
       ]
     },
@@ -522,7 +573,8 @@
           "result": "CLI/help/flags verified; server exit1 before readiness from denied ZeroMQ IPC. Follow-up preflight exits2 on AF_UNIX errno1; zero generation calls.",
           "evidence": [
             "artifacts/p14-cpu-functional-first/report.json",
-            "artifacts/p14-local-final-preflight.json"
+            "artifacts/p14-local-final-preflight.json",
+            "artifacts/final/p14-local-blocked.json"
           ]
         },
         {
@@ -587,9 +639,10 @@
         {
           "criterion": "Broker/worker crash and downstream replay recovery",
           "status": "pass",
-          "result": "AOF Redis SIGKILL/restart retains queued job; worker exits71 after effect commit; replacement worker produces one visible effect and succeeds on second attempt.",
+          "result": "AOF Redis SIGKILL/restart retains queued job; worker exits71 after effect commit; replacement worker produces one visible effect and succeeds on second attempt. Repeated at clean c7b8: AOF restart retained queue, worker exited71 after effect, recovery kept one visible effect across two attempts.",
           "evidence": [
-            "artifacts/stateful/p16-local.json"
+            "artifacts/stateful/p16-local.json",
+            "artifacts/final/p16-native.json"
           ]
         },
         {
@@ -670,7 +723,8 @@
           "result": "Baseline3fail/1pass; patched4regressions+9upstream saver checks=13pass. Commit07b33185eab893be2ed031eedae52f09314bf77c.",
           "evidence": [
             "artifacts/p18-demo.json",
-            "artifacts/p18-outputs/upstream-verification.json"
+            "artifacts/p18-outputs/upstream-verification.json",
+            "artifacts/final/demos/p18-outputs/upstream-verification.json"
           ]
         },
         {
@@ -689,5 +743,9 @@
         }
       ]
     }
-  ]
+  ],
+  "additional_source_commits": {
+    "P09_dependency_fix_and_cli_smoke": "9f8e0fdf41f3a170004c297c24b18ab01da7f25b"
+  },
+  "source_identity_policy": "Full application gates bind c7b8. P09 packaging/CLI evidence binds 9f8e. The final documentation commit is not a separately tested deployment candidate."
 }

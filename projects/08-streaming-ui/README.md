@@ -6,7 +6,7 @@ identity, security, telemetry, approval, and capability-control implementations.
 
 **Verified:** 20 API contract tests, 14 fixture browser cases across desktop and mobile, and
 one browser smoke through actual local embeddings, reranking, generation, and Guardrails.
-The local smoke opened the supporting page from the original PDF. See
+The local smoke inspected extracted page 2 and verified its authenticated original-PDF link. See
 [acceptance](ACCEPTANCE.md) for measured results and their limits. Fixture answers are visibly
 labeled and do not demonstrate model quality.
 
@@ -24,8 +24,8 @@ these events in the browser; this is not a hand-built imitation of a chat hook. 
 decisions and official sources are in [COMPATIBILITY.md](COMPATIBILITY.md).
 
 The complete answer is validated and redacted before protected content is delivered. The
-buffer is limited to 32,768 answer characters, 16 citations, and 128 KiB of serialized answer
-data. Delivery uses 64-character chunks and ASGI backpressure, with no unbounded producer
+buffer is limited to 32,768 answer characters, 16 citations, and 131,072 serialized JSON
+characters. The serialized limit counts characters, so it is not an exact UTF-8 byte limit. Delivery uses 64-character chunks and ASGI backpressure, with no unbounded producer
 queue. These are **presentation chunks of a checked answer**, not provider tokens. Browser
 first display and server first delivery are measured separately; provider TTFT remains null.
 
@@ -116,8 +116,8 @@ reranking, checked SSE delivery, and browser page navigation. It does not replac
 RAG evaluation suite. Missing models or validators fail the test; no fixture substitution is
 allowed in the local profile.
 
-The measured local run displayed its checked answer after **14,042 ms** in the browser;
-server first delivery was **14,024.104 ms**. This was one CPU run with a three-page synthetic
+The measured local run displayed its checked answer after **14,785 ms** in the browser;
+server first delivery was **14,766.393 ms**. This was one CPU run with a three-page synthetic
 operating manual. The API buffers the answer for validation, so neither value is provider
 TTFT. The test used an explicitly enabled test identity while keeping actual local models
 and the mandatory non-fixture output validator active.

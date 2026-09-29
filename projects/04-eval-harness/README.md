@@ -36,8 +36,9 @@ uv run --no-sync python scripts/with_local_models.py -- \
   --output artifacts/evals/release-local.json
 ```
 
-Windows users can run native Ollama separately and use `uv run --no-sync pais eval ...`
-with a regenerated model lock. The wrapper's `.venv/bin/python` command shown above is Unix-specific.
+The verified runtime is Linux/POSIX. The wrapper's `.venv/bin/python` commands are
+Unix-specific. Windows execution, including POSIX resource and file-lock compatibility,
+has not been verified and needs its own portability work and acceptance run.
 
 ## Meaningful failure demonstration
 
@@ -66,6 +67,20 @@ uv run --no-sync pytest tests/test_evaluation.py -q
 | Full local-model release | Status and output under artifacts/evals; fixture cannot substitute |
 | LangSmith dataset/run integration | Implemented in `pais.evaluation.langsmith_upload`; real account execution unverified |
 | Trends and provenance | Per-run manifest and append-only trends.jsonl |
+
+## Final integrated measurements
+
+Clean commit `c7b8a793f34795f3d2de148c1c5c211845e8b222` passed **144/144** local-profile cases,
+with zero errors/skips and p95 **6,366.34 ms**. The unchanged full degraded suite passed
+96 and failed 48, exited 1, and was independently rejected by P11 release binding. The
+positive binding was accepted. This checks source provenance and the local synthetic
+workload; it does not authorize cluster deployment or clear dependency findings.
+
+The positive release contains **56 actual Qwen responses, 16 deterministic page-balanced
+excerpt summaries and 72 contract/abstention cases**. It is not 144 generated answers.
+The first actual audit run passed **8/8**, p95 **6,508.33 ms**, and appended its exposure.
+All three reports, exact metric outputs and exposure records are under `artifacts/evals/`.
+The audit remains small, same-build and previously accessed for exclusion/test checks.
 
 ## Case study
 

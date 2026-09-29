@@ -25,11 +25,11 @@ model quality. A single actual model smoke demonstrates integration, not broad a
 
 ## Current reproducible evidence
 
-Fixture browser run on 2026-09-29: **14 passed, 0 failed**, 21.7 seconds reported by Playwright.
-The whole orchestration took 22,400.662 ms. Browser: Chromium 153.0.8010.0; one worker.
+Final fixture browser run on 2026-09-29: **14 passed, 0 failed**, 23.621 seconds reported by Playwright.
+The whole orchestration took 24,510.303 ms. Browser: Chromium 153.0.8010.0; one worker.
 The PDF fixture SHA-256 was
 `3be958fbf8db86e97d477dd2f4cc972ed175d378e324cf32c8b0acad77050a05`.
-The run recorded an unborn Git HEAD as null and a dirty tree; it does not invent a commit.
+The final fixture and local runs record clean commit `c7b8a793f34795f3d2de148c1c5c211845e8b222`. Earlier development runs retain their null commit/dirty state under `artifacts/ui-pre-freeze`; they are not relabeled.
 
 - `artifacts/ui/browser-evidence.json` records command, time, profile, versions, configuration,
   dataset hash, exit status, and artifact inventory.
@@ -42,26 +42,28 @@ The run recorded an unborn Git HEAD as null and a dirty tree; it does not invent
 
 ## Actual local browser integration
 
-The separate local run completed **1 passed, 0 failed** in 26.5 seconds reported by Playwright,
-with 27,241.585 ms for the orchestration. It had no mocked responses and no fixture model.
+The separate final local run completed **1 passed, 0 failed** in 25.821 seconds reported by Playwright,
+with 26,511.863 ms for the orchestration. It had no mocked responses and no fixture model.
 It uploaded the same three-page synthetic PDF, asked for the safe operating pressure,
-received the supported 8 bar answer, and opened the original page-2 source in the browser.
+received the supported 8 bar answer, and inspected its extracted page-2 source in the browser.
+The authenticated PDF blob and `#page=2` link were verified; a browser PDF renderer was not exercised.
 The test ran real Ollama embeddings, CrossEncoder reranking, Qwen generation, and the
 isolated mandatory Guardrails validator. Authentication used the explicit test-identity
 switch, independently from the local model profile.
 
 | Measurement | Observed value |
 |---|---|
-| Browser first display | 14,042 ms |
-| Server first checked-answer delivery | 14,024.104 ms |
-| Browser question-to-completed-answer check | 14,505 ms |
+| Browser first display | 14,785 ms |
+| Server first checked-answer delivery | 14,766.393 ms |
+| Browser question-to-completed-answer check | 15,072 ms |
 | Provider TTFT | Null; not measured by the buffered RAG contract |
 | Generator | `ollama:qwen2.5:1.5b` |
 | Generator digest | `65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b` |
 | Model-lock SHA-256 | `f6d72df65ac4aefb64f07aa7f4d4af0f547b312dafc222aa5a1f0204463ff45a` |
-| Next build ID, shared with the final fixture run | `B_CRNFyVs9Db71inhPqV9` |
+| Next build ID, shared with the final fixture run | `p57JVxelz6CAGXQnnOrB3` |
 
-The exact executed command was:
+A fresh-checkout reproduction command is below. The final recorded run used the equivalent
+`.venv-verified/bin/python` core interpreter; its exact command is retained in the JSON manifest:
 
 ```bash
 PAIS_GUARDRAILS_PYTHON="$PWD/projects/06-security-guardrails/.venv/bin/python" \
@@ -83,7 +85,7 @@ arrived only when response compression flushed. First display in that diagnostic
 The proxy now disables compression and preserves `no-transform`. The unchanged semantic
 cancellation check succeeds: first text is visible while Stop is available, cancellation
 ends delivery, and retry restores one server message.
-The final passing run recorded first browser display at **31 ms desktop** and **28 ms mobile**.
+The final passing run recorded first browser display at **70 ms desktop** and **41 ms mobile**.
 These are fixture presentation measurements with an intentional inter-chunk delay, not
 production latency targets or provider token timings.
 

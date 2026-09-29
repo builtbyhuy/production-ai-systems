@@ -2,20 +2,22 @@
 
 Scan date: 2026-09-29. Tool: **pip-audit2.10.1** using the actual installed environments; UI uses `npm audit --omit=dev`. Raw reports are retained, including duplicate advisory records returned by the service. Counts below are affected installed package names, not an estimate of exploitable vulnerabilities.
 
-The fresh application environment was created with the exact frozen `uv.lock`;164 noneditable distributions were scanned. An earlier experimental environment had extra packages and is not the final core environment. Its old scan remains `artifacts/pip-audit-core.json` for provenance.
+The fresh application environment was created from the exact frozen `uv.lock`. Its audit lists 164 entries: 162 were queried, the editable project was intentionally skipped, and the CPU-specific Torch build was unmatched by the PyPI advisory lookup. Zero reported findings applies only to the 162 queried entries. An earlier experimental environment had extra packages and is not the final core environment; its scan remains `artifacts/pip-audit-core.json` for provenance.
 
-| Environment | Distributions scanned | Packages with reported advisories | Raw report |
-|---|---:|---:|---|
-| Core, fresh verified lock | 164 | 0 | [pip-audit-verified.json](../../artifacts/pip-audit-verified.json) |
-| Evaluation worker, adopted fresh lock |120|2|[pip-audit-eval-final.json](../../artifacts/pip-audit-eval-final.json)|
-| Evaluation worker, superseded baseline |115|6|[pip-audit-eval.json](../../artifacts/pip-audit-eval.json)|
-| Guardrails worker | 108 | 4 | [pip-audit-security.json](../../artifacts/pip-audit-security.json) |
-| CrewAI worker | 158 | 1 | [pip-audit-research.json](../../artifacts/pip-audit-research.json) |
-| Training worker | 45 | 3 | [pip-audit-training.json](../../artifacts/pip-audit-training.json) |
-| CPU vLLM runtime |153|1 (`setuptools77.0.3`)|[pip-audit-inference.json](../../artifacts/pip-audit-inference.json)|
-| UI production dependencies | npm production scope | 0 reported | [npm-audit-production.json](../../artifacts/npm-audit-production.json) |
+| Environment | Listed / queried entries | Packages with reported advisories | Unqueried scope | Raw report |
+|---|---:|---:|---|---|
+| Core, fresh verified lock | 164 / 162 | 0 | Editable project; CPU Torch | [pip-audit-verified.json](../../artifacts/pip-audit-verified.json) |
+| Evaluation worker, adopted fresh lock | 120 / 120 | 2 | None | [pip-audit-eval-final.json](../../artifacts/pip-audit-eval-final.json) |
+| Evaluation worker, superseded baseline | 115 / 115 | 6 | None | [pip-audit-eval.json](../../artifacts/pip-audit-eval.json) |
+| Guardrails worker | 108 / 108 | 4 | None | [pip-audit-security.json](../../artifacts/pip-audit-security.json) |
+| CrewAI worker | 158 / 158 | 1 | None | [pip-audit-research.json](../../artifacts/pip-audit-research.json) |
+| Training worker, after CLI dependency fix | 49 / 48 | 3 | CPU Torch | [pip-audit-training-final.json](../../artifacts/pip-audit-training-final.json) |
+| CPU vLLM runtime | 153 / 148 | 1 | Five CPU wheel versions | [pip-audit-inference.json](../../artifacts/pip-audit-inference.json) |
+| UI production dependencies | npm production scope | 0 reported | Development dependencies excluded from this scan | [npm-audit-production.json](../../artifacts/npm-audit-production.json) |
 
 **The whole-repository production dependency gate is not passed.** No advisory has been suppressed or dismissed as a false positive. Functional acceptance of trusted local code remains separate from production supply-chain acceptance. These scans report known advisories at one point in time; zero findings is not a security guarantee.
+
+The unmatched inference packages are Torch 2.13.0+cpu, Torchaudio 2.11.0+cpu, Torchcodec 0.16.0+cpu, Torchvision 0.28.0+cpu and vLLM 0.30.0+cpu. Core/training use Torch 2.8.0+cpu. These are explicit scanner coverage gaps, not cleared packages. The earlier training report listed 45 entries with 44 queried and the same three affected packages; adding the declared Pydantic dependency produced the final 49-entry environment.
 
 ## Findings and exercised paths
 

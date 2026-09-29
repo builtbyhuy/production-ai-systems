@@ -48,14 +48,16 @@ delivery, retries the same message, and compares the result against server histo
 desktop and mobile fixtures pass the same behavioral cases. See `ACCEPTANCE.md` for actual
 counts and evidence paths; no deployment latency guarantee follows from this fixture timing.
 
-The final actual local browser smoke used the same built frontend. A three-page PDF was
+The earlier development local browser smoke used the same built frontend. A three-page PDF was
 uploaded through the interface, then the configured local embedding model, CrossEncoder,
 and Qwen generator answered a pressure question. The mandatory isolated Guardrails worker
 protected the completed answer before delivery. Browser first display was 14,042 ms, and
-the original page-2 source opened successfully. This one measured path demonstrates that
+the extracted page-2 source opened successfully. This one measured path demonstrates that
 the UI and real inference stack work together; the broader RAG release suite remains the
 source of quality evidence. The saved model digest, model-lock hash, Next build ID, command,
 timestamps, and actual screenshots make the scope of this result inspectable.
+
+The final clean-commit repetition at `c7b8a793f34795f3d2de148c1c5c211845e8b222` passed with browser first display 14,785 ms and server first delivery 14,766.393 ms. Provider TTFT remains null. Its authenticated original-PDF link was checked without testing a browser PDF renderer. See the final values in `ACCEPTANCE.md`.
 
 ## Rejected shortcuts and current limits
 
