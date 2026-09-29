@@ -16,10 +16,18 @@ Run from the repository root with Python 3.12:
 uv sync --project projects/09-lora-training --locked
 PYTHONPATH=packages .venv/bin/python -m pais.training fixture --output artifacts/p09-fixture
 PYTHONPATH=packages projects/09-lora-training/.venv/bin/python -m pais.training smoke --output artifacts/p09-smoke-reproduction
+.venv/bin/python -m pais demo 09 --profile local --output artifacts/p09-cli-reproduction/run.json
 .venv/bin/pytest -q tests/test_training.py
 ```
 
 Choose a fresh output directory for each run; existing evidence is never overwritten. The isolated environment pins torch **2.8.0+cpu**, Transformers **4.56.2**, PEFT **0.17.1**, Datasets **4.1.1**, TRL **0.23.1**, Accelerate **1.10.1**, Tokenizers **0.22.0**, and Safetensors **0.6.2**. `uv.lock` also fixes transitive dependencies. The explicit PyTorch CPU index avoids CUDA downloads. Invoking training from the repository's different Transformers environment produces a prerequisite error, exit code 2.
+
+The isolated environment also declares Pydantic because the common `pais demo` entrypoint
+imports the shared evidence/contracts layer before dispatching training. A final integration
+run exposed this missing declaration before training began; its failure log is preserved in
+`artifacts/final/p09-local.log`. The dependency correction is a separate source commit from
+the application release gate. Its actual CLI reproduction has its own source identity and
+does not make a successful smoke a substantive model-quality release.
 
 All Hugging Face loading uses locally provisioned files, `local_files_only=True`, `trust_remote_code=False`, and Safetensors. Hub/dataset telemetry and automatic Hub access are disabled before ML imports. These application settings prevent hidden Hugging Face downloads; a deployment that promises network isolation must additionally enforce it at the operating-system boundary.
 

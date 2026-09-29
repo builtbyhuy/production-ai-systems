@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Isolated, offline-capable CPU LoRA SFT/DPO reproducibility environment"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+  "pydantic>=2.11,<3",
   "torch==2.8.0",
   "transformers==4.56.2",
   "peft==0.17.1",
