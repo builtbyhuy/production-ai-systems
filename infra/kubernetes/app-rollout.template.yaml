@@ -1,0 +1,219 @@
+# Render with projects/11-cicd/render_manifests.py after a complete real-model release gate.
+# One POSIX state volume on one pinned node; SQLite WAL is not a shared-network-filesystem DB.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pais-test
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pais-api
+  namespace: pais-test
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pais-state
+  namespace: pais-test
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: '@@STATE_STORAGE_CLASS@@'
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pais-stable
+  namespace: pais-test
+spec:
+  selector:
+    app: pais-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pais-canary
+  namespace: pais-test
+spec:
+  selector:
+    app: pais-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pais-public
+  namespace: pais-test
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffering: 'off'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '120'
+    nginx.ingress.kubernetes.io/proxy-body-size: '20m'
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: ['@@HOSTNAME@@']
+      secretName: pais-ingress-tls
+  rules:
+    - host: '@@HOSTNAME@@'
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pais-stable
+                port:
+                  name: http
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: pais-api
+  namespace: pais-test
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  progressDeadlineSeconds: 1800
+  progressDeadlineAbort: true
+  selector:
+    matchLabels:
+      app: pais-api
+  strategy:
+    canary:
+      stableService: pais-stable
+      canaryService: pais-canary
+      maxSurge: 1
+      maxUnavailable: 0
+      scaleDownDelaySeconds: 120
+      abortScaleDownDelaySeconds: 120
+      trafficRouting:
+        nginx:
+          stableIngress: pais-public
+      steps:
+        - setWeight: 10
+        - pause:
+            duration: 5m
+        - analysis:
+            templates:
+              - templateName: pais-quality
+            args:
+              - name: release
+                valueFrom:
+                  podTemplateHashValue: Latest
+        - setWeight: 50
+        - pause:
+            duration: 5m
+        - analysis:
+            templates:
+              - templateName: pais-quality
+            args:
+              - name: release
+                valueFrom:
+                  podTemplateHashValue: Latest
+        - pause: {} # Deployment owner reviews staging and recovery evidence before promotion.
+        - setWeight: 100
+  template:
+    metadata:
+      labels:
+        app: pais-api
+      annotations:
+        pais.example/git-commit: '@@RELEASE_COMMIT@@'
+    spec:
+      serviceAccountName: pais-api
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 120
+      nodeSelector:
+        pais-state-node: 'true'
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: '@@APP_IMAGE@@'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          env:
+            - name: PAIS_DB_PATH
+              value: /state/pais.db
+            - name: PAIS_PROFILE
+              value: local
+            - name: PAIS_RELEASE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['rollouts-pod-template-hash']
+            - name: PAIS_AUTH_TOKENS
+              valueFrom:
+                secretKeyRef:
+                  name: pais-auth
+                  key: tokens-json
+            - name: PAIS_MODEL_LOCK
+              value: /models/model-lock.json
+            - name: PAIS_OLLAMA_URL
+              value: http://ollama.pais-test.svc:11434
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://otel-collector.monitoring.svc:4318
+          resources:
+            requests:
+              cpu: '1'
+              memory: 1Gi
+            limits:
+              cpu: '2'
+              memory: 3Gi
+          startupProbe:
+            httpGet:
+              path: /api/ready
+              port: http
+            periodSeconds: 5
+            failureThreshold: 120
+          readinessProbe:
+            httpGet:
+              path: /api/ready
+              port: http
+            periodSeconds: 5
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            periodSeconds: 15
+            failureThreshold: 4
+          volumeMounts:
+            - name: state
+              mountPath: /state
+            - name: models
+              mountPath: /models
+              readOnly: true
+            - name: temporary
+              mountPath: /tmp
+      volumes:
+        - name: state
+          persistentVolumeClaim:
+            claimName: pais-state
+        - name: models
+          persistentVolumeClaim:
+            claimName: pais-models
+        - name: temporary
+          emptyDir:
+            sizeLimit: 256Mi

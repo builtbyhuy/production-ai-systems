@@ -1,0 +1,17 @@
+{
+  "name": "linux-x86-cpu-functional",
+  "evidence_profile": "functional",
+  "backend": "cpu",
+  "vllm_version": "0.30.0+cpu",
+  "model": "pais-tiny-gpt2-functional",
+  "model_directory": null,
+  "model_revision": null,
+  "dtype": "float32",
+  "max_model_len": 128,
+  "max_num_seqs": 2,
+  "max_num_batched_tokens": 128,
+  "prefix_caching": true,
+  "cpu_kv_cache_gib": 1,
+  "minimum_host_ram_gib": 8,
+  "replicas": 1
+}

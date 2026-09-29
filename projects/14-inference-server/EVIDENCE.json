@@ -1,0 +1,195 @@
+{
+  "schema_version": "pais.p14.evidence.v1",
+  "recorded_at": "2026-09-29T10:41:53.854853+00:00",
+  "status": "implemented_with_serving_acceptance_blocked",
+  "cpu_slot_released": true,
+  "no_owned_server_remaining": true,
+  "fixture": {
+    "report": "artifacts/p14-fixture.json",
+    "status": "passed",
+    "model_requests": 0,
+    "checks_passed": 4
+  },
+  "contract_tests": {
+    "command": ".venv/bin/pytest tests/test_operations_inference.py projects/14-inference-server/test_supervisor.py -q --junitxml=artifacts/p14-contract-tests.xml",
+    "passed": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.294,
+    "scope": "8 existing mocked gateway/admission contracts plus 3 real supervisor/failclosed unit cases; not serving performance"
+  },
+  "installation": {
+    "runtime": "/workspace/scratch/708ae715c693/vllm-runtime/.venv",
+    "metadata": {
+      "vllm": "0.30.0+cpu",
+      "torch": "2.13.0+cpu",
+      "transformers": "5.17.0",
+      "tokenizers": "0.23.2",
+      "safetensors": "0.8.0",
+      "uvicorn": "0.54.0",
+      "httpx": "0.28.1"
+    },
+    "dependency_check": "uv pip check:153 packages compatible",
+    "wheel_url": "https://github.com/vllm-project/vllm/releases/download/v0.30.0/vllm-0.30.0%2Bcpu-cp38-abi3-manylinux_2_39_x86_64.whl",
+    "wheel_sha256": "0ee75278b3626c5d0b7c310c6d62afae93e900f4eac339c91e333fde5108ed78",
+    "wheel_bytes": 147429514,
+    "lock_scope": "exact installed version snapshot; vLLM direct wheel is hash-pinned, other dependencies are version-pinned",
+    "fresh_environment_reinstallation": "not rerun; existing installed environment checked"
+  },
+  "actual_server_attempt": {
+    "report": "artifacts/p14-cpu-functional-first/report.json",
+    "status": "failed",
+    "exit_code": 1,
+    "started_at": "2026-09-29T10:35:13.127301+00:00",
+    "finished_at": "2026-09-29T10:35:39.764232+00:00",
+    "cli_help_exit": 0,
+    "cli_flags_verified": [
+      "--served-model-name",
+      "--host",
+      "--port",
+      "--dtype",
+      "--max-model-len",
+      "--max-num-seqs",
+      "--max-num-batched-tokens",
+      "--block-size",
+      "--enable-prefix-caching",
+      "--enforce-eager",
+      "--chat-template",
+      "--chat-template-content-format",
+      "--api-server-count",
+      "--disable-uvicorn-access-log"
+    ],
+    "error": "ZeroMQ IPC bind denied with Operation not permitted before readiness",
+    "generation_requests": 0,
+    "inference_identity_verified": false,
+    "server_log": "artifacts/p14-cpu-functional-first/vllm-server.log",
+    "executed_supervisor_source": "artifacts/p14-cpu-functional-first/supervisor-executed.py",
+    "executed_supervisor_source_sha256": "f5c64b3ece6a6c744436dd0e1a1d900856270e234db50e53b814524a87d53a16",
+    "resources": {
+      "owned_processes_stopped": true,
+      "remaining_live_pids": [],
+      "process_exit_codes": {
+        "cli-help": 0,
+        "vllm-server": 1
+      },
+      "aggregate_peak_rss_bytes": 1342173184,
+      "sample_count": 515,
+      "sample_period_seconds": 0.05,
+      "stop_threshold_bytes": 4026531840,
+      "observed_within_4_gib": true,
+      "kernel_memory_limit_applied": false,
+      "rss_measurement": "sum of supervised process RSS; shared pages can be counted twice",
+      "pid_mapping": "host /proc PID plus direct-parent/NSpid mapping into the supervisor namespace",
+      "watchdog_failure": null
+    },
+    "git_metadata_correction": "The preserved first report contains literal HEAD because rev-parse failed in an unborn repository. This is not a commit hash. Final preflight correctly records commit=null and unborn_or_unavailable=true."
+  },
+  "final_failclosed_entrypoint": {
+    "command": ".venv/bin/python -m pais demo 14 --profile local --output artifacts/p14-local-final-preflight.json",
+    "report": "artifacts/p14-local-final-preflight.json",
+    "status": "blocked",
+    "exit_code": 2,
+    "cause": "AF_UNIX/SOCK_STREAM socket creation PermissionError errno1; no subsequent server process is launched"
+  },
+  "model_derivative": {
+    "origin": "P09 original random initialization, with separately approved config derivative",
+    "trained_adapter_served": false,
+    "meaningful_model_quality_claim": false,
+    "license": "original random weights MIT; GPT-2 implementation Apache-2.0",
+    "parameters": 39456,
+    "source_directory": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p09-smoke/base-model",
+    "source_files_sha256": {
+      "config.json": "7e367bf7127392256f1772799f8f51db58cd2086c76d54991ddf8eff5a42f6fe",
+      "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+      "manifest.json": "6b7cbd4001347562535d68cb6706282e09b6081db65107e914f9795f350a1dfe",
+      "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    },
+    "original_profile_rejected": true,
+    "rejection_scope": "outside advertised CPUAttentionBackend head-size contract; no engine attempt",
+    "original_head_size": 16,
+    "supported_cpu_head_sizes": [
+      32,
+      64,
+      80,
+      96,
+      112,
+      128,
+      160,
+      192,
+      224,
+      256,
+      512
+    ],
+    "transformation": {
+      "n_head": {
+        "from": 2,
+        "to": 1
+      },
+      "new_head_size": 32
+    },
+    "attention_semantics_changed": true,
+    "weights_bytes_unchanged": true,
+    "revision_sha256": "c2e96bcb3bdb96b0b47966c531c1ce0ba81ec9c7dde5d573f4b53d10a6f76a87",
+    "files_sha256": {
+      "config.json": "8e1355eeb42ca2c9193eacc5047792efe08f3f4f1cabd0019634af2f39b633fe",
+      "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+      "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    }
+  },
+  "prerequisite_source_inspection": {
+    "cpu_attention_sha256": "76fb02a6bd725125565d84bf04f627cf16da5f7ff8f31f87c01ed6a1439398c7",
+    "gpt2_sha256": "fe8d8cee50fb9f1f8d0c1ca8d07b935619726b3e129b30166e3fb6d5ab8a3bee",
+    "original_head_size16": "outside advertised supported list; original model was not attempted",
+    "async_inprocess": "vLLM EngineCoreClient explicitly rejects asyncio without multiprocessing",
+    "transport": "single-engine async frontend uses ZeroMQ IPC; inspected TCP branches are distributed/elastic configurations, not a supported equivalent for this smoke"
+  },
+  "kubernetes_template": {
+    "path": "projects/14-inference-server/kubernetes-cpu.template.yaml",
+    "yaml_documents_parsed": [
+      "ConfigMap",
+      "Deployment",
+      "Service",
+      "NetworkPolicy"
+    ],
+    "api_schema_validated": false,
+    "deployed": false,
+    "required_inputs": [
+      "verified compatible CPU image digest",
+      "gateway image digest",
+      "reviewed model PVC and revision",
+      "gateway/upstream Secret",
+      "authorized cluster allowing required local IPC"
+    ]
+  },
+  "acceptance": {
+    "real_serving": "blocked before engine readiness",
+    "real_streaming": "not run",
+    "engine_cancellation": "not run",
+    "real_admission_burst": "not run",
+    "real_ttft_throughput_tail_latency": "not measured",
+    "batching_cache_quantization_comparison": "not run",
+    "multi_instance_balancing_recovery": "mocked gateway contracts only; real serving not run",
+    "cluster": "not provisioned or deployed",
+    "model_quality": "no claim; random functional derivative"
+  },
+  "files_sha256": {
+    "projects/14-inference-server/runtime-cpu.lock.txt": "be2ee4679590ee8cbe46420c18a77f5a8f7210d71311d7a5f13a7ddfef8020d0",
+    "projects/14-inference-server/run_cpu_smoke.py": "0ebfc4e3112cd1efb7601a01cbd1aa2c612c9f0a085f7b2d3a990b279ece0abf",
+    "projects/14-inference-server/test_supervisor.py": "13799148fddc2ea3eaef781b9b5f4af99ff044281b6bb1ed3851507483053970",
+    "projects/14-inference-server/provision_cpu.sh": "2eecc1fd382fb8c6d1a6f5f4130ffe5241d9c0c9bfd42476e28c4f5f67dc6a99",
+    "projects/14-inference-server/chat-template.jinja": "a800c13076c83d27084ee456f40238570346a2eb5cbeaaa260dfa0351ddeeac3",
+    "projects/14-inference-server/kubernetes-cpu.template.yaml": "e1197fd3816862774fb2e9890ba6e0f688bf9232d463d71938f3c04bd64c7edb",
+    "packages/pais/inference.py": "d6e964834f64a68cc04d314dfd82e584705f83da3c1bc8c38cd63b1e945901cd",
+    "artifacts/p14-cpu-functional-first/report.json": "68bdd7047aa01685987a823486961cab7dc4de3ec0f48fa27ceb12073f3a364f",
+    "artifacts/p14-local-final-preflight.json": "23290224ff944ff58193573266564b0afe57e7a3ce71d6bae2cc616bc4b68655",
+    "artifacts/p14-contract-tests.xml": "f9cd8e3579179ca57664102f09e581237d474552f0c5bbc02e2b141f98160f64",
+    "artifacts/p14-fixture.json": "84c4a132122c8fa194f62ef66ff42e15ef35e61dab327329d1b992fd4de43193"
+  }
+}

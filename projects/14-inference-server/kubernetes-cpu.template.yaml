@@ -1,0 +1,194 @@
+# TEMPLATE ONLY: replace both image placeholders with reviewed repository@sha256 references.
+# Provision a model PVC and the named authentication Secret before applying in an authorized cluster.
+# The smoke test does not validate this template, Kubernetes recovery, or cluster throughput.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pais-inference-cpu
+data:
+  gateway.json: |
+    {
+      "model": "pais-random-gpt2-one-head-functional",
+      "backends": ["http://127.0.0.1:8000"],
+      "max_inflight": 1,
+      "max_queue": 0,
+      "queue_timeout_seconds": 1,
+      "request_timeout_seconds": 20,
+      "health_interval_seconds": 2,
+      "max_context_tokens": 128,
+      "max_output_tokens": 96
+    }
+  chat-template.jinja: |
+    {% for message in messages %}{{ message['content'] }}{{ '\n' }}{% endfor %}{% if add_generation_prompt %}{{ 'Answer:' }}{% endif %}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pais-inference-cpu
+  annotations:
+    pais.evidence/profile: cpu-functional-template-not-deployed
+    pais.model/revision: "${REVIEWED_MODEL_SHA256}"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pais-inference-cpu
+  template:
+    metadata:
+      labels:
+        app: pais-inference-cpu
+    spec:
+      terminationGracePeriodSeconds: 40
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: vllm
+          image: "${VLLM_CPU_IMAGE_DIGEST}"
+          command: [python, -m, vllm.entrypoints.cli.main, serve, /model]
+          args:
+            - --served-model-name
+            - pais-random-gpt2-one-head-functional
+            - --host
+            - 127.0.0.1
+            - --port
+            - "8000"
+            - --dtype
+            - float32
+            - --max-model-len
+            - "128"
+            - --max-num-seqs
+            - "2"
+            - --max-num-batched-tokens
+            - "128"
+            - --block-size
+            - "32"
+            - --enable-prefix-caching
+            - --enforce-eager
+            - --chat-template
+            - /config/chat-template.jinja
+            - --chat-template-content-format
+            - string
+            - --api-server-count
+            - "1"
+          env:
+            - {name: HF_HUB_OFFLINE, value: "1"}
+            - {name: HF_HUB_DISABLE_TELEMETRY, value: "1"}
+            - {name: VLLM_NO_USAGE_STATS, value: "1"}
+            - {name: VLLM_CPU_KVCACHE_SPACE, value: "1"}
+            - {name: VLLM_CPU_OMP_THREADS_BIND, value: nobind}
+            - {name: OMP_NUM_THREADS, value: "2"}
+            - {name: MKL_NUM_THREADS, value: "2"}
+            - {name: HF_HOME, value: /tmp/huggingface}
+            - {name: VLLM_CACHE_ROOT, value: /tmp/vllm}
+            - name: VLLM_API_KEY
+              valueFrom:
+                secretKeyRef: {name: pais-inference-auth, key: upstream-token}
+          resources:
+            requests: {cpu: "2", memory: 3Gi}
+            limits: {cpu: "2", memory: 4Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          startupProbe:
+            exec:
+              command: [python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+            periodSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            exec:
+              command: [python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+            periodSeconds: 10
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command: [python, -c, "import time; time.sleep(20)"]
+          volumeMounts:
+            - {name: model, mountPath: /model, readOnly: true}
+            - {name: config, mountPath: /config, readOnly: true}
+            - {name: server-tmp, mountPath: /tmp}
+            - {name: shm, mountPath: /dev/shm}
+        - name: gateway
+          image: "${GATEWAY_IMAGE_DIGEST}"
+          command: [python, -m, uvicorn, "pais.inference:create_gateway_app", --factory]
+          args: [--host, 0.0.0.0, --port, "8081", --workers, "1", --no-access-log]
+          ports: [{name: gateway, containerPort: 8081}]
+          env:
+            - {name: PAIS_INFERENCE_GATEWAY_CONFIG, value: /config/gateway.json}
+            - name: PAIS_INFERENCE_GATEWAY_TOKEN
+              valueFrom:
+                secretKeyRef: {name: pais-inference-auth, key: gateway-token}
+            - name: VLLM_API_KEY
+              valueFrom:
+                secretKeyRef: {name: pais-inference-auth, key: upstream-token}
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          readinessProbe:
+            httpGet: {path: /ready, port: gateway}
+            periodSeconds: 2
+          livenessProbe:
+            httpGet: {path: /health, port: gateway}
+            periodSeconds: 10
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - python
+                  - -c
+                  - >-
+                    import os, time, urllib.request;
+                    request = urllib.request.Request('http://127.0.0.1:8081/drain',
+                    data=b'', headers={'Authorization': 'Bearer ' + os.environ['PAIS_INFERENCE_GATEWAY_TOKEN']});
+                    urllib.request.urlopen(request, timeout=2).read(); time.sleep(10)
+          volumeMounts:
+            - {name: config, mountPath: /config, readOnly: true}
+            - {name: gateway-tmp, mountPath: /tmp}
+      volumes:
+        - name: model
+          persistentVolumeClaim: {claimName: pais-reviewed-tiny-model, readOnly: true}
+        - name: config
+          configMap: {name: pais-inference-cpu}
+        - name: server-tmp
+          emptyDir: {sizeLimit: 256Mi}
+        - name: gateway-tmp
+          emptyDir: {sizeLimit: 32Mi}
+        - name: shm
+          emptyDir: {medium: Memory, sizeLimit: 1Gi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pais-inference-cpu
+spec:
+  type: ClusterIP
+  selector: {app: pais-inference-cpu}
+  ports: [{name: gateway, port: 8081, targetPort: gateway}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pais-inference-cpu
+spec:
+  podSelector:
+    matchLabels: {app: pais-inference-cpu}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {pais-inference-clients: "true"}
+      ports: [{port: 8081, protocol: TCP}]
+  egress: []

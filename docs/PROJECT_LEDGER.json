@@ -1,0 +1,693 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-29",
+  "scope": "All18 implementation tracks are present. Local acceptance is intentionally limited to the documented workload and downstream contracts. No overall production deployment is accepted.",
+  "source_candidate": null,
+  "projects": [
+    {
+      "id": "P01",
+      "name": "RAG with citations",
+      "readme": "projects/01-rag-citations/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "PDF extraction, immutable page/span/version provenance, LangGraph, sqlite-vec/FTS5 fusion, actual CrossEncoder, constrained source selection, explicit excerpt summaries and abstention.",
+      "evidence_level": "fixture + actual models/storage",
+      "overall_acceptance": "PASS within local acceptance scope",
+      "blocker": "None for measured local lifecycle; final144-case regression recorded separately in P04.",
+      "next_action": "Rerun the unchanged local release gate against the frozen source; retain corpus-size and extractive-policy limits.",
+      "next_command": ".venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais eval --profile local --suite release --output artifacts/evals/release-local.json",
+      "criteria": [
+        {
+          "criterion": "Cross-page, abstention, conflicts, injection and lifecycle",
+          "status": "pass",
+          "result": "13/13 actual local lifecycle checks after constrained-selection prompt correction; original failed7/13 preserved.",
+          "evidence": [
+            "projects/01-rag-citations/evidence/local-sqlite-selection-v2.json"
+          ]
+        },
+        {
+          "criterion": "Retrieval comparison",
+          "status": "pass",
+          "result": "16 frozen queries: lexical recall@5=.9375; dense/hybrid/rerank=1.0. Reranking increased latency without a ranking gain.",
+          "evidence": [
+            "projects/01-rag-citations/evidence/local-retrieval.json"
+          ]
+        },
+        {
+          "criterion": "Versioned citations and tenant/deletion checks",
+          "status": "pass",
+          "result": "Real SQLite and LanceDB contracts; physical pages and exact complete source spans enforced. Scanned PDFs are explicitly unsupported.",
+          "evidence": [
+            "projects/07-local-first/evidence/contract-tests.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Model router",
+      "readme": "projects/02-model-router/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "LiteLLM routing, capability/context constraints, bounded fallback and circuit breaking, persistent integer budget reservations, unknown usage holds and attempt-level reconciliation.",
+      "evidence_level": "fixture + actual two-model comparison",
+      "overall_acceptance": "PARTIAL",
+      "blocker": "No connected invoice comparison or measured paid-provider savings.",
+      "next_action": "Choose an authorized comparable provider workload and versioned price card before a paid comparison; local results are already measured.",
+      "next_command": ".venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais demo 02 --profile local --output artifacts/p02-local.json",
+      "criteria": [
+        {
+          "criterion": "Same-workload policy comparison",
+          "status": "pass",
+          "result": "12 questions each: cheap4/12, expensive6/12, routed4/12. Mean seconds=.801/2.084/1.054; p95=2.036/5.800/2.608. Local API rates zero; no savings claim.",
+          "evidence": [
+            "artifacts/p02-router-local.json"
+          ]
+        },
+        {
+          "criterion": "Retries, cancellation and concurrent budget enforcement",
+          "status": "pass",
+          "result": "Three retry/fallback attempts recorded, cancelled usage remains held;24 simultaneous admissions accept3 at declared429 micro-USD simulated cap.",
+          "evidence": [
+            "artifacts/p02-router-local.json"
+          ]
+        },
+        {
+          "criterion": "Connected invoice reconciliation and dollar savings",
+          "status": "not_run",
+          "result": "Requires authorized account, live rate-card identity and explicit spending budget.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Multi-agent research",
+      "readme": "projects/03-multi-agent-research/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Four substantive CrewAI roles and tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.",
+      "evidence_level": "real CrewAI + actual-model failed attempt",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "Small-model run timed out; live web and general research quality unverified; isolated dependency advisories.",
+      "next_action": "Resolve framework dependency advisories and evaluate a suitable local model/configuration against the bounded research contract; provision only reviewed web targets.",
+      "next_command": ".venv/bin/python -m pais demo 03 --profile fixture --output artifacts/p03-crewai.json",
+      "criteria": [
+        {
+          "criterion": "Actual CrewAI orchestration and rejection/approval paths",
+          "status": "pass",
+          "result": "Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic.",
+          "evidence": [
+            "artifacts/stateful/crewai-tests.json",
+            "artifacts/stateful/p03-fixture.json"
+          ]
+        },
+        {
+          "criterion": "Actual local model completing research",
+          "status": "fail",
+          "result": "Qwen1.5B received one response, timed out on call2 after70.02s, executed zero tools; no fixture fallback.",
+          "evidence": [
+            "artifacts/stateful/p03-local-attempt.json"
+          ]
+        },
+        {
+          "criterion": "Authorized live web acquisition",
+          "status": "not_run",
+          "result": "Bounded pinned HTTPS adapter and controlled-transport contract exist; no live source run.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Evaluation harness",
+      "readme": "projects/04-eval-harness/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "144 frozen distinct scenarios, source-separated dev/release/audit data, real DeepEval/RAGAS exact metrics, local reports/trends, optional LangSmith upload and a strict complete-profile gate.",
+      "evidence_level": "fixture + actual-model baseline",
+      "overall_acceptance": "INCOMPLETE pending final gate and connected checks",
+      "blocker": "Final clean-commit rerun pending; LangSmith account unavailable; isolated evaluator advisories.",
+      "next_action": "Run the final144-case local release, same full degraded suite and8-case audit; preserve exact profiles and disclosures.",
+      "next_command": ".venv/bin/python scripts/with_local_models.py -- .venv/bin/python -m pais eval --profile local --suite release --output artifacts/evals/release-local-final.json",
+      "criteria": [
+        {
+          "criterion": "Coverage and real metric execution",
+          "status": "pass",
+          "result": "144 cases across9 categories, plus8 development and8 audit; actual DeepEval custom support and RAGAS exact/string metrics. No model judge.",
+          "evidence": [
+            "artifacts/evals/release-fixture-final-debug.json"
+          ]
+        },
+        {
+          "criterion": "First actual local release",
+          "status": "fail",
+          "result": "132/144, twelve summary omissions, no errors/skips. Strict thresholds retained; explicit excerpt-summary route now implemented.",
+          "evidence": [
+            "artifacts/evals/release-local-first.json"
+          ]
+        },
+        {
+          "criterion": "Final clean-commit release and deliberately degraded candidate",
+          "status": "not_run",
+          "result": "Must execute full144 actual local cases in each candidate; fixture cannot substitute.",
+          "evidence": []
+        },
+        {
+          "criterion": "LangSmith real dataset/run integration",
+          "status": "not_run",
+          "result": "Adapter exists, account/key/target not configured.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "Observability",
+      "readme": "projects/05-observability/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "OpenTelemetry instrumentation, bounded labels/redaction, provisioned Prometheus/Grafana/Tempo/Alertmanager, durable worker trace propagation, alerts and accounting consistency.",
+      "evidence_level": "native monitoring deployment profile",
+      "overall_acceptance": "PASS within declared native drill scope",
+      "blocker": "Container deployment, mature anomaly baseline and paid invoice reconciliation unverified.",
+      "next_action": "Review the accepted actual dashboard/trace/alert evidence; execute Compose separately on a Docker host if that deployment is selected.",
+      "next_command": ".venv/bin/python projects/05-observability/native_drill.py --binaries-dir .tools/monitoring --output artifacts/p05-native-new --max-rss-mib 1536",
+      "criteria": [
+        {
+          "criterion": "Actual traffic, trace, alerts firing and resolving",
+          "status": "pass",
+          "result": "Two alert pairs observed firing/resolved; linked producer/worker Tempo spans and successful real worker;155.3733s drill.",
+          "evidence": [
+            "artifacts/p05-native-run.json",
+            "artifacts/p05-native-first-pass/report.json",
+            "artifacts/p05-native-first-pass/distributed-trace.json"
+          ]
+        },
+        {
+          "criterion": "Accounting and dashboard",
+          "status": "pass",
+          "result": "Ledger40 micro-USD equals Prometheus40, explicitly simulated prices.12 panels provisioned; screenshot proves first8, lower4 were lazily unrendered.",
+          "evidence": [
+            "artifacts/p05-native-first-pass/ledger-query.json",
+            "artifacts/p05-native-first-pass/grafana-dashboard.png"
+          ]
+        },
+        {
+          "criterion": "Declared resource bound",
+          "status": "pass",
+          "result": "Sampled sum-RSS1,448,546,304 bytes below1536MiB. Original1GiB failure and locale failure preserved; shared pages may double-count.",
+          "evidence": [
+            "artifacts/p05-native-first-pass/report.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Security middleware",
+      "readme": "projects/06-security-guardrails/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Actual Guardrails isolated validation, server-resolved identities, PII filtering, tool/argument policy, DNS-pinned bounded HTTPS and cross-instance admission; rootless Docker execution adapter fails closed.",
+      "evidence_level": "fixture + actual Guardrails and HTTP",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "Untrusted-code sandbox unavailable; isolated Guardrails dependency advisories.",
+      "next_action": "Use a reviewed patched-compatible validator environment; on a suitable host provision a rootless Docker/cgroupv2/seccomp boundary and an audited Python image, then run real denial/resource drills.",
+      "next_command": ".venv/bin/python projects/06-security-guardrails/sandbox_drill.py --enabled --image \"$PAIS_SANDBOX_IMAGE\" --endpoint \"$PAIS_SANDBOX_ENDPOINT\" --output artifacts/p06-sandbox/report.json",
+      "criteria": [
+        {
+          "criterion": "Real schema/output enforcement and shared limits",
+          "status": "pass",
+          "result": "Three Guardrails tests;24 requests across two FastAPI instances admit3 and return21 real429 responses; missing validator fails closed.",
+          "evidence": [
+            "artifacts/p06-guardrails-real.json"
+          ]
+        },
+        {
+          "criterion": "Injection detector measurement",
+          "status": "pass",
+          "result": "Measured twelve examples: TP5,FN2,FP1,TN4. This records two missed attacks and one false alarm; not a comprehensive defense.",
+          "evidence": [
+            "artifacts/p06-guardrails-real.json"
+          ]
+        },
+        {
+          "criterion": "Sandbox filesystem/network/CPU/RAM/time/output isolation",
+          "status": "not_run",
+          "result": "No Docker daemon; namespace/netlink operations denied. Execution stays disabled; no host-subprocess substitute.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "Local-first environment",
+      "readme": "projects/07-local-first/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Native CPU Ollama and safetensors CrossEncoder, revision/hash locking, selectable real SQLite/LanceDB, offline checks, resource measurement and prepared container profiles.",
+      "evidence_level": "actual models/storage + native offline",
+      "overall_acceptance": "PARTIAL",
+      "blocker": "Docker unavailable; Compose build/launch/offline acceptance not executed.",
+      "next_action": "On a Docker host choose a reviewed base-image digest, regenerate container-specific model paths, build and run the documented Compose acceptance.",
+      "next_command": ".venv/bin/python projects/07-local-first/offline_acceptance.py --backend sqlite --output artifacts/p07-offline.json",
+      "criteria": [
+        {
+          "criterion": "Both local storage adapters with actual models",
+          "status": "pass",
+          "result": "SQLite13/13 and LanceDB13/13 lifecycle checks.",
+          "evidence": [
+            "projects/07-local-first/evidence/offline-local-sqlite.json",
+            "projects/07-local-first/evidence/offline-local-lancedb.json"
+          ]
+        },
+        {
+          "criterion": "Offline application boundary and resources",
+          "status": "pass",
+          "result": "Only loopback routes; proxy variables stripped; direct IPv4/IPv6 egress fails before/after. Corrected app+Ollama sampledRSS1,865,792KiB. Trusted-app profile, not hostile-code isolation.",
+          "evidence": [
+            "projects/07-local-first/evidence/offline-local-sqlite-resources.json"
+          ]
+        },
+        {
+          "criterion": "Container deployment/offline profile",
+          "status": "not_run",
+          "result": "Compose and mandatory security bridge prepared; no Docker runtime.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P08",
+      "name": "Streaming copilot",
+      "readme": "projects/08-streaming-ui/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Next.js/AI SDK and FastAPI PDF upload, source inspection, auth/tenant boundaries, persistent conversations, approved actions, stable replay IDs, cancellation and error recovery with accessibility checks.",
+      "evidence_level": "API + desktop/mobile + actual-model browser",
+      "overall_acceptance": "PASS within local UI scope",
+      "blocker": "Provider cancellation is adapter-limited; process-crash pending-message reconciliation and hosted operation remain open.",
+      "next_action": "Launch the documented API/UI and rerun the browser profiles; preserve first-display versus provider-TTFT distinction.",
+      "next_command": ".venv/bin/python projects/08-streaming-ui/run_browser_tests.py --profile fixture",
+      "criteria": [
+        {
+          "criterion": "API and browser failure/recovery contracts",
+          "status": "pass",
+          "result": "20 API tests;14/14 desktop/mobile browser checks, zero skips/flaky; API demonstration15/15.",
+          "evidence": [
+            "artifacts/ui/browser-evidence.json",
+            "artifacts/p08-api-demo.json"
+          ]
+        },
+        {
+          "criterion": "Actual PDF-to-model-to-page browser path",
+          "status": "pass",
+          "result": "One real local smoke passed. First display14,042ms; server first delivery14,024.104ms; providerTTFT unavailable because output is validated before delivery.",
+          "evidence": [
+            "artifacts/ui/local/browser-evidence.json",
+            "artifacts/ui/local/local-smoke-measurements.json"
+          ]
+        },
+        {
+          "criterion": "Citation interaction and keyboard/modal behavior",
+          "status": "pass",
+          "result": "Original physical page2 opens and complete cited source span displays; human-readable exact approval action.",
+          "evidence": [
+            "artifacts/ui/local/desktop-local-source.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P09",
+      "name": "LoRA SFT/DPO",
+      "readme": "projects/09-lora-training/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Original licensed data, source-disjoint splits, genuine PEFT/TRL SFT and DPO, checkpoint/export/reload, source exclusion and prospective domain/general retention checks.",
+      "evidence_level": "actual CPU training smoke",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "Random tiny model has0% exact match and insufficient held-out samples; dependency advisories; substantive model/compute not provisioned.",
+      "next_action": "Select a licensed pretrained model and reviewed larger held-out source groups, resolve supported runtime advisories, then execute the same stages and retention gate.",
+      "next_command": ".venv/bin/python -m pais demo 09 --profile local --output artifacts/p09-local.json",
+      "criteria": [
+        {
+          "criterion": "Genuine training and exact adapter reload",
+          "status": "pass",
+          "result": "39,456 base parameters/1,024 LoRA;3SFT+3DPO steps; both adapters changed, frozen base retained; reload maximum logit difference0.",
+          "evidence": [
+            "artifacts/p09-smoke/training-result.json"
+          ]
+        },
+        {
+          "criterion": "Before/after domain/general comparison and retention",
+          "status": "fail",
+          "result": "Base/SFT/DPO exact match all0%; six held-out cases per suite below declared minimum20; retention rejected.",
+          "evidence": [
+            "artifacts/p09-smoke/training-result.json"
+          ]
+        },
+        {
+          "criterion": "Substantive training quality and checkpoint/resume",
+          "status": "not_run",
+          "result": "Small smoke establishes mechanics, not a useful tuned model; full compute/data/profile remains separate.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P10",
+      "name": "Multi-tenant SaaS",
+      "readme": "projects/10-multi-tenant-saas/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Server-derived memberships and roles, tenant-scoped resource contracts, append-only billable usage/corrections, atomic quotas, Supabase user-JWT/RLS adapters and Stripe test-only webhooks/metering/reconciliation.",
+      "evidence_level": "local + real SDK contracts",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "No Supabase test project/two real JWTs or Stripe test account/customer/meter mapping.",
+      "next_action": "Review/apply migration.sql in an authorized test project, create two users/resources, then exercise SupabaseTenantAdapter and StripeTestBilling with test credentials and compare remote records.",
+      "next_command": ".venv/bin/python -m pais demo 10 --profile fixture --output artifacts/p10-fixture.json",
+      "criteria": [
+        {
+          "criterion": "Local quota, role, ledger and signature boundaries",
+          "status": "pass",
+          "result": "Thirty concurrent quota requests admit ten; cross-tenant/role rejection and immutable correction history; actual Stripe signature/replay/stale/tied-event tests.",
+          "evidence": [
+            "artifacts/stateful/p10-fixture.json"
+          ]
+        },
+        {
+          "criterion": "Two real authenticated tenant isolation across remote RLS/storage",
+          "status": "not_run",
+          "result": "SQL and user-scoped SDK adapters prepared; remote policies not applied or proved.",
+          "evidence": []
+        },
+        {
+          "criterion": "Stripe test records/subscription/meter reconciliation",
+          "status": "not_run",
+          "result": "Test-only adapters implemented; real account execution absent.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P11",
+      "name": "CI/CD and rollout",
+      "readme": "projects/11-cicd/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Pinned GitHub Actions, frozen runtime gates, immutable image/bundle validation, default-disabled capability/emergency flags, ArgoCD/Rollouts/Prometheus configuration and explicit recovery ownership.",
+      "evidence_level": "contract tests + parsed configuration",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "No GitHub repository/Actions execution, Docker/cluster/registry target; isolated dependency advisories prevent whole-repo supply-chain pass.",
+      "next_action": "Resolve dependency findings, provision a protected self-hosted model runner and test cluster/immutable images, then run passing, degraded and missing-data rollout drills in the runbook.",
+      "next_command": ".venv/bin/python -m pais.operations check-release artifacts/evals/release-local-final.json --commit \"$(git rev-parse HEAD)\"",
+      "criteria": [
+        {
+          "criterion": "Release validation and runtime emergency control",
+          "status": "pass",
+          "result": "Missing/dirty/incomplete evidence rejected; model/data/dependency binding enforced; no-data/NaN and insufficient canary observations block. Flags read durable state on each new admission.",
+          "evidence": [
+            "tests/test_operations.py",
+            "tests/test_operations_inference.py"
+          ]
+        },
+        {
+          "criterion": "Dependency scans",
+          "status": "fail",
+          "result": "Core and UIproduction scans report0advisories; evaluator/security/research/training runtimes have reported advisories. No ignore rule was added.",
+          "evidence": [
+            "artifacts/pip-audit-verified.json",
+            "artifacts/npm-audit-production.json",
+            "docs/dependencies/AUDIT.md"
+          ]
+        },
+        {
+          "criterion": "Actual image build, Actions, promotion and rollback",
+          "status": "not_run",
+          "result": "Templates/tests are not cluster proof; use one pinned-node POSIX volume for this SQLite functional deployment.",
+          "evidence": [
+            "projects/11-cicd/ROLLOUT_RUNBOOK.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P12",
+      "name": "Vector database",
+      "readme": "projects/12-vector-database/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Qdrant dense/sparse/hybrid retrieval, tenant filtering, version authority/tombstones, configuration-keyed caches, reindexing, portable checksummed backup and fresh restore.",
+      "evidence_level": "actual Qdrant local100docs/300queries",
+      "overall_acceptance": "PARTIAL",
+      "blocker": "Server/HNSW/scale/load profiles unexecuted; benchmark embeddings are feature-hash fixtures.",
+      "next_action": "Provision a named Qdrant server and real embedding profile; run declared larger corpus/concurrency/cache/index comparisons and fresh restore.",
+      "next_command": ".venv/bin/python -m pais demo 12 --profile fixture --output artifacts/p12-local-store.json",
+      "criteria": [
+        {
+          "criterion": "Actual store comparison and fresh restore",
+          "status": "pass",
+          "result": "100 documents/300 queries; denseRecall@1=.71, sparse/hybrid1.0. Restored100documents/vectors; version/deletion/tenant checks pass.",
+          "evidence": [
+            "artifacts/stateful/p12-fixture.json"
+          ]
+        },
+        {
+          "criterion": "Embedding cache and consistency",
+          "status": "pass",
+          "result": "100cache hits/200misses in the recorded fixture-embedding run; derived indexes never override source tombstones.",
+          "evidence": [
+            "artifacts/stateful/p12-fixture.json"
+          ]
+        },
+        {
+          "criterion": "Large-index HNSW/server performance",
+          "status": "not_run",
+          "result": "Qdrant client local mode uses exact search; measured small-corpus timings are not scalable ANN performance.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P13",
+      "name": "Agent memory",
+      "readme": "projects/13-agent-memory/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Actual Redis buffers and Qdrant, authoritative memory versions/provenance/confidence, TTL/eviction, source-linked summaries, corrections/tombstones and stale-session conflict handling.",
+      "evidence_level": "actual Redis/Qdrant + four model calls",
+      "overall_acceptance": "PASS within small local acceptance scope",
+      "blocker": "General-task quality/semantic recall and larger workloads unverified.",
+      "next_action": "Expand the independently authored workload before interpreting quality or token impact; preserve the present two-fact baseline and exact token measurements.",
+      "next_command": ".venv/bin/python scripts/with_local_models.py -- .venv/bin/python projects/13-agent-memory/compare_local.py --output artifacts/p13-comparison.json",
+      "criteria": [
+        {
+          "criterion": "Restart, updates, expiry/eviction, correction and deletion",
+          "status": "pass",
+          "result": "Redis SIGKILL/AOF restart, actual Qdrant, cross-tenant checks, invalidated summaries and stale-session resurrection rejection.",
+          "evidence": [
+            "artifacts/stateful/p13-fixture.json"
+          ]
+        },
+        {
+          "criterion": "Memory enabled/disabled task and token comparison",
+          "status": "pass",
+          "result": "Two fixed supplied facts: disabled0/2, enabled2/2; prompttokens121/136 and outputtokens4/10. Four Qwen responses in4.43s. Baseline lacks facts; no general uplift or token savings claim.",
+          "evidence": [
+            "artifacts/stateful/p13-local-comparison.json"
+          ]
+        },
+        {
+          "criterion": "Irrelevant and low-confidence exclusion",
+          "status": "pass",
+          "result": "Both model prompts exclude two conflicting low-confidence records and an unrelated record; actual Redis/Qdrant retrieval test.",
+          "evidence": [
+            "projects/13-agent-memory/test_comparison.py"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P14",
+      "name": "Inference server",
+      "readme": "projects/14-inference-server/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "vLLM CPU provisioning/profile, bounded admission gateway, readiness/warmup, streaming/cancellation/drain/load harness, resource/cleanup supervisor and a CPU Kubernetes template and separate GPU JSON profiles.",
+      "evidence_level": "mock contracts + actual CLI/startup attempt",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "AF_UNIX creation denied before actual serving; no GPU/cluster for comparisons.",
+      "next_action": "Use a host permitting AF_UNIX IPC, provision the exact CPU runtime and model derivative, run the functional supervisor, then separately qualify cluster/cache/batching/quantization profiles.",
+      "next_command": "PAIS_VLLM_PYTHON=/path/to/cpu-runtime/bin/python .venv/bin/python -m pais demo 14 --profile local --output artifacts/p14-local.json",
+      "criteria": [
+        {
+          "criterion": "Admission/gateway/supervisor contracts",
+          "status": "pass",
+          "result": "Eleven tests pass; fixture four checks have zero model calls. Four Kubernetes YAML documents parse; no API-schema/cluster validation.",
+          "evidence": [
+            "projects/14-inference-server/EVIDENCE.json"
+          ]
+        },
+        {
+          "criterion": "Actual CPU serving",
+          "status": "fail",
+          "result": "CLI/help/flags verified; server exit1 before readiness from denied ZeroMQ IPC. Follow-up preflight exits2 on AF_UNIX errno1; zero generation calls.",
+          "evidence": [
+            "artifacts/p14-cpu-functional-first/report.json",
+            "artifacts/p14-local-final-preflight.json"
+          ]
+        },
+        {
+          "criterion": "Load/batching/cache/quantization and instance recovery",
+          "status": "not_run",
+          "result": "Separate random39,456parameter one-head derivative; no trained-adapter quality or serving-performance evidence.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P15",
+      "name": "Human approval",
+      "readme": "projects/15-human-approval/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "LangGraph interrupts and durable approval/checkpoint state bound to trusted tenant/reviewer/exact action/context/expiry/idempotency, edit/reapprove/cancel/restart and atomic visible effects.",
+      "evidence_level": "actual LangGraph/SQLite + UI",
+      "overall_acceptance": "PARTIAL",
+      "blocker": "Grounding0.85 review rule is uncalibrated; external providers need a separately verified idempotency/reconciliation contract.",
+      "next_action": "Collect reviewed development examples for review_signals, measure false acceptance/rejection under the unchanged0.85 baseline and version any justified threshold change. Then verify a selected external provider idempotency contract.",
+      "next_command": ".venv/bin/python -m pais demo 15 --profile fixture --output artifacts/p15-approval.json",
+      "criteria": [
+        {
+          "criterion": "Paused restart and authorization/context decision paths",
+          "status": "pass",
+          "result": "Wrong user/tenant, changed action, expired/stale context, concurrent decisions, edit/reapprove/cancel and restart/resume tests pass.",
+          "evidence": [
+            "artifacts/stateful/p15-fixture.json",
+            "tests/test_workflows.py"
+          ]
+        },
+        {
+          "criterion": "Effect succeeds before replay",
+          "status": "pass",
+          "result": "Durable local downstream receipt preserves at most one visible effect despite replay; effect boundary explicitly documented.",
+          "evidence": [
+            "artifacts/p15-approval-demo.json"
+          ]
+        },
+        {
+          "criterion": "Development-data calibration of review trigger",
+          "status": "not_run",
+          "result": "review_signals uses an explicit0.85 development rule plus mandatory conflict/sensitive-action review. It is not a calibrated probability or uncertainty model.",
+          "evidence": [
+            "projects/15-human-approval/README.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P16",
+      "name": "Automation pipeline",
+      "readme": "projects/16-automation-pipeline/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Signed FastAPI webhook adapter, durable acceptance/outbox, Celery/Redis, leases, bounded backoff/jitter, cancellation/dead/uncertain state and reviewed replay with explicit idempotent local effects.",
+      "evidence_level": "actual Redis/Celery multiprocess recovery",
+      "overall_acceptance": "PASS within native pipeline scope",
+      "blocker": "Webhook router requires tenant signing configuration before mounting; external-effect and hosted deployment unverified.",
+      "next_action": "Configure trusted tenant signing secrets and mount the documented router; revalidate each external effect provider contract before using it.",
+      "next_command": ".venv/bin/python -m pais demo 16 --profile local --output artifacts/p16-native.json",
+      "criteria": [
+        {
+          "criterion": "Broker/worker crash and downstream replay recovery",
+          "status": "pass",
+          "result": "AOF Redis SIGKILL/restart retains queued job; worker exits71 after effect commit; replacement worker produces one visible effect and succeeds on second attempt.",
+          "evidence": [
+            "artifacts/stateful/p16-local.json"
+          ]
+        },
+        {
+          "criterion": "Bounded retries, poison isolation and reviewed replay",
+          "status": "pass",
+          "result": "Transient job succeeds after2attempts; poison dead-letters while healthy job continues; authorized replay succeeds; four effects belong to four distinct jobs.",
+          "evidence": [
+            "artifacts/stateful/p16-local.json"
+          ]
+        },
+        {
+          "criterion": "Signed duplicate webhook/outbox and authorization",
+          "status": "pass",
+          "result": "Durable uniqueness and tenant/trace binding, invalid signatures rejected, published job retries safe.",
+          "evidence": [
+            "tests/test_jobs.py"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P17",
+      "name": "Code benchmark",
+      "readme": "projects/17-domain-benchmark/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "100 original MIT Python/API repair tasks,325 checks, source-split policy, correctness controller, submission validation, two explicit rule/no-op baselines and result-derived leaderboard.",
+      "evidence_level": "trusted corpus/controller QA",
+      "overall_acceptance": "INCOMPLETE",
+      "blocker": "Missing P06 sandbox; zero actual baseline scores/leaderboard rows; no publication target/community evidence.",
+      "next_action": "After P06 real isolation passes, run both baseline submissions in fresh sandboxes on the same split twice and generate the leaderboard only from raw scored results.",
+      "next_command": ".venv/bin/python -m pais.benchmark score artifacts/p17-submissions/no-op.json --split test --sandbox-image \"$PAIS_SANDBOX_IMAGE\" --enable-sandbox --output artifacts/p17-runs/no-op-test",
+      "criteria": [
+        {
+          "criterion": "Meaningful licensed corpus and reference QA",
+          "status": "pass",
+          "result": "100 unique ASTs across10categories;325checks;100references pass and100seeded defects reproduced;60/20/20splits.",
+          "evidence": [
+            "projects/17-domain-benchmark/EVIDENCE.json"
+          ]
+        },
+        {
+          "criterion": "Malformed submission and fail-closed scoring",
+          "status": "pass",
+          "result": "Invalid schema/tampering rejected; missing sandbox fails closed; fixture corpus checks cannot become leaderboard rows.",
+          "evidence": [
+            "tests/test_benchmark.py"
+          ]
+        },
+        {
+          "criterion": "Actual baseline scoring and reproducible leaderboard",
+          "status": "not_run",
+          "result": "Zero scored runs/rows; no invented model score.",
+          "evidence": []
+        },
+        {
+          "criterion": "Publication and actual community adoption",
+          "status": "not_run",
+          "result": "Contribution guide prepared; no external users or adoption claimed.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P18",
+      "name": "Upstream contribution",
+      "readme": "projects/18-upstream-contribution/README.md",
+      "implementation": "implemented",
+      "implementation_scope": "Current LangGraph checkpoint-sqlite transaction defect reproduction, small rollback patch, hash-pinned MIT source snapshot, byte-identical RED/GREEN tests and concrete English PR draft.",
+      "evidence_level": "actual upstream reproduction/patched tests",
+      "overall_acceptance": "PARTIAL",
+      "blocker": "Full upstream development checks, approved issue/assignment and PR submission not done.",
+      "next_action": "Use the recorded upstream commit and contribution rules to obtain issue approval/assignment, run complete upstream package checks in a fresh checkout, then submit the prepared scoped patch when authorized.",
+      "next_command": ".venv/bin/python -m pais demo 18 --profile local --output artifacts/p18-patch.json",
+      "criteria": [
+        {
+          "criterion": "Original issue and correction",
+          "status": "pass",
+          "result": "Baseline3fail/1pass; patched4regressions+9upstream saver checks=13pass. Commit07b33185eab893be2ed031eedae52f09314bf77c.",
+          "evidence": [
+            "artifacts/p18-demo.json",
+            "artifacts/p18-outputs/upstream-verification.json"
+          ]
+        },
+        {
+          "criterion": "Full upstream format/lint/test",
+          "status": "not_run",
+          "result": "Focused synchronous saver checks passed; complete upstream development environment not executed.",
+          "evidence": []
+        },
+        {
+          "criterion": "PR submitted, maintainer response, merge",
+          "status": "not_run",
+          "result": "Patch and PR draft prepared; no issue/assignment/submission/merge fabricated.",
+          "evidence": [
+            "projects/18-upstream-contribution/PROPOSED_PR.md"
+          ]
+        }
+      ]
+    }
+  ]
+}

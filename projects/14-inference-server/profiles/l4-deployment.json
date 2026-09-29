@@ -1,0 +1,20 @@
+{
+  "name": "linux-nvidia-l4-two-replicas",
+  "evidence_profile": "deployment",
+  "backend": "cuda",
+  "vllm_version": "0.30.0",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "model_directory": null,
+  "model_revision": null,
+  "image_digest": null,
+  "dtype": "float16",
+  "max_model_len": 4096,
+  "max_num_seqs": 8,
+  "max_num_batched_tokens": 4096,
+  "prefix_caching": true,
+  "gpu_memory_utilization": 0.8,
+  "minimum_host_ram_gib": 32,
+  "minimum_gpu_ram_gib": 24,
+  "gpu_compute_capability": 8.9,
+  "replicas": 2
+}

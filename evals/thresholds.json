@@ -1,0 +1,19 @@
+{
+  "version": "2026-09-29.1",
+  "declared_before_first_quality_run": true,
+  "rationale": "Narrow synthetic operations corpus: every security, page/span, lifecycle and accounting assertion is mandatory. Extractive answers require complete supporting citations. Broad-domain quality is outside this release gate.",
+  "release": {
+    "minimum_cases": 144,
+    "required_categories": ["answerable", "unanswerable", "contradictory", "cross-page", "citation", "adversarial", "authorization", "malformed-input", "failure-recovery"],
+    "minimum_pass_rate": 1.0,
+    "maximum_errors": 0,
+    "maximum_skipped": 0,
+    "citation_support_minimum": 1.0,
+    "requires_local_model_profile_for_deployment": true,
+    "required_dependencies": ["langgraph", "sqlite-vec", "pypdf", "sentence-transformers", "deepeval", "ragas"],
+    "operational_p95_ms_target": 60000,
+    "performance_target_hardware": "CPU functional profile, 8 GiB cgroup, concurrency 1; not a production throughput claim"
+  },
+  "change_policy": "Any threshold change requires a new version, rationale and comparison to this version. No silent gate relaxation."
+}
+

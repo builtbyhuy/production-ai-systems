@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pais-test
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: '@@GITOPS_URL@@'
+    targetRevision: '@@GITOPS_REVISION@@'
+    path: infra/deploy/pais-test
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pais-test
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+  # Manual sync and promotion: this template does not authorize external deployment.

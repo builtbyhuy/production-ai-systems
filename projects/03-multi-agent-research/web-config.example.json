@@ -1,0 +1,23 @@
+{
+  "allowed_hosts": ["docs.langchain.com"],
+  "deadline_seconds": 90,
+  "max_bytes_per_source": 500000,
+  "max_model_calls": 8,
+  "sources": [
+    {
+      "source_id": "langgraph-interrupts-reviewed-v1",
+      "tenant_id": "demo",
+      "title": "LangGraph interrupts",
+      "uri": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "passage": "",
+      "facts": [
+        {
+          "subject": "LangGraph interrupts",
+          "predicate": "capability",
+          "value": "pause graph execution",
+          "quote": "Interrupts allow you to pause graph execution"
+        }
+      ]
+    }
+  ]
+}

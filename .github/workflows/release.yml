@@ -1,0 +1,73 @@
+name: Actual-model release candidate
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ai-release
+  cancel-in-progress: false
+jobs:
+  release:
+    # Provision this runner in advance with locked dependencies, models and Ollama.
+    # Protect ai-release environment; never execute fork/PR code on this runner.
+    if: github.ref == 'refs/heads/main'
+    environment: ai-release
+    runs-on: [self-hosted, linux, pais-local-models]
+    timeout-minutes: 90
+    env:
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      DO_NOT_TRACK: '1'
+      PAIS_MODEL_LOCK: ${{ vars.PAIS_MODEL_LOCK }}
+      PAIS_OLLAMA_URL: ${{ vars.PAIS_OLLAMA_URL }}
+      PAIS_PYTHON_BASE_IMAGE: ${{ vars.PAIS_PYTHON_BASE_IMAGE }}
+      PAIS_GUARDRAILS_PYTHON: ${{ vars.PAIS_GUARDRAILS_PYTHON }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: '0.12.18'
+      - name: Frozen offline runtime; absence is a failed prerequisite
+        run: uv sync --frozen --offline --group dev --extra local --extra router --extra workflows --extra vectors
+      - name: Frozen isolated evaluation and security dependencies
+        run: |
+          uv sync --frozen --offline --project projects/04-eval-harness
+          uv sync --frozen --offline --project projects/06-security-guardrails
+      - name: Full release evaluation with actual local models
+        run: uv run --no-sync pais eval --profile local --suite release --output artifacts/evals/release.json
+      - name: Independently bind complete evidence to this candidate
+        run: uv run --no-sync python -m pais.operations check-release artifacts/evals/release.json --commit "$GITHUB_SHA"
+      - name: Intentionally degraded candidate must fail the same gate
+        shell: bash
+        run: |
+          set +e
+          uv run --no-sync pais eval --profile local --suite release --degraded --output artifacts/evals/degraded.json
+          status=$?
+          set -e
+          test "$status" -eq 1
+      - name: Validate digest-pinned build base
+        run: uv run --no-sync python projects/11-cicd/validate_image.py "$PAIS_PYTHON_BASE_IMAGE"
+      - name: Build immutable OCI archive without publishing
+        run: >-
+          docker buildx build --file infra/Dockerfile.api
+          --build-arg BASE_IMAGE="$PAIS_PYTHON_BASE_IMAGE"
+          --output type=oci,dest=artifacts/pais-image.tar
+          --metadata-file artifacts/image-metadata.json .
+      - name: Capture candidate bundle
+        run: uv run --no-sync python projects/11-cicd/create_bundle.py --evaluation artifacts/evals/release.json --metadata artifacts/image-metadata.json --image-repository ghcr.io/${{ github.repository }} --output artifacts/release-bundle.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: candidate-${{ github.sha }}
+          path: |
+            artifacts/evals/release.json
+            artifacts/evals/degraded.json
+            artifacts/image-metadata.json
+            artifacts/release-bundle.json
+            artifacts/pais-image.tar
+          if-no-files-found: error
+          retention-days: 14
+    # Registry publication and GitOps promotion require a separately reviewed target.

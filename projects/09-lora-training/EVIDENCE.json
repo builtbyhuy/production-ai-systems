@@ -1,0 +1,218 @@
+{
+  "project": "P09",
+  "profile": "local",
+  "verification_kind": "genuine-tiny-training-smoke",
+  "timestamp_utc": "2026-09-29T09:22:07.095580+00:00",
+  "command": [
+    "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/training.py",
+    "smoke",
+    "--output",
+    "artifacts/p09-smoke"
+  ],
+  "git": {
+    "commit": null,
+    "dirty": true
+  },
+  "exit_status": 0,
+  "configuration_sha256": "d4583b380801401f504eb5830f012cc2fd5317c8253529889dd595dd2cca5bec",
+  "dependency_versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "4.56.2",
+    "peft": "0.17.1",
+    "datasets": "4.1.1",
+    "trl": "0.23.1",
+    "accelerate": "1.10.1",
+    "tokenizers": "0.22.0",
+    "safetensors": "0.6.2"
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "hardware": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "torch_threads": 2,
+  "sft_steps": 3,
+  "dpo_steps": 3,
+  "sft_train_loss": 5.71666161219279,
+  "dpo_train_loss": 0.6925957600275675,
+  "adapter_parameters": 1024,
+  "sft_adapter_changed": true,
+  "frozen_backbone_unchanged": true,
+  "dpo_adapter_changed": true,
+  "retention_gate": {
+    "accepted": false,
+    "reasons": [
+      "base/domain:insufficient_cases",
+      "base/general:insufficient_cases",
+      "sft/domain:insufficient_cases",
+      "sft/general:insufficient_cases",
+      "dpo/domain:insufficient_cases",
+      "dpo/general:insufficient_cases"
+    ],
+    "thresholds": {
+      "minimum_cases_per_suite": 20,
+      "max_general_score_drop": 0.05,
+      "max_domain_score_drop": 0.02,
+      "max_nll_ratio": 1.1
+    },
+    "policy": "Both SFT and DPO must retain base capabilities on identical held-out suites. This does not guarantee the absence of forgetting outside those suites."
+  },
+  "timing_seconds": {
+    "sft": 0.2823382300011872,
+    "dpo": 0.28162751399941044,
+    "total": 1.1824997539988544
+  },
+  "release_approved": false,
+  "substantive_quality_verified": false,
+  "limitations": [
+    "Random tiny model is not a pretrained assistant; pipeline behavior is the only smoke claim.",
+    "The small synthetic held-out suites cannot establish broad capability retention or task utility.",
+    "No adapter is released when retention checks fail."
+  ],
+  "source_record": {
+    "path": "artifacts/p09-smoke/training-result.json",
+    "sha256": "c1355cb3b9aee67cca9933a76ef22c651832f5b4ffb2895aaf0288745aa8346e"
+  },
+  "model": {
+    "origin": "randomly initialized GPT-2 architecture, no pretrained weights",
+    "revision": "pais-tiny-gpt2-v1-seed-20260929",
+    "license": "Apache-2.0 implementation; original random weights MIT",
+    "parameters": 39456,
+    "tokenizer_fit_split": "train only",
+    "tokenizer_vocabulary_size": 309
+  },
+  "base_artifact_hashes": {
+    "config.json": "7e367bf7127392256f1772799f8f51db58cd2086c76d54991ddf8eff5a42f6fe",
+    "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+    "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+    "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+    "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+    "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+  },
+  "dataset_manifest": {
+    "dataset_version": "ops-instructions-v1",
+    "dataset_sha256": "9fb549124d9b7b96cc2a92f4555d7908f5ea820b9f68749d01bc2c199b04d0cb",
+    "split_seed": 20260929,
+    "counts": {
+      "train": 36,
+      "dev": 12,
+      "test": 12
+    },
+    "suite_counts": {
+      "train": {
+        "domain": 18,
+        "general": 18
+      },
+      "dev": {
+        "domain": 6,
+        "general": 6
+      },
+      "test": {
+        "domain": 6,
+        "general": 6
+      }
+    },
+    "split_sha256": {
+      "train": "063ce263b6bd6242300ac43137f0853dddec6d78d8a324ddb675e502c724178a",
+      "dev": "a7dfa1ba5032a95b47684cfb683d6de38b820a0dcbbde312ddf975609962fdde",
+      "test": "4d676d6909b0d1ac87393a4ebe6f12aecf717d17f3bfa6de38d4746ac2a757ae"
+    },
+    "forbidden_fingerprint_count": 1516,
+    "forbidden_source_count": 148
+  },
+  "exclusions": [
+    {
+      "path": "evals/release.json",
+      "sha256": "bd1b14b140771975cb9f9364437c0276e04d1c63271225565ec5d63ff5dd5c1a",
+      "new_text_fingerprints": 492
+    },
+    {
+      "path": "evals/development.json",
+      "sha256": "5ef533bdd5e2b91ea5de5bfe93b8508bcf3d243e068dbadcd215319d491dad51",
+      "new_text_fingerprints": 49
+    },
+    {
+      "path": "evals/audit.json",
+      "sha256": "a710224f34bd9861567d424146c5f1301dd922575c12cc3e1b3032f1557cb7ef",
+      "new_text_fingerprints": 41
+    },
+    {
+      "path": "evals/corpus.json",
+      "sha256": "19b6826c771c1b122bda03e792c2193f4d540a5d4e917714e7d08097cdfc009b",
+      "new_text_fingerprints": 115
+    },
+    {
+      "path": "projects/17-domain-benchmark/data/tasks-v1.jsonl",
+      "sha256": "c76215ca42e8d33254ceff5146a2f1c92833c9156ccbe5ec9b57b63ebf25a8bd",
+      "new_text_fingerprints": 819
+    }
+  ],
+  "audit_access": "Hash/overlap access only; release and audit examples are excluded, never used for training, checkpoint selection or threshold tuning.",
+  "metrics": {
+    "base": {
+      "domain": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.793780167897542,
+        "suite_sha256": "ce0ae6951e38cb9221aeb328e991c083bb1bbd5fed0ba9d00a3f1f50b977de9f"
+      },
+      "general": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.737117687861125,
+        "suite_sha256": "5ba2ac26c122d25889770762a2b05053bbe03415b752b07b3588a6418b605c42"
+      }
+    },
+    "sft": {
+      "domain": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.78711732228597,
+        "suite_sha256": "ce0ae6951e38cb9221aeb328e991c083bb1bbd5fed0ba9d00a3f1f50b977de9f"
+      },
+      "general": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.721898714701335,
+        "suite_sha256": "5ba2ac26c122d25889770762a2b05053bbe03415b752b07b3588a6418b605c42"
+      }
+    },
+    "dpo": {
+      "domain": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.784539620081584,
+        "suite_sha256": "ce0ae6951e38cb9221aeb328e991c083bb1bbd5fed0ba9d00a3f1f50b977de9f"
+      },
+      "general": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.708777745564778,
+        "suite_sha256": "5ba2ac26c122d25889770762a2b05053bbe03415b752b07b3588a6418b605c42"
+      }
+    }
+  },
+  "exports": {
+    "sft": {
+      "reload_verified": true,
+      "max_logit_absolute_difference": 0.0,
+      "files": {
+        "README.md": "2ce5159900d672005cf68c11120462f1cf663012b87646caf9e0625f11db1297",
+        "adapter_config.json": "d7ec9ccaec5a0c005621b440cfe290f9bbbe3bbfb54ef0fbd839789623e8dc55",
+        "adapter_model.safetensors": "9a3da37d4dbee8aa2318b354d2f503dc8cf2d496e7f8f3258acabc9e8daee259",
+        "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+        "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+        "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+      }
+    },
+    "dpo": {
+      "reload_verified": true,
+      "max_logit_absolute_difference": 0.0,
+      "files": {
+        "README.md": "e2acc5e2c220789d0775473d6ed960bc30cb93de0d62663fa10950f6917cb96e",
+        "adapter_config.json": "d7ec9ccaec5a0c005621b440cfe290f9bbbe3bbfb54ef0fbd839789623e8dc55",
+        "adapter_model.safetensors": "02374e915a2fa5ad469987d36e145be85df13b6a3c4480322e6ef0c3e80efbc3",
+        "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+        "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+        "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+      }
+    }
+  }
+}

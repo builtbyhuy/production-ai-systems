@@ -1,0 +1,46 @@
+groups:
+  - name: pais-application
+    interval: 5s
+    rules:
+      - record: pais:request_rate:2m
+        expr: sum by (release) (rate(pais_requests_total{route!="/api/metrics"}[2m]))
+      - record: pais:error_ratio:2m
+        expr: sum by (release) (rate(pais_requests_total{status_class="5xx"}[2m])) / clamp_min(sum by (release) (rate(pais_requests_total{route!="/api/metrics"}[2m])), 0.001)
+      - record: pais:latency_p95_seconds:2m
+        expr: histogram_quantile(0.95, sum by (le,release) (rate(pais_request_duration_seconds_bucket{route="/api/chat/stream"}[2m])))
+      - alert: PaisErrorSpike
+        expr: pais:error_ratio:2m > 0.05 and on(release) sum by(release) (increase(pais_requests_total{route!="/api/metrics"}[2m])) >= 10
+        for: 10s
+        labels: {severity: warning, scope: local-demo}
+        annotations:
+          summary: Application stream error ratio exceeds five percent
+      - alert: PaisSlowProtectedDelivery
+        expr: pais:latency_p95_seconds:2m > 0.25
+        for: 10s
+        labels: {severity: warning, scope: local-demo}
+        annotations:
+          summary: Local drill p95 protected delivery exceeds the declared 250ms threshold
+      - alert: PaisBudgetHigh
+        expr: pais_budget_utilization_ratio > 0.8
+        for: 10s
+        labels: {severity: warning}
+        annotations:
+          summary: Committed usage including unknown holds exceeds eighty percent of budget
+      - alert: PaisUnknownProviderUsage
+        expr: pais_ledger_cost_microusd{kind="unknown_hold"} > 0
+        for: 10s
+        labels: {severity: warning}
+        annotations:
+          summary: Provider cost uncertainty retains an unreconciled budget reservation
+      - alert: PaisTrafficAnomaly
+        expr: pais:request_rate:2m > 2 * avg_over_time(pais:request_rate:2m[30m]) and pais:request_rate:2m > 1 and count_over_time(pais:request_rate:2m[30m]) >= 300
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: Traffic exceeds twice its thirty minute baseline with at least twenty-five minutes of samples
+      - alert: PaisTelemetryMissing
+        expr: absent(up{job="pais-api"}) or up{job="pais-api"} == 0
+        for: 15s
+        labels: {severity: critical}
+        annotations:
+          summary: Application telemetry is missing; release measurements are unavailable

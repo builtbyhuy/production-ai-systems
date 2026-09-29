@@ -1,0 +1,20 @@
+{
+  "name": "linux-nvidia-t4-functional",
+  "evidence_profile": "functional",
+  "backend": "cuda",
+  "vllm_version": "0.30.0",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "model_directory": null,
+  "model_revision": null,
+  "image_digest": null,
+  "dtype": "float16",
+  "max_model_len": 2048,
+  "max_num_seqs": 2,
+  "max_num_batched_tokens": 2048,
+  "prefix_caching": true,
+  "gpu_memory_utilization": 0.75,
+  "minimum_host_ram_gib": 16,
+  "minimum_gpu_ram_gib": 16,
+  "gpu_compute_capability": 7.5,
+  "replicas": 1
+}

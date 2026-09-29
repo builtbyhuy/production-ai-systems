@@ -1,0 +1,26 @@
+[project]
+name = "pais-training-environment"
+version = "0.1.0"
+description = "Isolated, offline-capable CPU LoRA SFT/DPO reproducibility environment"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torch==2.8.0",
+  "transformers==4.56.2",
+  "peft==0.17.1",
+  "datasets==4.1.1",
+  "trl==0.23.1",
+  "accelerate==1.10.1",
+  "tokenizers==0.22.0",
+  "safetensors==0.6.2",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[tool.uv]
+package = false

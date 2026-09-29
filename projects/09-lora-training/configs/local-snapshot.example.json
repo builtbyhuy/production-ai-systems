@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profile": "local-pretrained-training-input-template",
+  "model": {
+    "mode": "local-snapshot",
+    "path": "models/REVIEWED_SMALL_LOCAL_MODEL",
+    "revision": "REPLACE_WITH_IMMUTABLE_40_TO_64_HEX_REVISION",
+    "license": "REPLACE_WITH_REVIEWED_MODEL_LICENSE",
+    "files_sha256": {"model.safetensors": "REPLACE_WITH_ACTUAL_SHA256", "config.json": "REPLACE_WITH_ACTUAL_SHA256"}
+  },
+  "data_path": "projects/09-lora-training/data/REVIEWED_LARGER_INSTRUCTIONS.jsonl",
+  "stages": ["sft", "dpo"],
+  "seed": 20260929,
+  "device": "cpu",
+  "torch_threads": 2,
+  "max_model_parameters": 50000000,
+  "max_steps": 100,
+  "max_length": 512,
+  "batch_size": 1,
+  "learning_rate": 0.0001,
+  "dpo_beta": 0.1,
+  "lora": {"r": 4, "alpha": 8, "target_modules": ["c_attn"], "fan_in_fan_out": true},
+  "retention_thresholds": {"minimum_cases_per_suite": 20, "max_general_score_drop": 0.05, "max_domain_score_drop": 0.02, "max_nll_ratio": 1.1},
+  "threshold_rationale": "Input template only. All model/data prerequisites and workload-specific evaluation design must be reviewed before execution. c_attn targets assume GPT-2; change them for another model architecture. No GPU or substantive-quality evidence is claimed."
+}

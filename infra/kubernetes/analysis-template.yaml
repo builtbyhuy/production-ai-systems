@@ -1,0 +1,70 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: pais-quality
+  namespace: pais-test
+spec:
+  args:
+    - name: release
+    - name: prometheus-address
+      value: http://prometheus.monitoring.svc:9090
+  metrics:
+    - name: sufficient-request-observations
+      interval: 5m
+      count: 3
+      failureLimit: 0
+      consecutiveErrorLimit: 1
+      successCondition: len(result) == 1 && !isNaN(result[0]) && !isInf(result[0]) && result[0] >= 100
+      provider:
+        prometheus:
+          address: '{{args.prometheus-address}}'
+          timeout: 15
+          query: sum(increase(pais_requests_total{release="{{args.release}}"}[5m]))
+    - name: sufficient-quality-observations
+      interval: 5m
+      count: 3
+      failureLimit: 0
+      consecutiveErrorLimit: 1
+      successCondition: len(result) == 1 && !isNaN(result[0]) && !isInf(result[0]) && result[0] >= 100
+      provider:
+        prometheus:
+          address: '{{args.prometheus-address}}'
+          timeout: 15
+          query: sum(increase(pais_quality_observations_total{release="{{args.release}}",kind="grounding"}[5m]))
+    - name: grounded-quality
+      interval: 5m
+      count: 3
+      failureLimit: 0
+      consecutiveErrorLimit: 1
+      successCondition: len(result) == 1 && !isNaN(result[0]) && !isInf(result[0]) && result[0] >= 0.95 && result[0] <= 1
+      provider:
+        prometheus:
+          address: '{{args.prometheus-address}}'
+          timeout: 15
+          query: >-
+            sum(increase(pais_quality_observations_total{release="{{args.release}}",kind="grounding",outcome="pass"}[5m]))
+            / sum(increase(pais_quality_observations_total{release="{{args.release}}",kind="grounding"}[5m]))
+    - name: request-success
+      interval: 5m
+      count: 3
+      failureLimit: 0
+      consecutiveErrorLimit: 1
+      successCondition: len(result) == 1 && !isNaN(result[0]) && !isInf(result[0]) && result[0] >= 0.98 && result[0] <= 1
+      provider:
+        prometheus:
+          address: '{{args.prometheus-address}}'
+          timeout: 15
+          query: >-
+            sum(increase(pais_requests_total{release="{{args.release}}",status_class!="5xx"}[5m]))
+            / sum(increase(pais_requests_total{release="{{args.release}}"}[5m]))
+    - name: response-latency
+      interval: 5m
+      count: 3
+      failureLimit: 0
+      consecutiveErrorLimit: 1
+      successCondition: len(result) == 1 && !isNaN(result[0]) && !isInf(result[0]) && result[0] >= 0 && result[0] <= 10
+      provider:
+        prometheus:
+          address: '{{args.prometheus-address}}'
+          timeout: 15
+          query: histogram_quantile(0.95, sum by (le) (rate(pais_request_duration_seconds_bucket{release="{{args.release}}"}[5m])))

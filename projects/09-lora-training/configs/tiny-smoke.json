@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "profile": "genuine-tiny-training-smoke",
+  "model": {"mode": "random-tiny"},
+  "stages": ["sft", "dpo"],
+  "seed": 20260929,
+  "device": "cpu",
+  "torch_threads": 2,
+  "max_model_parameters": 1000000,
+  "max_steps": 3,
+  "max_length": 128,
+  "batch_size": 2,
+  "learning_rate": 0.01,
+  "dpo_beta": 0.1,
+  "lora": {"r": 4, "alpha": 8, "target_modules": ["c_attn"], "fan_in_fan_out": true},
+  "retention_thresholds": {
+    "minimum_cases_per_suite": 20,
+    "max_general_score_drop": 0.05,
+    "max_domain_score_drop": 0.02,
+    "max_nll_ratio": 1.10
+  },
+  "threshold_rationale": "Prospective retention gate: at most 5 percentage points general loss and 2 domain loss, NLL increase <=10%. Twenty cases is only a minimum operational gate, not a claim of statistical power. Built-in smoke has six held-out cases per suite and must not pass substantive promotion."
+}

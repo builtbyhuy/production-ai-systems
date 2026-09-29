@@ -1,0 +1,13 @@
+# Case study — preserving the meaning of an executable benchmark
+
+This benchmark was built to separate three questions: whether the task corpus is well formed, whether candidate programs are correct on its contracts, and whether the machine can safely execute untrusted code. Those questions have different evidence. Conflating them would turn successful fixture tests into a false model or sandbox claim.
+
+The corpus has 100 independently authored Python/API contracts across ten categories. Each reference has a deliberate regression mutation and at least three checks. The trusted validator requires a pinned dataset hash and proves that the reference passes every check while the starter fails at least one. The executed authoring run passed all 100 references and detected all 100 seeded defects across 325 checks.
+
+Authoring exposed two subtle evaluation defects. Canonical JSON serialization originally sorted nested argument dictionaries, changing the insertion order required by query-string tasks and erasing some canonicalization regressions. Corpus serialization now preserves argument order. A second issue counted a JSON encoding failure for a nonfinite return as though the candidate function itself had raised the expected ValueError. Return serialization is now distinguished from function exceptions. Those fixes improved the test's meaning rather than lowering its requirements.
+
+The controller keeps expected outputs outside the candidate process, validates the returned wire protocol, rejects booleans as numeric outputs, and handles malformed exception ancestry without substring matches. A task receives credit only when all checks pass. Leaderboards are derived from complete split records and their digests, with explicit uncertainty and cost provenance. Public checks still permit memorization; hashes and protocol checks do not make this an adversarially tamperproof grading service.
+
+Two honest baseline implementations exist: unchanged buggy starters and twelve hand-authored string-repair rules based on train idioms. Neither is described as AI. A reference-solution oracle was rejected as a normal baseline because it would conceal answer access and say nothing about repair ability. No real baseline score is available yet.
+
+The actual execution preflight found no Docker daemon and failed a bwrap network-namespace probe with `Operation not permitted`. The system therefore denied untrusted runs. Host execution was limited to the project's own hash-pinned authored programs for dataset QA. Scoring, reproduction, leaderboard results and community adoption remain open acceptance items until an audited boundary and authorized publication target are available.

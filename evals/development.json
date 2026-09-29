@@ -1,0 +1,130 @@
+[
+  {
+    "id": "dev-01",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-1",
+    "provenance": "corpus.json#dev-procedure-1",
+    "split": "development",
+    "question": "What is the dev-procedure-1 inspection interval?",
+    "expected_terms": [
+      "11 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-02",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-2",
+    "provenance": "corpus.json#dev-procedure-2",
+    "split": "development",
+    "question": "What is the dev-procedure-2 inspection interval?",
+    "expected_terms": [
+      "12 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-03",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-3",
+    "provenance": "corpus.json#dev-procedure-3",
+    "split": "development",
+    "question": "What is the dev-procedure-3 inspection interval?",
+    "expected_terms": [
+      "13 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-04",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-4",
+    "provenance": "corpus.json#dev-procedure-4",
+    "split": "development",
+    "question": "What is the dev-procedure-4 inspection interval?",
+    "expected_terms": [
+      "14 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-05",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-5",
+    "provenance": "corpus.json#dev-procedure-5",
+    "split": "development",
+    "question": "What is the dev-procedure-5 inspection interval?",
+    "expected_terms": [
+      "15 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-06",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-6",
+    "provenance": "corpus.json#dev-procedure-6",
+    "split": "development",
+    "question": "What is the dev-procedure-6 inspection interval?",
+    "expected_terms": [
+      "16 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-07",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-7",
+    "provenance": "corpus.json#dev-procedure-7",
+    "split": "development",
+    "question": "What is the dev-procedure-7 inspection interval?",
+    "expected_terms": [
+      "17 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "dev-08",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "dev-procedure-8",
+    "provenance": "corpus.json#dev-procedure-8",
+    "split": "development",
+    "question": "What is the dev-procedure-8 inspection interval?",
+    "expected_terms": [
+      "18 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "state_schema": 1,
+  "checkpoint_schema": 1,
+  "minimum_readable_checkpoint_schema": 1,
+  "migration_policy": "expand-only",
+  "notes": "Initial schema. Re-review this file with every state/graph migration; do not use this declaration to assert untested compatibility."
+}

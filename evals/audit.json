@@ -1,0 +1,130 @@
+[
+  {
+    "id": "audit-01",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-1",
+    "provenance": "corpus.json#audit-procedure-1",
+    "split": "audit",
+    "question": "What is the audit-procedure-1 inspection interval?",
+    "expected_terms": [
+      "11 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-02",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-2",
+    "provenance": "corpus.json#audit-procedure-2",
+    "split": "audit",
+    "question": "What is the audit-procedure-2 inspection interval?",
+    "expected_terms": [
+      "12 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-03",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-3",
+    "provenance": "corpus.json#audit-procedure-3",
+    "split": "audit",
+    "question": "What is the audit-procedure-3 inspection interval?",
+    "expected_terms": [
+      "13 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-04",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-4",
+    "provenance": "corpus.json#audit-procedure-4",
+    "split": "audit",
+    "question": "What is the audit-procedure-4 inspection interval?",
+    "expected_terms": [
+      "14 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-05",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-5",
+    "provenance": "corpus.json#audit-procedure-5",
+    "split": "audit",
+    "question": "What is the audit-procedure-5 inspection interval?",
+    "expected_terms": [
+      "15 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-06",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-6",
+    "provenance": "corpus.json#audit-procedure-6",
+    "split": "audit",
+    "question": "What is the audit-procedure-6 inspection interval?",
+    "expected_terms": [
+      "16 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-07",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-7",
+    "provenance": "corpus.json#audit-procedure-7",
+    "split": "audit",
+    "question": "What is the audit-procedure-7 inspection interval?",
+    "expected_terms": [
+      "17 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  },
+  {
+    "id": "audit-08",
+    "category": "answerable",
+    "scenario": "answer",
+    "source_id": "audit-procedure-8",
+    "provenance": "corpus.json#audit-procedure-8",
+    "split": "audit",
+    "question": "What is the audit-procedure-8 inspection interval?",
+    "expected_terms": [
+      "18 hours"
+    ],
+    "expected_pages": [
+      1
+    ],
+    "expected_outcome": "pass"
+  }
+]

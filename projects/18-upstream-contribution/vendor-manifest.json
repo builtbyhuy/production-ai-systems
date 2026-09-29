@@ -1,0 +1,13 @@
+{
+  "upstream_commit": "07b33185eab893be2ed031eedae52f09314bf77c",
+  "source_url": "https://github.com/langchain-ai/langgraph/tree/07b33185eab893be2ed031eedae52f09314bf77c/libs/checkpoint-sqlite",
+  "license": "MIT; see ../UPSTREAM_LICENSE",
+  "files": {
+    "libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/__init__.py": "e8a986ba59e382181380ae72ae72e04951ff3594ea1d6b5a95a097396bbcbf1b",
+    "libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/_delta.py": "cfa828f6c03373c6fa6ad9cb9b4c0080425f2524f10c789f27651d58a229c326",
+    "libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/aio.py": "040adafd431be0394b023dd24acbaf36c58fc3f1ec50ea927304f6f4d1dee4ed",
+    "libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/utils.py": "7e1724b4442c0276738c6256c758ae575b89660972077f7e566f551bd3a1ec82",
+    "libs/checkpoint-sqlite/tests/test_sqlite.py": "b417bdd0f0ab7251bcf273eca3df35c7303b2b91938dd104838fbfbf2cdde822"
+  }
+}

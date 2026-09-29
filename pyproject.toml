@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "production-ai-systems"
+version = "0.1.0"
+description = "Evidence-driven technical operations copilot and 18 AI systems portfolio"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "pydantic>=2.11,<3", "fastapi>=0.115,<1", "uvicorn>=0.34,<1",
+  "python-multipart>=0.0.20,<1", "httpx[socks]>=0.28,<1", "pypdf>=6,<7",
+  "sqlite-vec>=0.1.6,<0.2", "langgraph>=1,<2",
+  "langgraph-checkpoint-sqlite>=2,<4", "prometheus-client>=0.22,<1",
+  "opentelemetry-sdk>=1.32,<2", "opentelemetry-exporter-otlp-proto-http>=1.32,<2",
+  "reportlab>=4.4,<5"
+]
+
+[project.optional-dependencies]
+local = ["torch==2.8.0", "sentence-transformers>=4,<6", "lancedb==0.22.0"]
+vectors = ["lancedb==0.22.0"]
+router = ["litellm>=1.70,<2"]
+workflows = ["celery>=5.5,<6", "redis>=5,<7", "qdrant-client>=1.14,<2", "stripe>=12,<16", "supabase>=2,<3"]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[project.scripts]
+pais = "pais.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["packages"]
+
+[dependency-groups]
+dev = ["pytest>=8.3,<10", "pytest-asyncio>=0.26,<2", "ruff>=0.11,<1", "mypy>=1.15,<2", "pyyaml>=6,<7"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["packages", "."]
+addopts = "-ra --strict-markers"
+markers = ["local: requires actual local models", "connected: requires explicitly configured integrations", "deployment: requires declared cluster or sandbox"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["projects/18-upstream-contribution/vendor"]

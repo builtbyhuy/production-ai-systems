@@ -1,0 +1,2 @@
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 6305.60it/s]
+{"report": "/workspace/scratch/708ae715c693/production-ai-systems/projects/07-local-first/evidence/offline-local-sqlite.json", "exit_status": 0}

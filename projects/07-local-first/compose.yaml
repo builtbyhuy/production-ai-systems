@@ -1,0 +1,68 @@
+# Native Ollama profile. Build/provision deliberately before starting this file.
+# Use compose.offline.yaml as a second file to run Ollama on an internal network.
+name: pais-local
+services:
+  api:
+    image: ${PAIS_API_IMAGE:?Set the recorded prebuilt API image ID or immutable reference}
+    pull_policy: never
+    entrypoint: ["/app/.venv/bin/python", "/p07/container_entrypoint.py"]
+    environment:
+      PAIS_PROFILE: local
+      PAIS_DB_PATH: /state/pais.db
+      PAIS_VECTOR_BACKEND: ${PAIS_VECTOR_BACKEND:-sqlite}
+      PAIS_MODEL_LOCK: /models/container-models.lock.json
+      PAIS_OLLAMA_URL: http://host.docker.internal:11434
+      PAIS_AUTH_TOKENS_FILE: /run/secrets/pais_auth_tokens
+      PAIS_ALLOW_FIXTURE_AUTH: "0"
+      PAIS_LOCAL_THREADS: "2"
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      LANGSMITH_TRACING: "false"
+      LANGCHAIN_TRACING_V2: "false"
+      OTEL_SDK_DISABLED: "true"
+      DO_NOT_TRACK: "1"
+      XDG_CACHE_HOME: /tmp/cache
+    secrets: [pais_auth_tokens]
+    volumes:
+      - application_state:/state
+      - type: bind
+        source: ${PAIS_MODELS_DIR:?Set the absolute provisioned models directory}
+        target: /models
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./container_entrypoint.py
+        target: /p07/container_entrypoint.py
+        read_only: true
+    ports: ["127.0.0.1:8000:8000"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    networks: [local]
+    init: true
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=256m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 3g
+    cpus: 2.0
+    pids_limit: 256
+    stop_grace_period: 90s
+    healthcheck:
+      test:
+        - CMD
+        - /app/.venv/bin/python
+        - -c
+        - "import httpx; r=httpx.get('http://127.0.0.1:8000/api/ready',timeout=25,trust_env=False); raise SystemExit(0 if r.status_code==200 and r.json().get('status')=='ready' else 1)"
+      interval: 30s
+      timeout: 30s
+      start_period: 120s
+      retries: 3
+volumes:
+  application_state:
+secrets:
+  pais_auth_tokens:
+    file: ${PAIS_AUTH_FILE:?Set the absolute operator-created credential JSON file}
+networks:
+  local:
+    driver: bridge

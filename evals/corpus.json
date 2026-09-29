@@ -1,0 +1,482 @@
+{
+  "rollback": {
+    "id": "rollback",
+    "title": "Synthetic operations manual: rollback",
+    "pages": [
+      "The rollback timeout is 90 seconds.",
+      "The rollback approver is the incident commander."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "backup": {
+    "id": "backup",
+    "title": "Synthetic operations manual: backup",
+    "pages": [
+      "The backup retention is 35 days.",
+      "The backup restore drill occurs every Tuesday."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "replication": {
+    "id": "replication",
+    "title": "Synthetic operations manual: replication",
+    "pages": [
+      "The maximum replication lag is 12 seconds.",
+      "The replication lag alert pauses write promotion."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "queue": {
+    "id": "queue",
+    "title": "Synthetic operations manual: queue",
+    "pages": [
+      "The queue visibility timeout is 180 seconds.",
+      "The queue poison message limit is 4 attempts."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "certificate": {
+    "id": "certificate",
+    "title": "Synthetic operations manual: certificate",
+    "pages": [
+      "The certificate renewal threshold is 21 days before expiry.",
+      "The certificate trust store owner is the platform team."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "incident": {
+    "id": "incident",
+    "title": "Synthetic operations manual: incident",
+    "pages": [
+      "The incident acknowledgement deadline is 7 minutes.",
+      "The incident status update interval is 20 minutes."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "canary": {
+    "id": "canary",
+    "title": "Synthetic operations manual: canary",
+    "pages": [
+      "The canary minimum observation count is 250 requests.",
+      "The canary failure threshold is 2 percent errors."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "connection": {
+    "id": "connection",
+    "title": "Synthetic operations manual: connection",
+    "pages": [
+      "The database connection pool limit is 24 connections.",
+      "The database connection acquisition timeout is 3 seconds."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "upload": {
+    "id": "upload",
+    "title": "Synthetic operations manual: upload",
+    "pages": [
+      "The PDF upload size limit is 8 megabytes.",
+      "The PDF upload page limit is 80 physical pages."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "index": {
+    "id": "index",
+    "title": "Synthetic operations manual: index",
+    "pages": [
+      "The index migration rollback window is 48 hours.",
+      "The index migration keeps the previous collection until verification."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "cache": {
+    "id": "cache",
+    "title": "Synthetic operations manual: cache",
+    "pages": [
+      "The embedding cache key includes the document hash and model revision.",
+      "The embedding cache invalidation event is a model revision change."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "identity": {
+    "id": "identity",
+    "title": "Synthetic operations manual: identity",
+    "pages": [
+      "The tenant identity comes from a verified server membership.",
+      "The tenant identity never comes from a client supplied header."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "approval": {
+    "id": "approval",
+    "title": "Synthetic operations manual: approval",
+    "pages": [
+      "The approval expiry is 15 minutes.",
+      "The approval digest binds the action and source version."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "shutdown": {
+    "id": "shutdown",
+    "title": "Synthetic operations manual: shutdown",
+    "pages": [
+      "The graceful shutdown drain period is 40 seconds.",
+      "The graceful shutdown rejects new jobs before draining existing work."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "stream": {
+    "id": "stream",
+    "title": "Synthetic operations manual: stream",
+    "pages": [
+      "The stream buffer maximum is 64 kilobytes.",
+      "The stream cancellation removes the subscriber and signals the provider."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "telemetry": {
+    "id": "telemetry",
+    "title": "Synthetic operations manual: telemetry",
+    "pages": [
+      "The trace retention is 5 days.",
+      "The trace sampling ratio is 10 percent of successful requests."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "budget": {
+    "id": "budget",
+    "title": "Synthetic operations manual: budget",
+    "pages": [
+      "The daily tenant budget limit is 500000 microdollars.",
+      "The daily tenant budget reserves the worst case before provider dispatch."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "circuit": {
+    "id": "circuit",
+    "title": "Synthetic operations manual: circuit",
+    "pages": [
+      "The circuit breaker opens after 5 consecutive failures.",
+      "The circuit breaker recovery probe begins after 30 seconds."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "webhook": {
+    "id": "webhook",
+    "title": "Synthetic operations manual: webhook",
+    "pages": [
+      "The webhook timestamp tolerance is 300 seconds.",
+      "The webhook signature covers the original request bytes."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "deletion": {
+    "id": "deletion",
+    "title": "Synthetic operations manual: deletion",
+    "pages": [
+      "The document deletion removes all active index entries.",
+      "The document deletion invalidates stored citation access immediately."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "memory": {
+    "id": "memory",
+    "title": "Synthetic operations manual: memory",
+    "pages": [
+      "The long term memory confidence minimum is 0.8.",
+      "The long term memory correction increments the source version."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "training": {
+    "id": "training",
+    "title": "Synthetic operations manual: training",
+    "pages": [
+      "The training split boundary is the source document identity.",
+      "The training audit holdout stays outside checkpoint selection."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "billing": {
+    "id": "billing",
+    "title": "Synthetic operations manual: billing",
+    "pages": [
+      "The billing reconciliation interval is 6 hours.",
+      "The billing correction is an append only ledger event."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "secrets": {
+    "id": "secrets",
+    "title": "Synthetic operations manual: secrets",
+    "pages": [
+      "The telemetry secret redaction occurs before export.",
+      "The telemetry secret allowlist contains no bearer tokens."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "latency": {
+    "id": "latency",
+    "title": "Synthetic operations manual: latency",
+    "pages": [
+      "The interactive request latency objective is 2000 milliseconds.",
+      "The interactive request latency window is the preceding 10 minutes."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "sandbox": {
+    "id": "sandbox",
+    "title": "Synthetic operations manual: sandbox",
+    "pages": [
+      "The execution worker network policy denies all outbound traffic.",
+      "The execution worker filesystem exposes only the submitted workspace."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "restore": {
+    "id": "restore",
+    "title": "Synthetic operations manual: restore",
+    "pages": [
+      "The restore verification compares vector counts and tenant filters.",
+      "The restore verification runs before a restored index serves requests."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "retrieval": {
+    "id": "retrieval",
+    "title": "Synthetic operations manual: retrieval",
+    "pages": [
+      "The reciprocal rank fusion constant is 60.",
+      "The reciprocal rank fusion applies to lexical and dense rankings."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "health": {
+    "id": "health",
+    "title": "Synthetic operations manual: health",
+    "pages": [
+      "The readiness endpoint requires a loaded model and healthy storage.",
+      "The readiness endpoint returns unavailable during model warmup."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "dispatch": {
+    "id": "dispatch",
+    "title": "Synthetic operations manual: dispatch",
+    "pages": [
+      "The outbox dispatcher claims at most 16 events per batch.",
+      "The outbox dispatcher publishes only committed database events."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "review": {
+    "id": "review",
+    "title": "Synthetic operations manual: review",
+    "pages": [
+      "The conflicting source policy requires human review.",
+      "The conflicting source policy preserves both source versions."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "rotation": {
+    "id": "rotation",
+    "title": "Synthetic operations manual: rotation",
+    "pages": [
+      "The signing key rotation overlap is 2 hours.",
+      "The signing key rotation preserves the key identifier for verification."
+    ],
+    "license": "MIT",
+    "provenance": "Original synthetic corpus authored for this repository; not a real operating policy."
+  },
+  "dev-procedure-1": {
+    "id": "dev-procedure-1",
+    "title": "Dev synthetic procedure 1",
+    "pages": [
+      "The dev-procedure-1 inspection interval is 11 hours.",
+      "The dev-procedure-1 owner is review group 1."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-2": {
+    "id": "dev-procedure-2",
+    "title": "Dev synthetic procedure 2",
+    "pages": [
+      "The dev-procedure-2 inspection interval is 12 hours.",
+      "The dev-procedure-2 owner is review group 2."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-3": {
+    "id": "dev-procedure-3",
+    "title": "Dev synthetic procedure 3",
+    "pages": [
+      "The dev-procedure-3 inspection interval is 13 hours.",
+      "The dev-procedure-3 owner is review group 3."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-4": {
+    "id": "dev-procedure-4",
+    "title": "Dev synthetic procedure 4",
+    "pages": [
+      "The dev-procedure-4 inspection interval is 14 hours.",
+      "The dev-procedure-4 owner is review group 4."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-5": {
+    "id": "dev-procedure-5",
+    "title": "Dev synthetic procedure 5",
+    "pages": [
+      "The dev-procedure-5 inspection interval is 15 hours.",
+      "The dev-procedure-5 owner is review group 5."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-6": {
+    "id": "dev-procedure-6",
+    "title": "Dev synthetic procedure 6",
+    "pages": [
+      "The dev-procedure-6 inspection interval is 16 hours.",
+      "The dev-procedure-6 owner is review group 6."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-7": {
+    "id": "dev-procedure-7",
+    "title": "Dev synthetic procedure 7",
+    "pages": [
+      "The dev-procedure-7 inspection interval is 17 hours.",
+      "The dev-procedure-7 owner is review group 7."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "dev-procedure-8": {
+    "id": "dev-procedure-8",
+    "title": "Dev synthetic procedure 8",
+    "pages": [
+      "The dev-procedure-8 inspection interval is 18 hours.",
+      "The dev-procedure-8 owner is review group 8."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-1": {
+    "id": "audit-procedure-1",
+    "title": "Audit synthetic procedure 1",
+    "pages": [
+      "The audit-procedure-1 inspection interval is 11 hours.",
+      "The audit-procedure-1 owner is review group 1."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-2": {
+    "id": "audit-procedure-2",
+    "title": "Audit synthetic procedure 2",
+    "pages": [
+      "The audit-procedure-2 inspection interval is 12 hours.",
+      "The audit-procedure-2 owner is review group 2."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-3": {
+    "id": "audit-procedure-3",
+    "title": "Audit synthetic procedure 3",
+    "pages": [
+      "The audit-procedure-3 inspection interval is 13 hours.",
+      "The audit-procedure-3 owner is review group 3."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-4": {
+    "id": "audit-procedure-4",
+    "title": "Audit synthetic procedure 4",
+    "pages": [
+      "The audit-procedure-4 inspection interval is 14 hours.",
+      "The audit-procedure-4 owner is review group 4."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-5": {
+    "id": "audit-procedure-5",
+    "title": "Audit synthetic procedure 5",
+    "pages": [
+      "The audit-procedure-5 inspection interval is 15 hours.",
+      "The audit-procedure-5 owner is review group 5."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-6": {
+    "id": "audit-procedure-6",
+    "title": "Audit synthetic procedure 6",
+    "pages": [
+      "The audit-procedure-6 inspection interval is 16 hours.",
+      "The audit-procedure-6 owner is review group 6."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-7": {
+    "id": "audit-procedure-7",
+    "title": "Audit synthetic procedure 7",
+    "pages": [
+      "The audit-procedure-7 inspection interval is 17 hours.",
+      "The audit-procedure-7 owner is review group 7."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  },
+  "audit-procedure-8": {
+    "id": "audit-procedure-8",
+    "title": "Audit synthetic procedure 8",
+    "pages": [
+      "The audit-procedure-8 inspection interval is 18 hours.",
+      "The audit-procedure-8 owner is review group 8."
+    ],
+    "license": "MIT",
+    "provenance": "Original separate synthetic source."
+  }
+}

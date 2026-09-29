@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "dataset_version": "2026-09-29.1",
+  "license": "MIT",
+  "counts": {
+    "release": 144,
+    "development": 8,
+    "audit": 8
+  },
+  "release_categories": {
+    "adversarial": 16,
+    "answerable": 32,
+    "authorization": 12,
+    "citation": 20,
+    "contradictory": 8,
+    "cross-page": 16,
+    "failure-recovery": 12,
+    "malformed-input": 12,
+    "unanswerable": 16
+  },
+  "files": {
+    "audit.json": "a710224f34bd9861567d424146c5f1301dd922575c12cc3e1b3032f1557cb7ef",
+    "corpus.json": "19b6826c771c1b122bda03e792c2193f4d540a5d4e917714e7d08097cdfc009b",
+    "development.json": "5ef533bdd5e2b91ea5de5bfe93b8508bcf3d243e068dbadcd215319d491dad51",
+    "release.json": "bd1b14b140771975cb9f9364437c0276e04d1c63271225565ec5d63ff5dd5c1a"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "version": "extractive-v1",
+  "registered_before_measurement": true,
+  "query_coverage_minimum": 0.25,
+  "fixture_rerank_minimum": 0.25,
+  "local_cross_encoder_score_minimum": 0.20,
+  "citation_exists_required": true,
+  "citation_exact_span_required": true,
+  "claim_equals_complete_source_sentence_required": true,
+  "any_invalid_citation_abstains_whole_answer": true,
+  "retrieval_target": {"real_local_recall_at_5_minimum": 0.90},
+  "grounding_development_target": {"false_answers": 0, "citation_validity": 1.0},
+  "rationale": "A conservative initial operating point for short technical operations text; retrieval target applies only to actual local-model results. The fixture tokenizer is deliberately not a semantic model. Changes need a recorded new version, rationale, and before/after results."
+}
