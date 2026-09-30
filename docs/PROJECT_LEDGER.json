@@ -92,10 +92,10 @@
       "readme": "projects/03-multi-agent-research/README.md",
       "implementation": "implemented",
       "implementation_scope": "Four native LangGraph roles and typed host tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.",
-      "evidence_level": "current LangGraph contracts + historical CrewAI/model evidence",
+      "evidence_level": "native LangGraph + actual local Qwen case",
       "overall_acceptance": "INCOMPLETE",
-      "blocker": "Clean current model reproduction and live web/general research quality remain unverified.",
-      "next_action": "Run the clean current LangGraph local path; evaluate general research quality separately and provision only reviewed web targets.",
+      "blocker": "Live web and unseen/general research quality remain unverified.",
+      "next_action": "Evaluate unseen research evidence/model quality separately and provision only reviewed live web targets.",
       "next_command": "uv run --no-sync pais demo 03 --profile fixture --output artifacts/p03-langgraph-current.json",
       "criteria": [
         {
@@ -105,6 +105,15 @@
           "evidence": [
             "projects/03-multi-agent-research/test_langgraph.py",
             "tests/test_research.py"
+          ]
+        },
+        {
+          "criterion": "Current actual local Qwen completing bounded research and local approval",
+          "status": "pass",
+          "result": "Clean10e53e8 completed four real model responses/two tools in6.91s; P15 approval recorded a durable local effect with external_delivery=false. This is one curated evidence case, not unseen research quality.",
+          "evidence": [
+            "docs/functional-verification-20260930.json",
+            "docs/FUNCTIONAL_VERIFICATION.md"
           ]
         },
         {

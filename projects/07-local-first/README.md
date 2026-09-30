@@ -24,6 +24,15 @@ Install official native [Ollama](https://ollama.com/download) for your platform.
 verification used Ollama 0.34.4; macOS can use the native application. With the server running,
 the explicit initial downloads are:
 
+Start the server from the repository root in a separate terminal and keep it running:
+
+```bash
+OLLAMA_HOST=127.0.0.1:11434 OLLAMA_MODELS="$PWD/models/ollama" OLLAMA_NO_CLOUD=1 OLLAMA_CONTEXT_LENGTH=2048 ollama serve
+```
+
+The pulls, lock creation and later API must use this same server and model directory.
+Run the following in the original repository terminal:
+
 ```bash
 ollama pull qwen2.5:1.5b
 ollama pull all-minilm:22m

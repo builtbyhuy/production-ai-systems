@@ -1,6 +1,6 @@
 # P03 — Evidence-driven research graph
 
-**Implemented. Actual LangGraph 1.2.12 orchestration, tools and bounded revisions are verified with deterministic fixture inference and a controlled web transport. General model quality and live web research are unverified.** The earlier CrewAI/Qwen attempt and its timeout remain historical evidence; they do not attest the migrated graph.
+**Implemented. Actual LangGraph 1.2.12 orchestration, tools and bounded revisions are verified with deterministic fixture inference, a controlled web transport and one actual local Qwen run. General model quality and live web research are unverified.** The earlier CrewAI/Qwen attempt and its timeout remain historical evidence; they do not attest the migrated graph.
 
 ## Problem and architecture
 
@@ -27,10 +27,10 @@ The public CLI selects the isolated interpreter. LangSmith tracing is disabled. 
 Reproduce the bounded actual-local attempt with already provisioned models:
 
 ~~~bash
-timeout --signal=TERM --kill-after=5s 120s .venv/bin/python scripts/with_local_models.py -- env PYTHONPATH=packages projects/03-multi-agent-research/.venv/bin/python projects/03-multi-agent-research/local_attempt.py
+.venv/bin/python scripts/with_local_models.py -- env PYTHONPATH=packages projects/03-multi-agent-research/.venv/bin/python projects/03-multi-agent-research/local_attempt.py
 ~~~
 
-The run permits at most eight model calls, zero revisions and a 90-second total budget. Explicit loopback model requests bypass inherited proxy settings, reject credentials and remote hosts, and never fall back to fixture inference. The script creates a timestamped directory and fresh database; `--output FRESH_DIRECTORY` selects another location and refuses any existing directory. An accepted report requests P15 review. Add `--approve-local` only when authorizing this local operator to approve and record the local report effect. Its durable receipt explicitly records `external_delivery: false`.
+The run permits at most eight call slots (model and tool calls), zero revisions and a 90-second total budget. Explicit loopback model requests bypass inherited proxy settings, reject credentials and remote hosts, and never fall back to fixture inference. The script creates a timestamped directory and fresh database; `--output FRESH_DIRECTORY` selects another location and refuses any existing directory. An accepted report requests P15 review. Add `--approve-local` only when authorizing this local operator to approve and record the local report effect. Its durable receipt explicitly records `external_delivery: false`.
 
 The separate web mode uses WebResearchConfig, the P06 HTTPS allowlist/DNS-pinned transport, at most five sources, bounded bodies, two redirects and a total deadline. Quotes must exist in the actual fetched bytes. It defaults to disabled and performs no paid inference. Review the example source quote and tenant before explicitly invoking:
 
@@ -53,6 +53,13 @@ This command performs real external source reads only when deliberately invoked.
 ## Case study and limitations
 
 The migrated fixture uses four model-call slots and two tools. A deliberately wrong “99 minutes” claim fails against “15 minutes” evidence; one revision uses eight slots through the graph's conditional edge. Eleven isolated cases pass: the five preserved acceptance tests plus durable tool failure and five controlled local-output/deadline cases. Six core validator/authorization tests pass. Controlled local responses test the HTTP/JSON contract; they do not establish real-model competence.
+
+On clean `10e53e8`, the current graph completed one real Qwen1.5B case in 6.91 seconds:
+four model responses, two tools and a P15 approval with a durable local effect receipt.
+`external_delivery` was false. [Current verification](../../docs/FUNCTIONAL_VERIFICATION.md)
+and its [bounded record](../../docs/functional-verification-20260930.json) preserve the
+source identity, model digests and measured outcome. This tests the curated evidence
+contract; unseen research quality remains unverified.
 
 The historical CrewAI qwen2.5:1.5b attempt received one real model response, then timed out on its second call after 70.02 seconds overall. It executed zero research tools and failed closed; no report was accepted. [Measured historical local attempt](../../artifacts/stateful/p03-local-attempt.json) includes its manifest, call budget, audit and failure. An earlier attempt failed before any model response because the isolated environment inherited a SOCKS proxy; that transport failure is preserved separately. Neither result establishes model competence or task success, and neither is a test of the current LangGraph stack.
 

@@ -30,39 +30,46 @@ Final committed-revision checks are recorded in docs/REDTEAM.md when completed.
 - a1e0a0c2068f3e86c90257c6c246ac2fc4afad34: original documentation handoff.
 
 Historical reports retain their commits, timestamps and dirty flags. They do not attest
-the repaired revision. No new actual-model or production-deployment claim is made.
+the repaired revision. Current actual-model results have their own clean source identity below; no production-deployment claim is made.
 
 ## Remaining gates
 
-Production dependency advisories/scan gaps, hostile-code sandbox and real inference
+Historical installed-environment audit coverage gaps, hostile-code sandbox and real inference
 serving remain unresolved. External SaaS, registry/cluster rollout/rollback, downstream
 receipt reconciliation and upstream submission still require independently verified targets.
 Router savings, 10k-vector quality and tiny training quality are unproven or failed.
 The eight audit cases reuse development templates; direct source access was reviewed here.
 
-## Current remediation and functional verification
+## Current functional revision
 
-On 30 September 2026 the owner approved replacing P03 CrewAI with LangGraph to
-remove the unpatched ChromaDB dependency, then authorized completing the runnable
-application. The implementation uses four native LangGraph nodes and fixed typed
-host tools; source/tenant validation, deadlines, budgets and P15 approval remain.
-The current migration passed 11 isolated and 6 core checks, including a fresh frozen
-install. A dirty diagnostic completed four real Qwen responses, two tools and a
-local approval receipt in 28.93 seconds; it does not attest a clean release or general
-research quality. Historical CrewAI evidence keeps its original identity.
+The owner approved P03 CrewAI→LangGraph on 30 September 2026. The research graph
+retains fixed roles/tools, tenant/source validation, deadlines, budgets and P15 review.
+Clean application `10e53e8` passed actual local research (four Qwen responses/two tools,
+executed local approval), SQLite/LanceDB13/13 each, real-model browser1/1 and full local
+release144/144. Degraded local96/48 exits1 with zero errors/skips. All18 bounded fixture
+demo entrypoints run. Local334 contracts, LangGraph11 and realGuardrails3 pass.
 
-P06's three enforcement checks and P09's actual offline SFT/DPO compatibility passed
-Linux Actions [36680942968](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36680942968)
-on the previous candidate. That run failed only on four ChromaDB entries. The new
-P03 lock removes CrewAI/ChromaDB through normal resolution. A local Trivy 0.74.0 scan
-of all six locks on the dirty migration reports zero HIGH/CRITICAL and secret findings.
-CI security settings remain unchanged. See [dependency status](docs/dependencies/AUDIT.md).
+[Linux Actions36684470475](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36684470475)
+passed337 contracts, both complete fixture gates, browser14, lint/types/build and actual
+offline SFT3/DPO3/export/reloads. Its clean merge tree matches `10e53e8` exactly. The
+unchanged security gate now reports zero HIGH/CRITICAL and secret findings across all
+six locks. P06/P09 compatible upgrades and approved P03 removal resolved the original17
+blocking entries without suppressing advisories or weakening expectations.
 
-`pais setup` now installs all required isolated runtimes, including the validation
-worker. Local dev discovers the standard model lock and validator; explicit environment
-overrides remain supported. Small Qwen1.5B, MiniLM embeddings and the pinned CPU reranker
-are provisioned locally. Clean-commit real-model, browser and GitHub gates still need
-verification before merging PR1. Model quality and production deployment remain separate.
+`pais setup` installs the required isolated workers. Local dev selects the standard
+model lock and Guardrails worker, respecting explicit overrides. Rejected demo acceptance
+now returns1. README documents explicit Ollama model-directory startup. Small local model
+weights remain ignored; historical CrewAI reports and139 public evidence hashes are preserved.
+See [current verification](docs/FUNCTIONAL_VERIFICATION.md) and its bounded record.
+
+The model regression is synthetic and does not establish broad quality or authorize a
+production cluster. Remaining acceptance gates above remain independent. Continue with:
+
+```bash
+uv run --no-sync pais setup --profile local
+# Start Ollama with the exact model directory as documented in README.
+PAIS_ALLOW_FIXTURE_AUTH=1 uv run --no-sync pais dev --profile local
+```
 
 Publication reproduction on 30 September 2026 used clean `48649a9` on macOS/ARM:
 332 Python checks, 144/144 fixture evaluation, degraded 96/48 with exit 1, 14/14 browser,

@@ -11,7 +11,7 @@ with LangGraph. Normal dependency resolution removed CrewAI and ChromaDB entirel
 
 A local Trivy **0.74.0** scan at `2026-09-30T07:21:05Z` of the dirty migration candidate
 reports **zero HIGH/CRITICAL entries and zero secret findings** across all six lockfiles,
-including development dependencies. The new candidate's GitHub gate remains pending.
+including development dependencies. The later clean candidate passed [Linux Actions36684470475](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36684470475), with the unchanged gate reporting zero HIGH/CRITICAL and secret findings.
 This is known-advisory scanner evidence, not a production acceptance or security guarantee.
 
 | Environment | Current frozen versions | HIGH/CRITICAL entries in the candidate scan |
@@ -29,7 +29,7 @@ adapters while preserving the frozen backbone; both export/reloads matched exact
 P03 retains tenant/source validation, bounded revisions/calls/deadlines and durable
 approval. Eleven isolated and six core checks passed, including a fresh frozen install.
 A dirty local Qwen diagnostic completed four roles and two tools with a local approval
-receipt; a clean-commit reproduction is still required. Historical CrewAI reports below
+receipt; clean `10e53e8` subsequently completed four actual Qwen responses, two tools and a local approval receipt. See [current functional verification](../FUNCTIONAL_VERIFICATION.md). Historical CrewAI reports below
 are preserved and describe their original runtime.
 
 The local candidate scan command was:
