@@ -44,10 +44,34 @@ reloaded with a maximum logit difference of 0.0. `release_approved` and
 `substantive_quality_verified` remain false: this verifies compatibility, not useful
 trained-model quality.
 
+The later interface revision **`0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab`** uses a single
+light entrance, Geist typography and a verified product preview. Authentication,
+readiness/error handling, form order and authenticated workspace markup are preserved.
+At 390, 740 and 1440 pixels the entrance has no horizontal overflow, both access
+controls remain above fold, the preview loads and browser errors are zero. Package
+and dependency locks are unchanged by this interface refinement.
+
+That clean revision passed all six actual local checks again: four Qwen research
+responses/two tools with local approval, both SQLite/LanceDB lifecycles 13/13, actual
+browser 1/1, full release 144/144 with 56 real responses, and a fresh complete degraded
+run 96/48 with zero errors/skips and exit 1. Clean fixture browser 14 also passed.
+[Linux Actions36687370179](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36687370179)
+passed the unchanged full CI, including 337 contracts, 11 LangGraph, 3 Guardrails,
+browser 14, actual offline training/export/reloads and the six-lock security scan.
+Its merge tree exactly matches the interface revision. The
+[interface verification record](functional-verification-interface-20260930.json)
+binds these reports to their commands, clean commit, dataset/model digests and hashes.
+
+The first degraded attempt at this revision had one Ollama embedding HTTP400 runtime
+error and is preserved separately. The same case then passed its normal and degraded
+diagnostics, followed by the fresh complete zero-error run above. The provider's
+precise cause remains unknown; no error was suppressed or expectation weakened.
+
 The [current README](../README.md) and [local provisioning guide](../projects/07-local-first/README.md)
 provide explicit commands using the same Ollama model directory. The latest
-[actual browser screenshot](images/copilot-local-20260930.png) is from the clean application
-commit above; the older screenshot remains preserved separately.
+[actual browser screenshot](images/copilot-interface-local-20260930.png) is from clean
+`0a7c94e`; the [earlier verified screenshot](images/copilot-local-20260930.png) and older
+evidence remain preserved separately.
 
 Production deployment, external SaaS delivery, hostile-code sandboxing, live web research,
 real vLLM serving and broad model quality remain outside these successful local checks.

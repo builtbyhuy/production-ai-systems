@@ -6,9 +6,9 @@ Upload a PDF, ask a question, open the exact source page and review a proposed a
 before it executes. The project brings retrieval, identity, output validation, evaluation
 and recovery together in one working application.
 
-![Local copilot answering an operational question with a source-page citation](docs/images/copilot-local-20260930.png)
+![Local copilot answering an operational question with a source-page citation](docs/images/copilot-interface-local-20260930.png)
 
-*Actual Qwen local-model browser run on clean `10e53e8`, 30 September 2026.
+*Actual Qwen local-model browser run on clean `0a7c94e`, 30 September 2026.
 [Current verification](docs/FUNCTIONAL_VERIFICATION.md) records the application and CI results.*
 
 This is an independent, AI-assisted engineering portfolio. It demonstrates a local

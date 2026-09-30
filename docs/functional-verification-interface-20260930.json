@@ -1,0 +1,263 @@
+{
+  "scope": "Actual local synthetic regression and Linux compatibility; not production deployment or general model quality.",
+  "tested_application_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+  "source_snapshot_sha256": "52d961bdb3fa206da9c1a3e41288f24152b41d1ce17149364641c1b4a51c9122",
+  "local_environment": {
+    "python": "3.12.13",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "hardware": {
+      "cpu_model": "arm",
+      "architecture": "arm64",
+      "memory_cgroup_bytes": null,
+      "cpu_cgroup_quota": null
+    }
+  },
+  "dataset_hashes": {
+    "evals/audit.json": "a710224f34bd9861567d424146c5f1301dd922575c12cc3e1b3032f1557cb7ef",
+    "evals/corpus.json": "19b6826c771c1b122bda03e792c2193f4d540a5d4e917714e7d08097cdfc009b",
+    "evals/development.json": "5ef533bdd5e2b91ea5de5bfe93b8508bcf3d243e068dbadcd215319d491dad51",
+    "evals/manifest.json": "5dd2a2ba7ee930fc4dfdafa8f8bc0e84b24b4ae9f7d790212be3c1fd5988db8b",
+    "evals/release.json": "bd1b14b140771975cb9f9364437c0276e04d1c63271225565ec5d63ff5dd5c1a",
+    "evals/thresholds.json": "ff7c300575077a04de08a96b91a49f3c302566c49d05dc3f22803e0c9a7cf70b"
+  },
+  "models": {
+    "schema_version": 1,
+    "generation": {
+      "name": "qwen2.5:1.5b",
+      "digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b"
+    },
+    "embedding": {
+      "name": "all-minilm:22m",
+      "digest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+      "dimensions": 384
+    },
+    "reranker": {
+      "repository": "cross-encoder/ms-marco-MiniLM-L6-v2",
+      "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+      "files": {
+        "config.json": "380e02c93f431831be65d99a4e7e5f67c133985bf2e77d9d4eba46847190bacc",
+        "model.safetensors": "821d1aa69520101d6e0737f78a042ae25b19e5cb9160701909d10434f4aeb0ae",
+        "special_tokens_map.json": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6",
+        "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "tokenizer_config.json": "a5c2e5a7b1a29a0702cd28c08a399b5ecc110c263009d17f7e3b415f25905fd8",
+        "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+      }
+    },
+    "provisioning_note": "Model revision selected before download; file hashes bind this exact local copy."
+  },
+  "checks": [
+    {
+      "check": "research",
+      "command": "projects/03-multi-agent-research/.venv/bin/python projects/03-multi-agent-research/local_attempt.py --output PRIVATE_OUTPUT/checks-native-0a7c94e/research --approve-local",
+      "timestamp_utc": "2026-09-30T08:04:01.888603+00:00",
+      "profile": "local",
+      "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 10.93,
+      "report_sha256": "ac92b62ef13ab9ca57af7d93b53e3c2603b75926fed5bd481ea7bbff8faed045"
+    },
+    {
+      "check": "rag-sqlite",
+      "command": ".venv/bin/python3 projects/01-rag-citations/demo.py --profile local --backend sqlite --output PRIVATE_OUTPUT/checks-native-0a7c94e/rag-sqlite.json",
+      "timestamp_utc": "2026-09-30T08:04:13.036753+00:00",
+      "profile": "local",
+      "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 12.384,
+      "report_sha256": "6213d0935c5af1afd476c68b0dfbd22844cdebb7cec7183e9be2c64ddaa6fb60"
+    },
+    {
+      "check": "rag-lancedb",
+      "command": ".venv/bin/python3 projects/01-rag-citations/demo.py --profile local --backend lancedb --output PRIVATE_OUTPUT/checks-native-0a7c94e/rag-lancedb.json",
+      "timestamp_utc": "2026-09-30T08:04:25.610084+00:00",
+      "profile": "local",
+      "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 12.206,
+      "report_sha256": "d6b6b0b91a26f3ad746a0cb08b9c05a589c249472e004b1fd91521e19db85469"
+    },
+    {
+      "check": "browser",
+      "command": ".venv/bin/python3 projects/08-streaming-ui/run_browser_tests.py --profile local --output-dir PRIVATE_OUTPUT/checks-native-0a7c94e/browser",
+      "timestamp_utc": "2026-09-30T08:04:38.040524+00:00",
+      "profile": "local",
+      "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 19.177,
+      "report_sha256": "80686296fb6a064991495ee51e2a930c0935b14c9a5207dd9ff6363a7bb24953"
+    },
+    {
+      "check": "release",
+      "command": ".venv/bin/python3 -m pais eval --profile local --suite release --output PRIVATE_OUTPUT/checks-native-0a7c94e/release.json",
+      "timestamp_utc": "2026-09-30T08:04:57.399821+00:00",
+      "profile": "local",
+      "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 162.353,
+      "report_sha256": "cd9b2a4d90e8cca0c04f24ddf51075b0f0241876a8974c5342c8ff9174e56f8d"
+    },
+    {
+      "check": "degraded",
+      "command": ".venv/bin/python3 -m pais eval --profile local --suite release --degraded --output PRIVATE_OUTPUT/checks-native-0a7c94e-degraded-retry/degraded.json",
+      "timestamp_utc": "2026-09-30T08:17:29.033837+00:00",
+      "profile": "local",
+      "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+      "dirty_tree": false,
+      "exit_status": 1,
+      "elapsed_seconds": 166.789,
+      "report_sha256": "51b8a16db85e08d2fba3996d650b7451dbf833eab40babd650b2be28449be2e1"
+    }
+  ],
+  "research": {
+    "actual_langgraph": true,
+    "model_responses": 4,
+    "tool_executions": 2,
+    "approval_status": "executed",
+    "external_delivery": false
+  },
+  "rag": {
+    "rag-sqlite": {
+      "cross_page_citations": true,
+      "unanswerable_abstained": true,
+      "injected_source_not_followed": true,
+      "duplicate_same_version": true,
+      "incorrect_page_rejected": true,
+      "conflict_surfaced": true,
+      "replacement_new_version": true,
+      "old_citation_still_valid": true,
+      "old_version_inactive": true,
+      "new_answer_uses_replacement": true,
+      "cross_tenant_search_empty": true,
+      "deleted_citation_unavailable": true,
+      "malformed_rejected": true
+    },
+    "rag-lancedb": {
+      "cross_page_citations": true,
+      "unanswerable_abstained": true,
+      "injected_source_not_followed": true,
+      "duplicate_same_version": true,
+      "incorrect_page_rejected": true,
+      "conflict_surfaced": true,
+      "replacement_new_version": true,
+      "old_citation_still_valid": true,
+      "old_version_inactive": true,
+      "new_answer_uses_replacement": true,
+      "cross_tenant_search_empty": true,
+      "deleted_citation_unavailable": true,
+      "malformed_rejected": true
+    }
+  },
+  "browser": {
+    "test_counts": {
+      "startTime": "2026-09-30T08:04:38.989Z",
+      "duration": 18190.781,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "mocked_responses": false,
+    "screenshot_sha256": "ceae21f0e698917e2b30abd8fb492b7ba9e55485b8051508f54f0cc116c5416c"
+  },
+  "evaluations": {
+    "release": {
+      "total": 144,
+      "passed": 144,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "gate_passed": true
+    },
+    "degraded": {
+      "total": 144,
+      "passed": 96,
+      "failed": 48,
+      "errors": 0,
+      "skipped": 0,
+      "gate_passed": false
+    }
+  },
+  "actual_qwen_responses": 56,
+  "linux_ci": {
+    "url": "https://github.com/builtbyhuy/production-ai-systems/actions/runs/36687370179",
+    "tested_merge_commit": "81ffde7a5c4577be25fbcc38234c46382b0c8c82",
+    "tree": "9c201819727e3910328e5d2bf5110052667e4566",
+    "conclusion": "success",
+    "python_tests": 337,
+    "langgraph_tests": 11,
+    "guardrails_tests": 3,
+    "browser_tests": 14,
+    "high_critical_findings": 0,
+    "secret_findings": 0,
+    "training": {
+      "sft_steps": 3,
+      "dpo_steps": 3,
+      "sft_adapter_changed": true,
+      "dpo_adapter_changed": true,
+      "frozen_backbone_unchanged": true,
+      "release_approved": false,
+      "substantive_quality_verified": false
+    },
+    "reloads": {
+      "sft_export": {
+        "reload_verified": true,
+        "max_logit_absolute_difference": 0.0
+      },
+      "dpo_export": {
+        "reload_verified": true,
+        "max_logit_absolute_difference": 0.0
+      }
+    }
+  },
+  "preserved_historical_evidence": 139,
+  "command_note": "Private output paths normalized; exact commands and full reports retained outside the public source.",
+  "fixture_browser": {
+    "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+    "dirty_tree": false,
+    "timestamp": "2026-09-30T08:03:55.559702+00:00",
+    "exit_status": 0,
+    "test_counts": {
+      "startTime": "2026-09-30T08:03:32.276Z",
+      "duration": 23209.015,
+      "expected": 14,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "dependency_lock_sha256": "159c946f4732352b7a3d09b2f2f6cf669497d459570276ae4c65833547693bba"
+  },
+  "interface": {
+    "font": "Geist",
+    "entrance": "Single light theme and exact prior real-model preview",
+    "authenticated_workspace_markup_preserved": true,
+    "package_lock_unchanged": true,
+    "preflight": {
+      "widths": [
+        390,
+        740,
+        1440
+      ],
+      "horizontal_overflow": false,
+      "browser_errors": 0,
+      "scope": "Candidate preflight source bytes equal the committed UI; no authentication or model calls."
+    },
+    "preflight_report_sha256": "e16a9138d2cbf242d16971b0396eac4905ed3a9727f79d4e938e5c1a836afd9a"
+  },
+  "preserved_failed_degraded_attempt": {
+    "tested_commit": "0a7c94e0b89f016a6345a7a3de53bc5b0974f0ab",
+    "dirty_tree": false,
+    "timestamp_utc": "2026-09-30T08:07:40.450690+00:00",
+    "passed": 96,
+    "failed": 48,
+    "errors": 1,
+    "skipped": 0,
+    "report_sha256": "148b7a00cefbd67b96e8476e4183dc785d5970ca80fd3a8a85e407ac514a4c97",
+    "scope": "One local Ollama embedding HTTP400 runtime error; provider cause not established. Kept separate from the fresh complete zero-error degraded check above."
+  }
+}
