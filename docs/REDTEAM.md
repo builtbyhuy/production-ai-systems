@@ -33,12 +33,32 @@ the Next.js production build, Ruff and the repository's declared Mypy scope also
 The initial browser attempt failed before all 14 cases because a partial test-browser
 extraction crashed. A fresh extraction of the pinned package passed **14/14**, with
 zero skips or flaky cases. This was a fixture UI run on a dirty review tree; it is not
-actual-model quality evidence. Final committed-revision results are recorded separately.
+actual-model quality evidence. Final committed-revision results are recorded below.
 
 Focused repair checks passed **87 security/API tests** and **25 release/evaluation tests**.
 The standalone Qdrant authorization follow-up passed **59 vector tests**.
 The historical genuine local-model report still binds to its exact original commit,
 `c7b8a793f34795f3d2de148c1c5c211845e8b222`; it cannot authorize a newer commit.
+
+## Final publication-revision checks
+
+All checks below ran on clean commit
+`c74195a7f4f49d6ddf0e40b5262fa5d4062aac27`. A subsequent documentation/evidence-only
+commit records these results; it is not a new actual-model release candidate.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Complete Python suite, including native Redis/Celery recovery | 335 passed; two upstream deprecation warnings | [Report](../artifacts/redteam-final/core-tests.json), [transcript](../artifacts/redteam-final/core-tests.log) |
+| Complete positive fixture evaluation with real isolated metric worker | 144 passed; 0 errors/skips; deployment eligibility false | [Report](../artifacts/redteam-final/release-fixture.json) |
+| Complete deliberately degraded fixture | 96 pass / 48 fail; 0 errors/skips; exit 1 | [Report](../artifacts/redteam-final/degraded-fixture.json) |
+| Desktop/mobile browser fixture | 14 passed; 0 skipped/flaky; historical snapshots preserved | [Browser report](../artifacts/redteam-final/ui/browser-evidence.json) |
+| TypeScript and production Next.js build | Passed | [Report](../artifacts/redteam-final/ui-build.json) |
+| Ruff and declared Mypy scope | Passed | [Lint](../artifacts/redteam-final/lint.json), [types](../artifacts/redteam-final/types.json) |
+
+The historical evidence allowlist's 139 files retain matching SHA-256 hashes. All 305 local
+Markdown links checked before adding this final evidence section resolved. The current
+verification is a portfolio publication gate for a scoped local application, not a
+production deployment approval.
 
 ## Evidence integrity and limits
 

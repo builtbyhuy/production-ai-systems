@@ -1,0 +1,97 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> pais-copilot@0.1.0 test
+> playwright test
+
+[WebServer] INFO:     Started server process [210162]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:210194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:210226) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/copilot.spec.ts:57:5 › PDF upload, first display, exact source page, keyboard return, actual screenshots (1.9s)
+  ✓   2 [desktop] › tests/copilot.spec.ts:145:5 › cancel partial delivery and retry without duplicate messages (1.5s)
+  ✓   3 [desktop] › tests/copilot.spec.ts:171:5 › real API forced failure recovers on same idempotent message (1.5s)
+  ✓   4 [desktop] › tests/copilot.spec.ts:213:5 › malformed stream fails visibly, then recovers through actual API (1.3s)
+  ✓   5 [desktop] › tests/copilot.spec.ts:236:5 › disconnect before generation recovers without an optimistic duplicate (1.3s)
+  ✓   6 [desktop] › tests/copilot.spec.ts:252:5 › approval binds exact action and persists one local execution (784ms)
+  ✓   7 [desktop] › tests/copilot.spec.ts:281:5 › model-like HTML is rendered as inert text (507ms)
+(node:210595) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile] › tests/copilot.spec.ts:57:5 › PDF upload, first display, exact source page, keyboard return, actual screenshots (1.7s)
+  ✓   9 [mobile] › tests/copilot.spec.ts:145:5 › cancel partial delivery and retry without duplicate messages (1.4s)
+  ✓  10 [mobile] › tests/copilot.spec.ts:171:5 › real API forced failure recovers on same idempotent message (1.4s)
+  ✓  11 [mobile] › tests/copilot.spec.ts:213:5 › malformed stream fails visibly, then recovers through actual API (1.3s)
+  ✓  12 [mobile] › tests/copilot.spec.ts:236:5 › disconnect before generation recovers without an optimistic duplicate (1.4s)
+  ✓  13 [mobile] › tests/copilot.spec.ts:252:5 › approval binds exact action and persists one local execution (782ms)
+  ✓  14 [mobile] › tests/copilot.spec.ts:281:5 › model-like HTML is rendered as inert text (479ms)
+
+  14 passed (19.7s)
+{
+  "project": "P08",
+  "profile": "fixture",
+  "timestamp": "2026-09-30T04:26:20.332418+00:00",
+  "command": "/workspace/scratch/2e84d8a1d829/production-ai-systems/.venv/bin/python projects/08-streaming-ui/run_browser_tests.py --profile fixture --output-dir artifacts/redteam-final/ui",
+  "parent_orchestration": null,
+  "api_python_executable": "/workspace/scratch/2e84d8a1d829/production-ai-systems/.venv/bin/python",
+  "tested_commit": "c74195a7f4f49d6ddf0e40b5262fa5d4062aac27",
+  "dirty_tree": false,
+  "versions": {
+    "@ai-sdk/react": "4.0.125",
+    "ai": "7.0.122",
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@playwright/test": "1.63.0",
+    "@sparticuz/chromium": "153.0.0",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "prettier": "3.9.9",
+    "typescript": "7.0.2"
+  },
+  "dataset_sha256": "3be958fbf8db86e97d477dd2f4cc972ed175d378e324cf32c8b0acad77050a05",
+  "frontend_build_id": "WJROuzK2jc-i7a1fKSlcu",
+  "dependency_lock_sha256": "159c946f4732352b7a3d09b2f2f6cf669497d459570276ae4c65833547693bba",
+  "model_lock_sha256": null,
+  "configuration": {
+    "viewports": [
+      "1440x960",
+      "390x844"
+    ],
+    "workers": 1,
+    "fixture_stream_delay_ms": 180,
+    "buffered_output": true,
+    "browser": "Chromium 153.0.8010.0"
+  },
+  "exit_status": 0,
+  "elapsed_ms": 20352.028,
+  "test_counts": {
+    "startTime": "2026-09-30T04:26:00.625Z",
+    "duration": 19682.904,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "screenshots": [
+    "desktop-approvals.png",
+    "desktop-conversation.png",
+    "desktop-library.png",
+    "desktop-recovery.png",
+    "desktop-source.png",
+    "mobile-approvals.png",
+    "mobile-conversation.png",
+    "mobile-library.png",
+    "mobile-recovery.png",
+    "mobile-source.png"
+  ],
+  "results": "playwright-results.json",
+  "limits": "Fixture browser/stream contracts; no real-model quality or provider TTFT claim."
+}

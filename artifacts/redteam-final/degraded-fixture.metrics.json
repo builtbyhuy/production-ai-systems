@@ -1,0 +1,731 @@
+{
+  "results": {
+    "answerable-01": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-02": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-03": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-04": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-05": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-06": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-07": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-08": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-09": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-10": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-11": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-12": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-13": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-14": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-15": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-16": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-17": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-18": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-19": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-20": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-21": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-22": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-23": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-24": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-25": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-26": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-27": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-28": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-29": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-30": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-31": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "answerable-32": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-01": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-02": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-03": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-04": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-05": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-06": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-07": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-08": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-09": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-10": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-11": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-12": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-13": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-14": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-15": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "cross-page-16": {
+      "deepeval_source_support": 0.0,
+      "ragas_reference_exact_match": 0.0,
+      "ragas_reference_similarity": 0.0
+    },
+    "unanswerable-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-09": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-10": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-11": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-12": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-13": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-14": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-15": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "unanswerable-16": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "contradictory-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-09": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-10": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-11": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-12": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-13": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-14": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-15": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-16": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-17": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-18": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-19": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "citation-20": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-09": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-10": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-11": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-12": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-13": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-14": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-15": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "adversarial-16": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-09": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-10": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-11": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "authorization-12": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-09": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-10": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-11": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "malformed-input-12": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-01": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-02": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-03": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-04": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-05": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-06": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-07": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-08": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-09": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-10": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-11": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    },
+    "failure-recovery-12": {
+      "deepeval_source_support": 1.0,
+      "ragas_reference_exact_match": 1.0,
+      "ragas_reference_similarity": 1.0
+    }
+  },
+  "versions": {
+    "deepeval": "4.2.6",
+    "ragas": "0.4.3",
+    "langchain": "1.4.3",
+    "langchain-community": "0.3.31"
+  },
+  "judge": "none; deterministic source validation and string/reference metrics"
+}
