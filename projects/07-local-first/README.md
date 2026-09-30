@@ -36,7 +36,15 @@ Run the following in the original repository terminal:
 ```bash
 ollama pull qwen2.5:1.5b
 ollama pull all-minilm:22m
-hf download cross-encoder/ms-marco-MiniLM-L6-v2 --revision 233902d25c440f23af6f7d6e94d2946bac0bee0a --include '*.json' '*.txt' '*.safetensors' --local-dir models/reranker
+uv run --no-sync python - <<'PYTHON'
+from huggingface_hub import snapshot_download
+snapshot_download(
+    "cross-encoder/ms-marco-MiniLM-L6-v2",
+    revision="233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    allow_patterns=["*.json", "*.txt", "*.safetensors"],
+    local_dir="models/reranker", token=False,
+)
+PYTHON
 .venv/bin/python projects/07-local-first/lock_models.py --reranker-dir models/reranker --output models/local-models.lock.json
 ```
 
