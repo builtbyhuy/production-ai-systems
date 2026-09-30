@@ -1,7 +1,7 @@
 # P07 — A local stack with explicit model and storage boundaries
 
 Run actual generation, embeddings, reranking, PDF provenance and tenant-filtered retrieval
-on one CPU machine. SQLite/sqlite-vec is the default. LanceDB is a separately implemented,
+on one local machine. Reranking runs on CPU; native Ollama selects the available device. SQLite/sqlite-vec is the default. LanceDB is a separately implemented,
 selectable local vector store; selecting it does not launch a second vector service.
 
 **Evidence:** both actual storage implementations pass the shared fixture contracts.

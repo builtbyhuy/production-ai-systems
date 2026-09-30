@@ -65,6 +65,20 @@ same durable local effect. No external message or publication is sent by this de
 
 ## Authentication and environment
 
+For native local development after [model provisioning](../07-local-first/README.md):
+
+```bash
+uv run --no-sync pais setup --profile local
+PAIS_ALLOW_FIXTURE_AUTH=1 uv run --no-sync python scripts/with_local_models.py -- \
+  .venv/bin/python -m pais dev --profile local
+```
+
+Start the frontend in the second terminal as above, then choose **Open local test
+workspace**. These are explicitly enabled development identities; embeddings,
+reranking, generation and mandatory Guardrails validation remain real. `pais dev`
+sets the standard isolated-validator and model-lock paths unless the operator has
+configured explicit alternatives. The model wrapper stops only the server it owns.
+
 | Setting | Purpose |
 |---|---|
 | `PAIS_DB_PATH` | Authoritative shared SQLite state; default `var/pais.db`. |

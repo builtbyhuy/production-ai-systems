@@ -89,15 +89,16 @@ Enforce budgets atomically under concurrency. Persist the information needed for
 
 ### P03 — Multi-Agent Research System
 
-**Stack:** CrewAI and a durable audit trail.
+**Stack:** LangGraph and a durable audit trail. The project owner approved this
+replacement on 30 September 2026 to remove CrewAI's unpatched ChromaDB dependency.
 
-Implement supervisor, researcher, writer, and fact-checker roles with explicit task schemas, tool permissions, budgets, deadlines, and bounded revision rounds. Make CrewAI perform substantive orchestration.
+Implement supervisor, researcher, writer, and fact-checker roles with explicit task schemas, tool permissions, budgets, deadlines, and bounded revision rounds. Make LangGraph perform substantive orchestration.
 
 Collect evidence with source identity, retrieval time, relevant passage, and claim linkage. The fact-checker must examine the evidence and can reject the draft. Define consensus as an explicit evidence-based acceptance rule. Preserve unresolved contradictions and support an insufficient-evidence outcome.
 
 Persist workflow state and audit records. Require human approval for designated final actions, integrating P15 where useful. Support a local evidence corpus for offline demonstrations and a separate authorized web-research mode.
 
-**Acceptance:** an unsupported but plausible claim is rejected; conflicting sources remain visible; malicious source instructions do not gain tool permissions; a missing agent or exhausted budget terminates predictably; rejection and approval paths work. Show an actual end-to-end CrewAI execution and its audit trail.
+**Acceptance:** an unsupported but plausible claim is rejected; conflicting sources remain visible; malicious source instructions do not gain tool permissions; a missing agent or exhausted budget terminates predictably; rejection and approval paths work. Show an actual end-to-end LangGraph execution and its audit trail. Earlier CrewAI reports retain their historical source identities.
 
 ### P04 — Automated Eval Harness
 

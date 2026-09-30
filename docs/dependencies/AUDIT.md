@@ -3,40 +3,46 @@
 ## 30 September security remediation candidate
 
 The original published Actions run on `97f4efe` reported **17 HIGH/CRITICAL advisory
-entries**. A local Trivy **0.74.0** scan of the updated locks on macOS/ARM at
-`2026-09-30T06:51:26Z` reported **4**, all in the unchanged P03 ChromaDB dependency;
-zero secret findings. It scanned all six application/project/UI lockfiles and included
-development dependencies. This is a dirty remediation candidate based on `97f4efe`,
-not a successful GitHub Actions run or a production acceptance claim.
+entries**. After the P06/P09 upgrades, Linux Actions
+[36680942968](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36680942968)
+passed the application, browser, validator and actual tiny SFT/DPO checks, then failed
+only on four ChromaDB entries. The owner subsequently approved replacing P03 CrewAI
+with LangGraph. Normal dependency resolution removed CrewAI and ChromaDB entirely.
+
+A local Trivy **0.74.0** scan at `2026-09-30T07:21:05Z` of the dirty migration candidate
+reports **zero HIGH/CRITICAL entries and zero secret findings** across all six lockfiles,
+including development dependencies. The new candidate's GitHub gate remains pending.
+This is known-advisory scanner evidence, not a production acceptance or security guarantee.
 
 | Environment | Current frozen versions | HIGH/CRITICAL entries in the candidate scan |
 |---|---|---:|
 | P06 Guardrails | Guardrails AI 0.11.0, LangChain Core 1.6.6, LiteLLM 1.103.1 | 0 |
 | P09 training | Transformers 5.10.4, PEFT 0.19.0, TRL 0.29.1, Tokenizers 0.22.2 | 0 |
-| P03 research | CrewAI 1.15.23, ChromaDB 1.1.1, unchanged | 4 |
+| P03 research | LangGraph 1.2.12, LangChain Core 1.6.5; CrewAI/ChromaDB removed | 0 |
 
 Guardrails 0.6.8 restricted LangChain Core to `<0.4`, excluding its patched release;
 the compatible Guardrails upgrade passed the same three real enforcement tests.
-Training retains the exact Torch 2.8.0+cpu prerequisite, offline loading and rejected
-model-quality release gate. CI now executes the actual tiny SFT/DPO pipeline to check
-the new ML stack on Linux; that run remains pending for this candidate.
+Training retains the exact Linux Torch 2.8.0+cpu prerequisite, offline loading and
+rejected model-quality release gate. Actual three-step SFT and DPO changed their
+adapters while preserving the frozen backbone; both export/reloads matched exactly.
 
-ChromaDB has no listed patched version for
-[CVE-2026-45829](https://github.com/advisories/GHSA-f4j7-r4q5-qw2c),
-[CVE-2026-45833](https://github.com/advisories/GHSA-36p7-vc44-83pf),
-[CVE-2026-45830](https://github.com/advisories/GHSA-2wm9-hf6c-p5cr) or
-[CVE-2026-45831](https://github.com/advisories/GHSA-xph7-9rjv-w5fr).
-CrewAI requires and imports ChromaDB even with memory disabled. Removing it alone
-breaks the framework import. Replacing the P03 orchestrator changes its declared
-stack and needs a separate approved decision and equivalent contract verification.
-No dependency is hidden, no finding is ignored, and the blocking security gate is
-unchanged. The scan command was:
+P03 retains tenant/source validation, bounded revisions/calls/deadlines and durable
+approval. Eleven isolated and six core checks passed, including a fresh frozen install.
+A dirty local Qwen diagnostic completed four roles and two tools with a local approval
+receipt; a clean-commit reproduction is still required. Historical CrewAI reports below
+are preserved and describe their original runtime.
+
+The local candidate scan command was:
 
 ```bash
 trivy fs --scanners vuln,secret --severity HIGH,CRITICAL --exit-code 1 \
   --ignore-unfixed=false --include-dev-deps \
-  --skip-dirs .venv,artifacts,node_modules .
+  --skip-dirs .venv,artifacts,node_modules,models .
 ```
+
+The local `models` exclusion covers ignored downloaded weights. All public source and
+six application/project/UI locks were scanned. The GitHub security gate remains unchanged,
+with no advisory suppression, `--ignore-unfixed=false` and no added exclusion.
 
 ## Historical installed-environment baseline
 
@@ -55,7 +61,7 @@ The fresh application environment was created from the exact frozen `uv.lock`. I
 | CPU vLLM runtime | 153 / 148 | 1 | Five CPU wheel versions | [pip-audit-inference.json](../../artifacts/pip-audit-inference.json) |
 | UI production dependencies | npm production scope | 0 reported | Development dependencies excluded from this scan | [npm-audit-production.json](../../artifacts/npm-audit-production.json) |
 
-**The whole-repository production dependency gate is not passed.** No advisory has been suppressed or dismissed as a false positive. Functional acceptance of trusted local code remains separate from production supply-chain acceptance. These scans report known advisories at one point in time; zero findings is not a security guarantee.
+**This historical installed-environment baseline did not pass the production dependency gate.** No advisory has been suppressed or dismissed as a false positive. Functional acceptance of trusted local code remains separate from production supply-chain acceptance. These scans report known advisories at one point in time; zero findings is not a security guarantee.
 
 The unmatched inference packages are Torch 2.13.0+cpu, Torchaudio 2.11.0+cpu, Torchcodec 0.16.0+cpu, Torchvision 0.28.0+cpu and vLLM 0.30.0+cpu. Core/training use Torch 2.8.0+cpu. These are explicit scanner coverage gaps, not cleared packages. The earlier training report listed 45 entries with 44 queried and the same three affected packages; adding the declared Pydantic dependency produced the final 49-entry environment.
 

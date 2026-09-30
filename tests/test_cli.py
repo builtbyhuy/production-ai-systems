@@ -29,3 +29,17 @@ def test_demo_missing_required_boundary_is_blocked(monkeypatch, tmp_path):
     target = tmp_path / "blocked-demo.json"
     assert cli._demo("17", "fixture", target, "sqlite") == 2
     assert json.loads(target.read_text())["exit_status"] == 2
+
+
+def test_setup_stops_when_required_validator_installation_fails(monkeypatch):
+    commands = []
+
+    def install(command, **kwargs):
+        commands.append(command)
+        failed = "projects/06-security-guardrails" in command
+        return SimpleNamespace(returncode=7 if failed else 0)
+
+    monkeypatch.setattr(cli.subprocess, "run", install)
+    assert cli.main(["setup", "--profile", "local"]) == 7
+    assert commands[-1][-1] == "projects/06-security-guardrails"
+    assert not any("projects/09-lora-training" in command for command in commands)

@@ -312,7 +312,8 @@ class LocalModels:
             "profile": "local", "real_inference": True, "dimensions": self.dimension,
             "embedding_model": self.embedding_id, "generation_model": self.generator_id,
             "reranker_model": self.reranker_id, "external_provider_calls": 0,
-            "device": "cpu", "runtime_downloads": False,
+            "device": "cpu", "device_scope": "reranker",
+            "ollama_device": "runtime-selected", "runtime_downloads": False,
             "cpu_threads": self.threads, "reranker_max_length": 256,
             "generation_policy": "validated verbatim complete source sentences only",
         }

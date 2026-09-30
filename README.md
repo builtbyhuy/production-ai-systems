@@ -42,6 +42,7 @@ the fixture demo. Fixture responses are deterministic and visibly labelled.
 git clone https://github.com/builtbyhuy/production-ai-systems.git
 cd production-ai-systems
 uv sync --frozen --group dev --extra vectors --extra router --extra workflows
+uv run --no-sync pais setup --profile fixture
 uv run --no-sync pais demo 01 --profile fixture
 ```
 
@@ -65,6 +66,14 @@ upload a text PDF, ask a question and open its citation. The
 [UI guide](projects/08-streaming-ui/README.md) documents credentials, approval and recovery.
 For actual local generation, embeddings and reranking, follow
 [local-model provisioning](projects/07-local-first/README.md).
+
+Once those small models are provisioned and locked, `pais setup --profile local`
+installs the local runtime and all required isolated workers. Start Ollama with the
+project's model directory, then run `pais dev --profile local`; the CLI selects the
+isolated Guardrails validator and the standard model lock. Explicit environment
+settings still take precedence. For a loopback development workspace with the documented
+test identities, use `PAIS_ALLOW_FIXTURE_AUTH=1`; the UI labels this a local test workspace.
+Local answers use the actual model and never fall back to fixture responses.
 
 ## Verify the behavior
 
@@ -96,7 +105,7 @@ Other experiments expose useful failures: routing did not improve over the cheap
 hybrid recall@1 fell to 0.21 at 10,000 synthetic documents; tiny SFT/DPO models achieved
 0% held-out exact match. Hostile-code execution stays disabled, vLLM serving did not start,
 and external SaaS, cluster and upstream submission criteria remain unfinished.
-Reported dependency advisories also block production promotion. The
+Current dependency remediation is tracked in [the audit](docs/dependencies/AUDIT.md). The
 [verification report](docs/VERIFICATION.md) preserves these results and remaining work.
 
 ## Explore the lab

@@ -192,7 +192,6 @@ def doctor() -> dict[str, Any]:
         "sentence-transformers",
         "torch",
         "litellm",
-        "crewai",
         "guardrails-ai",
         "celery",
         "redis",

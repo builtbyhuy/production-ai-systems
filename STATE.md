@@ -40,16 +40,29 @@ receipt reconciliation and upstream submission still require independently verif
 Router savings, 10k-vector quality and tiny training quality are unproven or failed.
 The eight audit cases reuse development templates; direct source access was reviewed here.
 
-## Continue locally
+## Current remediation and functional verification
 
-Dependency remediation is in progress on `fix/dependency-advisories`, based on
-published `97f4efe`. P06's compatible Guardrails/Core/LiteLLM upgrade passes its three
-real enforcement tests. P09 uses a corrected Transformers/PEFT/TRL/Tokenizers stack;
-Linux CI will execute offline tiny SFT/DPO compatibility without approving model quality.
-The updated locks' local Trivy scan reports 4 HIGH/CRITICAL entries, down from 17:
-all are unpatched ChromaDB findings required by CrewAI. The P03 stack decision and
-the new Linux run remain pending. Security scan settings and historical evidence
-are preserved. See [current dependency status](docs/dependencies/AUDIT.md).
+On 30 September 2026 the owner approved replacing P03 CrewAI with LangGraph to
+remove the unpatched ChromaDB dependency, then authorized completing the runnable
+application. The implementation uses four native LangGraph nodes and fixed typed
+host tools; source/tenant validation, deadlines, budgets and P15 approval remain.
+The current migration passed 11 isolated and 6 core checks, including a fresh frozen
+install. A dirty diagnostic completed four real Qwen responses, two tools and a
+local approval receipt in 28.93 seconds; it does not attest a clean release or general
+research quality. Historical CrewAI evidence keeps its original identity.
+
+P06's three enforcement checks and P09's actual offline SFT/DPO compatibility passed
+Linux Actions [36680942968](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36680942968)
+on the previous candidate. That run failed only on four ChromaDB entries. The new
+P03 lock removes CrewAI/ChromaDB through normal resolution. A local Trivy 0.74.0 scan
+of all six locks on the dirty migration reports zero HIGH/CRITICAL and secret findings.
+CI security settings remain unchanged. See [dependency status](docs/dependencies/AUDIT.md).
+
+`pais setup` now installs all required isolated runtimes, including the validation
+worker. Local dev discovers the standard model lock and validator; explicit environment
+overrides remain supported. Small Qwen1.5B, MiniLM embeddings and the pinned CPU reranker
+are provisioned locally. Clean-commit real-model, browser and GitHub gates still need
+verification before merging PR1. Model quality and production deployment remain separate.
 
 Publication reproduction on 30 September 2026 used clean `48649a9` on macOS/ARM:
 332 Python checks, 144/144 fixture evaluation, degraded 96/48 with exit 1, 14/14 browser,

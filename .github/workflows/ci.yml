@@ -48,7 +48,7 @@ jobs:
         run: |
           uv sync --frozen --project projects/03-multi-agent-research
           uv sync --frozen --project projects/06-security-guardrails --group dev
-          PYTHONPATH="$GITHUB_WORKSPACE/packages:$GITHUB_WORKSPACE" projects/03-multi-agent-research/.venv/bin/python -m pytest projects/03-multi-agent-research/test_crewai.py -q
+          PYTHONPATH="$GITHUB_WORKSPACE/packages:$GITHUB_WORKSPACE" projects/03-multi-agent-research/.venv/bin/python -m pytest projects/03-multi-agent-research/test_langgraph.py -q
           PYTHONPATH="$GITHUB_WORKSPACE/packages:$GITHUB_WORKSPACE" projects/06-security-guardrails/.venv/bin/python -m pytest projects/06-security-guardrails/test_guardrails_real.py -q
       - name: Offline tiny SFT/DPO compatibility; no model-quality release claim
         run: |

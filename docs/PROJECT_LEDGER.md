@@ -15,7 +15,7 @@ metadata. They are not retroactively relabeled as clean-commit runs.
 |---|---|---|---|---|
 | [P01 · RAG with citations](../projects/01-rag-citations/README.md) | implemented | fixture + actual models/storage | PASS within local acceptance scope | None for the measured local lifecycle; broad-domain grounding and scanned PDFs remain outside this acceptance scope. |
 | [P02 · Model router](../projects/02-model-router/README.md) | implemented | fixture + actual two-model comparison | PARTIAL | No connected invoice comparison or measured paid-provider savings. |
-| [P03 · Multi-agent research](../projects/03-multi-agent-research/README.md) | implemented | real CrewAI + actual-model failed attempt | INCOMPLETE | Small-model run timed out; live web and general research quality unverified; isolated dependency advisories. |
+| [P03 · Multi-agent research](../projects/03-multi-agent-research/README.md) | implemented | current LangGraph contracts + historical CrewAI/model evidence | INCOMPLETE | Clean current model reproduction and live web/general research quality remain unverified. |
 | [P04 · Evaluation harness](../projects/04-eval-harness/README.md) | implemented | fixture + clean-commit actual local release/degraded/audit | PARTIAL: local regression accepted | LangSmith integration not run; two evaluator packages retain reported advisories; narrow synthetic exact metrics do not establish general quality. |
 | [P05 · Observability](../projects/05-observability/README.md) | implemented | native monitoring deployment profile | PASS within declared native drill scope | Container deployment, mature anomaly baseline and paid invoice reconciliation unverified. |
 | [P06 · Security middleware](../projects/06-security-guardrails/README.md) | implemented | fixture + actual Guardrails and HTTP | INCOMPLETE | Untrusted-code sandbox unavailable; isolated Guardrails dependency advisories. |
@@ -65,16 +65,17 @@ LiteLLM routing, capability/context constraints, bounded fallback and circuit br
 
 ## P03 — Multi-agent research
 
-Four substantive CrewAI roles and tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.
+Four native LangGraph roles and typed host tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.
 
-- **PASS — Actual CrewAI orchestration and rejection/approval paths**: Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic. Final clean-commit five-test run passed; upstream callback-serialization warnings limit native framework checkpoint claims. Evidence: [crewai-tests.json](../artifacts/final/crewai-tests.json), [p03-fixture.json](../artifacts/stateful/p03-fixture.json).
-- **FAIL — Actual local model completing research**: Qwen1.5B received one response, timed out on call2 after70.02s, executed zero tools; no fixture fallback. Evidence: [p03-local-attempt.json](../artifacts/stateful/p03-local-attempt.json).
+- **PASS — Current native LangGraph orchestration and rejection/approval contracts**: Eleven isolated and six core checks passed, including a fresh frozen install. CrewAI/ChromaDB removed through normal resolution; existing rejection and approval assertions preserved. Evidence: [test_langgraph.py](../projects/03-multi-agent-research/test_langgraph.py), [test_research.py](../tests/test_research.py).
+- **PASS — Historical CrewAI orchestration and rejection/approval paths**: Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic. Final clean-commit five-test run passed; upstream callback-serialization warnings limit native framework checkpoint claims. Evidence: [crewai-tests.json](../artifacts/final/crewai-tests.json), [p03-fixture.json](../artifacts/stateful/p03-fixture.json).
+- **FAIL — Historical local model research attempt**: Qwen1.5B received one response, timed out on call2 after70.02s, executed zero tools; no fixture fallback. Evidence: [p03-local-attempt.json](../artifacts/stateful/p03-local-attempt.json).
 - **NOT RUN — Authorized live web acquisition**: Bounded pinned HTTPS adapter and controlled-transport contract exist; no live source run.
 
-**Next action:** Resolve framework dependency advisories and evaluate a suitable local model/configuration against the bounded research contract; provision only reviewed web targets.
+**Next action:** Run the clean current LangGraph local path; evaluate general research quality separately and provision only reviewed web targets.
 
 ```bash
-.venv/bin/python -m pais demo 03 --profile fixture --output artifacts/p03-crewai.json
+uv run --no-sync pais demo 03 --profile fixture --output artifacts/p03-langgraph-current.json
 ```
 
 
