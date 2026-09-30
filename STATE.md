@@ -42,6 +42,15 @@ The eight audit cases reuse development templates; direct source access was revi
 
 ## Continue locally
 
+Dependency remediation is in progress on `fix/dependency-advisories`, based on
+published `97f4efe`. P06's compatible Guardrails/Core/LiteLLM upgrade passes its three
+real enforcement tests. P09 uses a corrected Transformers/PEFT/TRL/Tokenizers stack;
+Linux CI will execute offline tiny SFT/DPO compatibility without approving model quality.
+The updated locks' local Trivy scan reports 4 HIGH/CRITICAL entries, down from 17:
+all are unpatched ChromaDB findings required by CrewAI. The P03 stack decision and
+the new Linux run remain pending. Security scan settings and historical evidence
+are preserved. See [current dependency status](docs/dependencies/AUDIT.md).
+
 Publication reproduction on 30 September 2026 used clean `48649a9` on macOS/ARM:
 332 Python checks, 144/144 fixture evaluation, degraded 96/48 with exit 1, 14/14 browser,
 5 CrewAI and 3 Guardrails framework checks, Ruff, scoped Mypy, TypeScript and UI build.

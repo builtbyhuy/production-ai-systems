@@ -1,5 +1,45 @@
 # Dependency audit and production gate
 
+## 30 September security remediation candidate
+
+The original published Actions run on `97f4efe` reported **17 HIGH/CRITICAL advisory
+entries**. A local Trivy **0.74.0** scan of the updated locks on macOS/ARM at
+`2026-09-30T06:51:26Z` reported **4**, all in the unchanged P03 ChromaDB dependency;
+zero secret findings. It scanned all six application/project/UI lockfiles and included
+development dependencies. This is a dirty remediation candidate based on `97f4efe`,
+not a successful GitHub Actions run or a production acceptance claim.
+
+| Environment | Current frozen versions | HIGH/CRITICAL entries in the candidate scan |
+|---|---|---:|
+| P06 Guardrails | Guardrails AI 0.11.0, LangChain Core 1.6.6, LiteLLM 1.103.1 | 0 |
+| P09 training | Transformers 5.10.4, PEFT 0.19.0, TRL 0.29.1, Tokenizers 0.22.2 | 0 |
+| P03 research | CrewAI 1.15.23, ChromaDB 1.1.1, unchanged | 4 |
+
+Guardrails 0.6.8 restricted LangChain Core to `<0.4`, excluding its patched release;
+the compatible Guardrails upgrade passed the same three real enforcement tests.
+Training retains the exact Torch 2.8.0+cpu prerequisite, offline loading and rejected
+model-quality release gate. CI now executes the actual tiny SFT/DPO pipeline to check
+the new ML stack on Linux; that run remains pending for this candidate.
+
+ChromaDB has no listed patched version for
+[CVE-2026-45829](https://github.com/advisories/GHSA-f4j7-r4q5-qw2c),
+[CVE-2026-45833](https://github.com/advisories/GHSA-36p7-vc44-83pf),
+[CVE-2026-45830](https://github.com/advisories/GHSA-2wm9-hf6c-p5cr) or
+[CVE-2026-45831](https://github.com/advisories/GHSA-xph7-9rjv-w5fr).
+CrewAI requires and imports ChromaDB even with memory disabled. Removing it alone
+breaks the framework import. Replacing the P03 orchestrator changes its declared
+stack and needs a separate approved decision and equivalent contract verification.
+No dependency is hidden, no finding is ignored, and the blocking security gate is
+unchanged. The scan command was:
+
+```bash
+trivy fs --scanners vuln,secret --severity HIGH,CRITICAL --exit-code 1 \
+  --ignore-unfixed=false --include-dev-deps \
+  --skip-dirs .venv,artifacts,node_modules .
+```
+
+## Historical installed-environment baseline
+
 Scan date: 2026-09-29. Tool: **pip-audit2.10.1** using the actual installed environments; UI uses `npm audit --omit=dev`. Raw reports are retained, including duplicate advisory records returned by the service. Counts below are affected installed package names, not an estimate of exploitable vulnerabilities.
 
 The fresh application environment was created from the exact frozen `uv.lock`. Its audit lists 164 entries: 162 were queried, the editable project was intentionally skipped, and the CPU-specific Torch build was unmatched by the PyPI advisory lookup. Zero reported findings applies only to the 162 queried entries. An earlier experimental environment had extra packages and is not the final core environment; its scan remains `artifacts/pip-audit-core.json` for provenance.

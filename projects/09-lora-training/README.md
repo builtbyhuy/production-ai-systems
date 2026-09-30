@@ -1,6 +1,6 @@
 # P09 — Provenance-aware LoRA SFT/DPO
 
-**Status: implemented; genuine CPU training smoke verified; substantive fine-tuning and capability retention remain unverified.** The measured random model achieved **0% exact match** on both held-out suites before SFT, after SFT, and after DPO. The retention gate rejected promotion because each suite has only six held-out examples; the prospective minimum is twenty.
+**Status: implemented; historical CPU training smoke verified; substantive fine-tuning and capability retention remain unverified.** The measured random model achieved **0% exact match** on both held-out suites before SFT, after SFT, and after DPO. The retention gate rejected promotion because each suite has only six held-out examples; the prospective minimum is twenty. The historical measurements below retain their original dependency versions; the security-upgraded environment needs its own Linux CPU smoke result.
 
 ## Problem and scope
 
@@ -10,17 +10,17 @@ The implementation is [training.py](../../packages/pais/training.py). It validat
 
 ## Setup and commands
 
-Run from the repository root with Python 3.12:
+Run from the repository root with Python 3.12. The full training smoke requires Linux and the exact PyTorch CPU build:
 
 ```bash
-uv sync --project projects/09-lora-training --locked
+uv sync --frozen --project projects/09-lora-training
 PYTHONPATH=packages .venv/bin/python -m pais.training fixture --output artifacts/p09-fixture
 PYTHONPATH=packages projects/09-lora-training/.venv/bin/python -m pais.training smoke --output artifacts/p09-smoke-reproduction
 .venv/bin/python -m pais demo 09 --profile local --output artifacts/p09-cli-reproduction/run.json
 .venv/bin/pytest -q tests/test_training.py
 ```
 
-Choose a fresh output directory for each run; existing evidence is never overwritten. The isolated environment pins torch **2.8.0+cpu**, Transformers **4.56.2**, PEFT **0.17.1**, Datasets **4.1.1**, TRL **0.23.1**, Accelerate **1.10.1**, Tokenizers **0.22.0**, and Safetensors **0.6.2**. `uv.lock` also fixes transitive dependencies. The explicit PyTorch CPU index avoids CUDA downloads. Invoking training from the repository's different Transformers environment produces a prerequisite error, exit code 2.
+Choose a fresh output directory for each run; existing evidence is never overwritten. The current isolated environment pins torch **2.8.0+cpu**, Transformers **5.10.4**, PEFT **0.19.0**, Datasets **4.1.1**, TRL **0.29.1**, Accelerate **1.10.1**, Tokenizers **0.22.2**, and Safetensors **0.6.2**. `uv.lock` also fixes transitive dependencies. The explicit PyTorch CPU index avoids CUDA downloads. The macOS wheel reports `2.8.0` rather than the required Linux build `2.8.0+cpu`; the full smoke fails its version prerequisite with exit code 2 there. Import or constructor checks on macOS do not establish a completed training run. Invoking training from the repository's different Transformers environment likewise produces a prerequisite error.
 
 The isolated environment also declares Pydantic because the common `pais demo` entrypoint
 imports the shared evidence/contracts layer before dispatching training. A final integration
@@ -45,7 +45,7 @@ The final step count is fixed before the smoke; there is no test-set checkpoint 
 
 ## Measured result
 
-The committed-size [EVIDENCE.json](EVIDENCE.json) summary derives from [training-result.json](../../artifacts/p09-smoke/training-result.json), timestamp **2026-09-29T09:22:07Z**, Python **3.12.14**, Linux x86-64, two PyTorch threads. It used 39,456 base parameters, 1,024 trainable adapter parameters and a 309-token vocabulary. The host allocation was 8 GiB RAM and eight CPU quota; the configured run used no GPU and downloaded no model weights. Raw artifacts are generated locally and excluded from Git; the summary retains their digests and measured values.
+The committed-size [EVIDENCE.json](EVIDENCE.json) summary derives from [training-result.json](../../artifacts/p09-smoke/training-result.json), timestamp **2026-09-29T09:22:07Z**, Python **3.12.14**, Linux x86-64, two PyTorch threads. That historical run used torch **2.8.0+cpu**, Transformers **4.56.2**, PEFT **0.17.1**, TRL **0.23.1** and Tokenizers **0.22.0**; Datasets, Accelerate and Safetensors had the same versions listed above. It used 39,456 base parameters, 1,024 trainable adapter parameters and a 309-token vocabulary. The host allocation was 8 GiB RAM and eight CPU quota; the configured run used no GPU and downloaded no model weights. Raw artifacts are generated locally and excluded from Git; the summary retains their digests and measured values.
 
 | Stage | Domain exact match, n=6 | General exact match, n=6 | Domain mean completion NLL | General mean completion NLL |
 |---|---:|---:|---:|---:|
@@ -65,9 +65,9 @@ Read [DATA_CARD.md](DATA_CARD.md), [ACCEPTANCE.md](ACCEPTANCE.md), [CASE_STUDY.m
 
 ## Compatibility sources
 
-The conservative pinned APIs were checked against official versioned documentation on 2026-09-29. They are intentionally pinned and are not presented as the latest releases.
+The current pinned APIs were checked against official versioned documentation on 2026-09-30. The DPO configuration now uses the supported total `max_length` and retains the explicit frozen, merged SFT reference. Dataset validation still rejects overlength targets before either trainer runs. The historical measurements above were executed with the earlier versions, and do not attest the upgraded environment.
 
-- [TRL 0.23.1 SFTTrainer and SFTConfig](https://huggingface.co/docs/trl/v0.23.1/en/sft_trainer): `processing_class`, completion-only loss, PEFT models and saved checkpoints.
-- [TRL 0.23.1 DPOTrainer](https://huggingface.co/docs/trl/v0.23.1/en/dpo_trainer): preference schema, explicit reference model and PEFT behavior.
-- [PEFT quicktour](https://huggingface.co/docs/peft/main/quicktour): adapter saving/loading; actual 0.17.1 behavior was exercised in the smoke.
-- [Transformers GPT-2 implementation](https://github.com/huggingface/transformers/blob/v4.56.2/src/transformers/models/gpt2/modeling_gpt2.py): model configuration and causal-language-model labels.
+- [TRL 0.29.1 SFTTrainer and SFTConfig](https://huggingface.co/docs/trl/v0.29.1/en/sft_trainer): `processing_class`, completion-only loss, PEFT models and saved checkpoints.
+- [TRL 0.29.1 DPOTrainer](https://huggingface.co/docs/trl/v0.29.1/en/dpo_trainer): preference schema and explicit reference model.
+- [PEFT 0.19.0 release](https://github.com/huggingface/peft/releases/tag/v0.19.0): Transformers 5 compatibility fixes.
+- [Transformers GPT-2 implementation](https://github.com/huggingface/transformers/blob/v5.10.4/src/transformers/models/gpt2/modeling_gpt2.py): model configuration and causal-language-model labels.
