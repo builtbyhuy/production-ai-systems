@@ -91,15 +91,33 @@
       "name": "Multi-agent research",
       "readme": "projects/03-multi-agent-research/README.md",
       "implementation": "implemented",
-      "implementation_scope": "Four substantive CrewAI roles and tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.",
-      "evidence_level": "real CrewAI + actual-model failed attempt",
+      "implementation_scope": "Four native LangGraph roles and typed host tools, evidence-linked fact checking, contradictions, source quarantine, bounded calls/deadlines/revisions, durable audit and P15 handoff; explicit authorized web mode.",
+      "evidence_level": "native LangGraph + actual local Qwen case",
       "overall_acceptance": "INCOMPLETE",
-      "blocker": "Small-model run timed out; live web and general research quality unverified; isolated dependency advisories.",
-      "next_action": "Resolve framework dependency advisories and evaluate a suitable local model/configuration against the bounded research contract; provision only reviewed web targets.",
-      "next_command": ".venv/bin/python -m pais demo 03 --profile fixture --output artifacts/p03-crewai.json",
+      "blocker": "Live web and unseen/general research quality remain unverified.",
+      "next_action": "Evaluate unseen research evidence/model quality separately and provision only reviewed live web targets.",
+      "next_command": "uv run --no-sync pais demo 03 --profile fixture --output artifacts/p03-langgraph-current.json",
       "criteria": [
         {
-          "criterion": "Actual CrewAI orchestration and rejection/approval paths",
+          "criterion": "Current native LangGraph orchestration and rejection/approval contracts",
+          "status": "pass",
+          "result": "Eleven isolated and six core checks passed, including a fresh frozen install. CrewAI/ChromaDB removed through normal resolution; existing rejection and approval assertions preserved.",
+          "evidence": [
+            "projects/03-multi-agent-research/test_langgraph.py",
+            "tests/test_research.py"
+          ]
+        },
+        {
+          "criterion": "Current actual local Qwen completing bounded research and local approval",
+          "status": "pass",
+          "result": "Clean10e53e8 completed four real model responses/two tools in6.91s; P15 approval recorded a durable local effect with external_delivery=false. This is one curated evidence case, not unseen research quality.",
+          "evidence": [
+            "docs/functional-verification-20260930.json",
+            "docs/FUNCTIONAL_VERIFICATION.md"
+          ]
+        },
+        {
+          "criterion": "Historical CrewAI orchestration and rejection/approval paths",
           "status": "pass",
           "result": "Five isolated real-library tests exercise four roles, tools, evidence rejection, malicious sources and budget termination; model responses deterministic. Final clean-commit five-test run passed; upstream callback-serialization warnings limit native framework checkpoint claims.",
           "evidence": [
@@ -108,7 +126,7 @@
           ]
         },
         {
-          "criterion": "Actual local model completing research",
+          "criterion": "Historical local model research attempt",
           "status": "fail",
           "result": "Qwen1.5B received one response, timed out on call2 after70.02s, executed zero tools; no fixture fallback.",
           "evidence": [

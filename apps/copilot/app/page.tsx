@@ -2,6 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type {
   Approval,
@@ -609,15 +610,16 @@ export default function Copilot() {
   if (!token || !principal)
     return (
       <main className="connect-layout">
-        <section className="connect-story">
+        <header className="connect-header">
           <div className="brand">
             <span className="brand-mark">
               <Icon name="spark" />
             </span>{" "}
             OPERATIONS<span className="brand-light">COPILOT</span>
           </div>
+        </header>
+        <section className="connect-story">
           <div className="connect-copy">
-            <span className="eyebrow">A WORKSPACE BUILT ON EVIDENCE</span>
             <h1>
               Know where your
               <br />
@@ -627,26 +629,11 @@ export default function Copilot() {
               Bring your operating documents. Ask a question. Inspect the source
               before taking the next step.
             </p>
-            <div className="connect-capabilities">
-              <span>
-                <Icon name="file" /> Versioned documents
-              </span>
-              <span>
-                <Icon name="link" /> Page-level sources
-              </span>
-              <span>
-                <Icon name="shield" /> Human approvals
-              </span>
-            </div>
           </div>
-          <p className="connect-foot">
-            Technical operations, with a traceable path from question to action.
-          </p>
         </section>
-        <section className="connect-form">
+        <section className="connect-form" aria-labelledby="connect-heading">
           <div className="connect-card">
-            <span className="eyebrow">WELCOME TO YOUR WORKSPACE</span>
-            <h2>Connect to continue</h2>
+            <h2 id="connect-heading">Connect to continue</h2>
             <p>Use the workspace credential supplied by your administrator.</p>
             <form
               onSubmit={(event) => {
@@ -712,6 +699,20 @@ export default function Copilot() {
             )}
           </div>
         </section>
+        <figure className="connect-preview">
+          <Image
+            src="/copilot-preview.png"
+            width={1440}
+            height={960}
+            sizes="(max-width: 1023px) calc(100vw - 48px), (max-width: 1320px) calc(100vw - 500px), 780px"
+            priority
+            alt="The PDF copilot answering an operating-pressure question with a citation to page 2 of the source document."
+          />
+          <figcaption>
+            Actual local-model run, 30 September 2026. A source-page citation in
+            the working copilot.
+          </figcaption>
+        </figure>
       </main>
     );
 

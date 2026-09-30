@@ -1,7 +1,7 @@
 # P07 — A local stack with explicit model and storage boundaries
 
 Run actual generation, embeddings, reranking, PDF provenance and tenant-filtered retrieval
-on one CPU machine. SQLite/sqlite-vec is the default. LanceDB is a separately implemented,
+on one local machine. Reranking runs on CPU; native Ollama selects the available device. SQLite/sqlite-vec is the default. LanceDB is a separately implemented,
 selectable local vector store; selecting it does not launch a second vector service.
 
 **Evidence:** both actual storage implementations pass the shared fixture contracts.
@@ -24,10 +24,27 @@ Install official native [Ollama](https://ollama.com/download) for your platform.
 verification used Ollama 0.34.4; macOS can use the native application. With the server running,
 the explicit initial downloads are:
 
+Start the server from the repository root in a separate terminal and keep it running:
+
+```bash
+OLLAMA_HOST=127.0.0.1:11434 OLLAMA_MODELS="$PWD/models/ollama" OLLAMA_NO_CLOUD=1 OLLAMA_CONTEXT_LENGTH=2048 ollama serve
+```
+
+The pulls, lock creation and later API must use this same server and model directory.
+Run the following in the original repository terminal:
+
 ```bash
 ollama pull qwen2.5:1.5b
 ollama pull all-minilm:22m
-hf download cross-encoder/ms-marco-MiniLM-L6-v2 --revision 233902d25c440f23af6f7d6e94d2946bac0bee0a --include '*.json' '*.txt' '*.safetensors' --local-dir models/reranker
+uv run --no-sync python - <<'PYTHON'
+from huggingface_hub import snapshot_download
+snapshot_download(
+    "cross-encoder/ms-marco-MiniLM-L6-v2",
+    revision="233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    allow_patterns=["*.json", "*.txt", "*.safetensors"],
+    local_dir="models/reranker", token=False,
+)
+PYTHON
 .venv/bin/python projects/07-local-first/lock_models.py --reranker-dir models/reranker --output models/local-models.lock.json
 ```
 

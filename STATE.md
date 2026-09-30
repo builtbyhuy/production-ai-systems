@@ -23,24 +23,69 @@ Final committed-revision checks are recorded in docs/REDTEAM.md when completed.
 
 ## Historical source identities
 
-- c7b8a793f34795f3d2de148c1c5c211845e8b222: actual-model release144/144,
-  degraded96/48, core262, local/browser/stateful checks; source hashes match Git objects.
+- c7b8a793f34795f3d2de148c1c5c211845e8b222: actual-model release 144/144,
+  degraded 96/48, core262, local/browser/stateful checks; source hashes match Git objects.
 - 9f8e0fdf41f3a170004c297c24b18ab01da7f25b: isolated training CLI dependency
   correction and actual tiny SFT/DPO reproduction, quality still rejected.
 - a1e0a0c2068f3e86c90257c6c246ac2fc4afad34: original documentation handoff.
 
 Historical reports retain their commits, timestamps and dirty flags. They do not attest
-the repaired revision. No new actual-model or production-deployment claim is made.
+the repaired revision. Current actual-model results have their own clean source identity below; no production-deployment claim is made.
 
 ## Remaining gates
 
-Production dependency advisories/scan gaps, hostile-code sandbox and real inference
+Historical installed-environment audit coverage gaps, hostile-code sandbox and real inference
 serving remain unresolved. External SaaS, registry/cluster rollout/rollback, downstream
 receipt reconciliation and upstream submission still require independently verified targets.
 Router savings, 10k-vector quality and tiny training quality are unproven or failed.
 The eight audit cases reuse development templates; direct source access was reviewed here.
 
-## Continue locally
+## Current functional revision
+
+The owner approved P03 CrewAI→LangGraph on 30 September 2026. The research graph
+retains fixed roles/tools, tenant/source validation, deadlines, budgets and P15 review.
+Clean application `10e53e8` passed actual local research (four Qwen responses/two tools,
+executed local approval), SQLite/LanceDB13/13 each, real-model browser 1/1 and full local
+release 144/144. Degraded local96/48 exits1 with zero errors/skips. All18 bounded fixture
+demo entrypoints run. Local334 contracts, LangGraph11 and realGuardrails3 pass.
+
+[Linux Actions36684470475](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36684470475)
+passed337 contracts, both complete fixture gates, browser 14, lint/types/build and actual
+offline SFT3/DPO3/export/reloads. Its clean merge tree matches `10e53e8` exactly. The
+unchanged security gate now reports zero HIGH/CRITICAL and secret findings across all
+six locks. P06/P09 compatible upgrades and approved P03 removal resolved the original17
+blocking entries without suppressing advisories or weakening expectations.
+
+`pais setup` installs the required isolated workers. Local dev selects the standard
+model lock and Guardrails worker, respecting explicit overrides. Rejected demo acceptance
+now returns1. README documents explicit Ollama model-directory startup. Small local model
+weights remain ignored; historical CrewAI reports and139 public evidence hashes are preserved.
+See [current verification](docs/FUNCTIONAL_VERIFICATION.md) and its bounded record.
+
+The later clean interface revision `0a7c94e` retains authenticated workspace behavior
+and improves the entrance with Geist, a single light theme and an exact verified
+preview. Type/build and 390/740/1440 layout/focus/contrast checks pass. Fixture browser 14
+and all six actual local checks pass again, including release 144/144 and fresh
+degraded 96/48 with zero errors/skips. The first degraded attempt's one embedding HTTP400
+error is preserved separately; its provider cause remains unknown. No exception was
+swallowed. Linux Actions36687370179 passed the full unchanged CI on an identical
+merge tree. The new bounded interface record preserves the earlier 10e evidence.
+
+The mobile cancellation fixture check now observes partial delivery and activates the
+visible Stop control in one browser turn. This removes a race between driver commands
+within the unchanged 180 ms frame interval. It retains stopped/retry/message-count
+checks and also verifies identical request/conversation IDs. Targeted desktop/mobile
+checks pass without retries or timing/expectation changes. Application handlers and
+model dependencies are unchanged; full CI remains the publication gate.
+
+The model regression is synthetic and does not establish broad quality or authorize a
+production cluster. Remaining acceptance gates above remain independent. Continue with:
+
+```bash
+uv run --no-sync pais setup --profile local
+# Start Ollama with the exact model directory as documented in README.
+PAIS_ALLOW_FIXTURE_AUTH=1 uv run --no-sync pais dev --profile local
+```
 
 Publication reproduction on 30 September 2026 used clean `48649a9` on macOS/ARM:
 332 Python checks, 144/144 fixture evaluation, degraded 96/48 with exit 1, 14/14 browser,

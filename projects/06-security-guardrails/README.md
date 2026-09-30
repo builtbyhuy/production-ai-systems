@@ -5,6 +5,14 @@ content protection, shared rate/concurrency limits, SSRF controls, and a fail-cl
 adapter are implemented. **Verified:** custom rules, real Guardrails AI 0.6.8, concurrency and
 tenant/tool denial. **Incomplete:** real container file/network/resource-denial acceptance.
 
+The current frozen environment uses Guardrails AI **0.11.0**, LangChain Core **1.6.6**
+and LiteLLM **1.103.1**. Guardrails 0.6.8 restricted LangChain Core to `<0.4`, which
+excluded the security fix in 1.2.22. The security update preserves the same three
+real-framework validation/rejection/failure tests; all three passed on macOS/ARM.
+The 0.6.8 result above remains the historical baseline. See the current CI run
+for Linux verification; an application test pass does not clear the whole repository's
+dependency gate.
+
 ## Architecture and threat model
 
 Bearer credentials resolve into `Principal` on the server. The client cannot authorize a tenant

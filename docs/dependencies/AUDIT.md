@@ -1,5 +1,51 @@
 # Dependency audit and production gate
 
+## 30 September security remediation candidate
+
+The original published Actions run on `97f4efe` reported **17 HIGH/CRITICAL advisory
+entries**. After the P06/P09 upgrades, Linux Actions
+[36680942968](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36680942968)
+passed the application, browser, validator and actual tiny SFT/DPO checks, then failed
+only on four ChromaDB entries. The owner subsequently approved replacing P03 CrewAI
+with LangGraph. Normal dependency resolution removed CrewAI and ChromaDB entirely.
+
+A local Trivy **0.74.0** scan at `2026-09-30T07:21:05Z` of the dirty migration candidate
+reports **zero HIGH/CRITICAL entries and zero secret findings** across all six lockfiles,
+including development dependencies. The later clean candidate passed [Linux Actions36684470475](https://github.com/builtbyhuy/production-ai-systems/actions/runs/36684470475), with the unchanged gate reporting zero HIGH/CRITICAL and secret findings.
+This is known-advisory scanner evidence, not a production acceptance or security guarantee.
+
+| Environment | Current frozen versions | HIGH/CRITICAL entries in the candidate scan |
+|---|---|---:|
+| P06 Guardrails | Guardrails AI 0.11.0, LangChain Core 1.6.6, LiteLLM 1.103.1 | 0 |
+| P09 training | Transformers 5.10.4, PEFT 0.19.0, TRL 0.29.1, Tokenizers 0.22.2 | 0 |
+| P03 research | LangGraph 1.2.12, LangChain Core 1.6.5; CrewAI/ChromaDB removed | 0 |
+
+Guardrails 0.6.8 restricted LangChain Core to `<0.4`, excluding its patched release;
+the compatible Guardrails upgrade passed the same three real enforcement tests.
+Training retains the exact Linux Torch 2.8.0+cpu prerequisite, offline loading and
+rejected model-quality release gate. Actual three-step SFT and DPO changed their
+adapters while preserving the frozen backbone; both export/reloads matched exactly.
+
+P03 retains tenant/source validation, bounded revisions/calls/deadlines and durable
+approval. Eleven isolated and six core checks passed, including a fresh frozen install.
+A dirty local Qwen diagnostic completed four roles and two tools with a local approval
+receipt; clean `10e53e8` subsequently completed four actual Qwen responses, two tools and a local approval receipt. See [current functional verification](../FUNCTIONAL_VERIFICATION.md). Historical CrewAI reports below
+are preserved and describe their original runtime.
+
+The local candidate scan command was:
+
+```bash
+trivy fs --scanners vuln,secret --severity HIGH,CRITICAL --exit-code 1 \
+  --ignore-unfixed=false --include-dev-deps \
+  --skip-dirs .venv,artifacts,node_modules,models .
+```
+
+The local `models` exclusion covers ignored downloaded weights. All public source and
+six application/project/UI locks were scanned. The GitHub security gate remains unchanged,
+with no advisory suppression, `--ignore-unfixed=false` and no added exclusion.
+
+## Historical installed-environment baseline
+
 Scan date: 2026-09-29. Tool: **pip-audit2.10.1** using the actual installed environments; UI uses `npm audit --omit=dev`. Raw reports are retained, including duplicate advisory records returned by the service. Counts below are affected installed package names, not an estimate of exploitable vulnerabilities.
 
 The fresh application environment was created from the exact frozen `uv.lock`. Its audit lists 164 entries: 162 were queried, the editable project was intentionally skipped, and the CPU-specific Torch build was unmatched by the PyPI advisory lookup. Zero reported findings applies only to the 162 queried entries. An earlier experimental environment had extra packages and is not the final core environment; its scan remains `artifacts/pip-audit-core.json` for provenance.
@@ -15,7 +61,7 @@ The fresh application environment was created from the exact frozen `uv.lock`. I
 | CPU vLLM runtime | 153 / 148 | 1 | Five CPU wheel versions | [pip-audit-inference.json](../../artifacts/pip-audit-inference.json) |
 | UI production dependencies | npm production scope | 0 reported | Development dependencies excluded from this scan | [npm-audit-production.json](../../artifacts/npm-audit-production.json) |
 
-**The whole-repository production dependency gate is not passed.** No advisory has been suppressed or dismissed as a false positive. Functional acceptance of trusted local code remains separate from production supply-chain acceptance. These scans report known advisories at one point in time; zero findings is not a security guarantee.
+**This historical installed-environment baseline did not pass the production dependency gate.** No advisory has been suppressed or dismissed as a false positive. Functional acceptance of trusted local code remains separate from production supply-chain acceptance. These scans report known advisories at one point in time; zero findings is not a security guarantee.
 
 The unmatched inference packages are Torch 2.13.0+cpu, Torchaudio 2.11.0+cpu, Torchcodec 0.16.0+cpu, Torchvision 0.28.0+cpu and vLLM 0.30.0+cpu. Core/training use Torch 2.8.0+cpu. These are explicit scanner coverage gaps, not cleared packages. The earlier training report listed 45 entries with 44 queried and the same three affected packages; adding the declared Pydantic dependency produced the final 49-entry environment.
 

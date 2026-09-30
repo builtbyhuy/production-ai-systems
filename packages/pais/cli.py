@@ -39,7 +39,6 @@ def _offline_defaults() -> None:
         "LANGCHAIN_TRACING_V2": "false",
         "DEEPEVAL_TELEMETRY_OPT_OUT": "YES",
         "RAGAS_DO_NOT_TRACK": "true",
-        "CREWAI_TELEMETRY_ENABLED": "false",
         "LITELLM_LOCAL_MODEL_COST_MAP": "True",
         "HF_HUB_DISABLE_TELEMETRY": "1",
         "TOKENIZERS_PARALLELISM": "false",
@@ -50,9 +49,8 @@ def _offline_defaults() -> None:
 
 def _demo(project: str, profile: str, output: Path, backend: str) -> int:
     project = project.removeprefix("P").zfill(2)
-    # CrewAI and training intentionally have incompatible ML/framework dependency
-    # graphs. The public CLI dispatches to their locked environments, preserving
-    # the same arguments and exit status rather than importing them into core.
+    # Research and training keep independently locked environments. Preserve their
+    # arguments and exit status when dispatching from the public CLI.
     isolated = {
         "03": "03-multi-agent-research",
         "09": "09-lora-training" if profile == "local" else None,
@@ -122,6 +120,7 @@ def _demo(project: str, profile: str, output: Path, backend: str) -> int:
     blocked = isinstance(result, dict) and result.get("status") in {"blocked", "not-run", "not_run"}
     failed = isinstance(result, dict) and (
         result.get("status") == "failed" or result.get("passed") is False
+        or result.get("acceptance") is False
     )
     if isinstance(result, dict) and isinstance(result.get("checks"), dict):
         failed = failed or any(value is not True for value in result["checks"].values())
@@ -200,15 +199,28 @@ def main(argv: list[str] | None = None) -> int:
             p = subprocess.run(command, cwd=ROOT, check=False)
             if p.returncode:
                 return p.returncode
-            return subprocess.run(
-                ["uv", "sync", "--frozen", "--project", "projects/04-eval-harness"],
-                cwd=ROOT,
-                check=False,
-            ).returncode
+            projects = ["03-multi-agent-research", "04-eval-harness", "06-security-guardrails"]
+            if args.profile == "local":
+                projects.append("09-lora-training")
+            for project in projects:
+                result = subprocess.run(
+                    ["uv", "sync", "--frozen", "--project", f"projects/{project}"],
+                    cwd=ROOT,
+                    check=False,
+                )
+                if result.returncode:
+                    return result.returncode
+            return 0
         if args.command == "dev":
             env = dict(os.environ, PAIS_PROFILE=args.profile)
             if args.profile == "fixture":
                 env["PAIS_ALLOW_FIXTURE_AUTH"] = "1"
+            else:
+                env.setdefault("PAIS_GUARDRAILS_PYTHON", str(
+                    ROOT / "projects/06-security-guardrails/.venv" /
+                    ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+                ))
+                env.setdefault("PAIS_MODEL_LOCK", str(ROOT / "models/local-models.lock.json"))
             return subprocess.run(
                 [
                     sys.executable,

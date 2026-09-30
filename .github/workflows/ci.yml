@@ -48,8 +48,22 @@ jobs:
         run: |
           uv sync --frozen --project projects/03-multi-agent-research
           uv sync --frozen --project projects/06-security-guardrails --group dev
-          PYTHONPATH="$GITHUB_WORKSPACE/packages:$GITHUB_WORKSPACE" projects/03-multi-agent-research/.venv/bin/python -m pytest projects/03-multi-agent-research/test_crewai.py -q
+          PYTHONPATH="$GITHUB_WORKSPACE/packages:$GITHUB_WORKSPACE" projects/03-multi-agent-research/.venv/bin/python -m pytest projects/03-multi-agent-research/test_langgraph.py -q
           PYTHONPATH="$GITHUB_WORKSPACE/packages:$GITHUB_WORKSPACE" projects/06-security-guardrails/.venv/bin/python -m pytest projects/06-security-guardrails/test_guardrails_real.py -q
+      - name: Offline tiny SFT/DPO compatibility; no model-quality release claim
+        run: |
+          uv sync --frozen --project projects/09-lora-training
+          PYTHONPATH="$GITHUB_WORKSPACE/packages" projects/09-lora-training/.venv/bin/python -m pais.training smoke --output artifacts/ci/training
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path("artifacts/ci/training/training-result.json").read_text())
+          assert result["sft_steps"] == result["dpo_steps"] == 3
+          assert result["sft_adapter_changed"] and result["dpo_adapter_changed"]
+          assert result["frozen_backbone_unchanged"]
+          assert result["release_approved"] is False
+          assert result["substantive_quality_verified"] is False
+          PY
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # verified v6 ref
         with:
           node-version: '24.19.0'
@@ -78,6 +92,8 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: fixture-evaluation-${{ github.sha }}
-          path: artifacts/ci/evals/
+          path: |
+            artifacts/ci/evals/
+            artifacts/ci/training/training-result.json
           if-no-files-found: warn
           retention-days: 14

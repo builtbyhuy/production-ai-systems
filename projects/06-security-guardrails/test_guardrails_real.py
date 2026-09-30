@@ -7,7 +7,7 @@ from pais.security import GuardrailsEnforcer, SecurityPolicy, SecurityViolation
 
 def test_actual_guardrails_validates_and_rejects():
     guard = GuardrailsEnforcer()
-    assert version("guardrails-ai") == "0.6.8"
+    assert version("guardrails-ai") == "0.11.0"
     assert guard.validate("Deployment timeout is 30 seconds") == "Deployment timeout is 30 seconds"
     with pytest.raises(SecurityViolation):
         guard.validate("-----BEGIN PRIVATE KEY----- fixture-only-not-a-real-key")

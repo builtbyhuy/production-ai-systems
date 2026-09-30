@@ -54,8 +54,9 @@ SSE output is buffered until complete protected output passes validation. This m
 streams validated text and measures first display separately from provider TTFT. It cannot
 claim unrestricted live provider-token output with equivalent full-message safety checks.
 
-RAGAS and CrewAI use isolated environments where their dependency families conflict with the
-modern application graph. Default fixture tests never masquerade as model training or hosted
+Evaluation, research and training use independently locked environments. P03 now uses
+LangGraph; historical CrewAI results retain their original source identities.
+Default fixture tests never masquerade as model training or hosted
 integration evidence. Every project remains incomplete until its own acceptance obligations pass.
 
 ## Deployment boundary

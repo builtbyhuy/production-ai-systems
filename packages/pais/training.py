@@ -43,12 +43,12 @@ CRITERIA = {
 }
 REQUIRED_VERSIONS = {
     "torch": "2.8.0+cpu",
-    "transformers": "4.56.2",
-    "peft": "0.17.1",
+    "transformers": "5.10.4",
+    "peft": "0.19.0",
     "datasets": "4.1.1",
-    "trl": "0.23.1",
+    "trl": "0.29.1",
     "accelerate": "1.10.1",
-    "tokenizers": "0.22.0",
+    "tokenizers": "0.22.2",
     "safetensors": "0.6.2",
 }
 
@@ -878,10 +878,8 @@ def run_pipeline(config_path: str | Path, output_dir: str | Path) -> dict:
         args=DPOConfig(
             output_dir=str(out / "dpo-checkpoints"),
             max_length=config["max_length"],
-            max_prompt_length=config["max_length"] - 16,
             beta=config["dpo_beta"],
             loss_type="sigmoid",
-            force_use_ref_model=True,
             disable_dropout=True,
             **common,
         ),

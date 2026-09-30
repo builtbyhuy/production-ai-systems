@@ -1,0 +1,220 @@
+{
+  "scope": "Actual local synthetic regression and Linux compatibility; not production deployment or general model quality.",
+  "tested_application_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+  "source_snapshot_sha256": "f4a0d71907e241424fda42b487ddac6b1235105d9c6b2ffd316fb12f6ffe9e3e",
+  "local_environment": {
+    "python": "3.12.13",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "hardware": {
+      "cpu_model": "arm",
+      "architecture": "arm64",
+      "memory_cgroup_bytes": null,
+      "cpu_cgroup_quota": null
+    }
+  },
+  "dataset_hashes": {
+    "evals/audit.json": "a710224f34bd9861567d424146c5f1301dd922575c12cc3e1b3032f1557cb7ef",
+    "evals/corpus.json": "19b6826c771c1b122bda03e792c2193f4d540a5d4e917714e7d08097cdfc009b",
+    "evals/development.json": "5ef533bdd5e2b91ea5de5bfe93b8508bcf3d243e068dbadcd215319d491dad51",
+    "evals/manifest.json": "5dd2a2ba7ee930fc4dfdafa8f8bc0e84b24b4ae9f7d790212be3c1fd5988db8b",
+    "evals/release.json": "bd1b14b140771975cb9f9364437c0276e04d1c63271225565ec5d63ff5dd5c1a",
+    "evals/thresholds.json": "ff7c300575077a04de08a96b91a49f3c302566c49d05dc3f22803e0c9a7cf70b"
+  },
+  "models": {
+    "schema_version": 1,
+    "generation": {
+      "name": "qwen2.5:1.5b",
+      "digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b"
+    },
+    "embedding": {
+      "name": "all-minilm:22m",
+      "digest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+      "dimensions": 384
+    },
+    "reranker": {
+      "repository": "cross-encoder/ms-marco-MiniLM-L6-v2",
+      "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+      "files": {
+        "config.json": "380e02c93f431831be65d99a4e7e5f67c133985bf2e77d9d4eba46847190bacc",
+        "model.safetensors": "821d1aa69520101d6e0737f78a042ae25b19e5cb9160701909d10434f4aeb0ae",
+        "special_tokens_map.json": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6",
+        "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "tokenizer_config.json": "a5c2e5a7b1a29a0702cd28c08a399b5ecc110c263009d17f7e3b415f25905fd8",
+        "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+      }
+    },
+    "provisioning_note": "Model revision selected before download; file hashes bind this exact local copy."
+  },
+  "checks": [
+    {
+      "check": "research",
+      "command": "projects/03-multi-agent-research/.venv/bin/python projects/03-multi-agent-research/local_attempt.py --output PRIVATE_OUTPUT/checks-native-10e53e8/research --approve-local",
+      "timestamp_utc": "2026-09-30T07:34:27.712344+00:00",
+      "profile": "local",
+      "tested_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 7.167,
+      "report_sha256": "7da783a81851339a278623b86460192089aacac3c366f5e1e93e739933cd32e9"
+    },
+    {
+      "check": "rag-sqlite",
+      "command": ".venv/bin/python projects/01-rag-citations/demo.py --profile local --backend sqlite --output PRIVATE_OUTPUT/checks-native-10e53e8/rag-sqlite.json",
+      "timestamp_utc": "2026-09-30T07:34:35.140406+00:00",
+      "profile": "local",
+      "tested_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 13.129,
+      "report_sha256": "74737a48f1e9e75e6928470167e6cfc5ccf5fa3bfe9b727ea63bc945ed0c56a4"
+    },
+    {
+      "check": "rag-lancedb",
+      "command": ".venv/bin/python projects/01-rag-citations/demo.py --profile local --backend lancedb --output PRIVATE_OUTPUT/checks-native-10e53e8/rag-lancedb.json",
+      "timestamp_utc": "2026-09-30T07:34:48.468080+00:00",
+      "profile": "local",
+      "tested_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 13.342,
+      "report_sha256": "208232ae4f8e3b0bd1d2f45c0f6b629e54671817af322d9c0c6d195092ef031a"
+    },
+    {
+      "check": "browser",
+      "command": ".venv/bin/python projects/08-streaming-ui/run_browser_tests.py --profile local --output-dir PRIVATE_OUTPUT/checks-native-10e53e8/browser",
+      "timestamp_utc": "2026-09-30T07:35:02.045438+00:00",
+      "profile": "local",
+      "tested_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 20.788,
+      "report_sha256": "9b3e507be7807faee9a8df193ea4881fdce724d20e401fc90dc3454b0612762b"
+    },
+    {
+      "check": "release",
+      "command": ".venv/bin/python -m pais eval --profile local --suite release --output PRIVATE_OUTPUT/checks-native-10e53e8/release.json",
+      "timestamp_utc": "2026-09-30T07:35:23.014538+00:00",
+      "profile": "local",
+      "tested_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+      "dirty_tree": false,
+      "exit_status": 0,
+      "elapsed_seconds": 154.877,
+      "report_sha256": "b1fba4f219a4077ec583ab8294a3d808fdf04caa7e32ed8a46000a6f2c7cad90"
+    },
+    {
+      "check": "degraded",
+      "command": ".venv/bin/python -m pais eval --profile local --suite release --degraded --output PRIVATE_OUTPUT/checks-native-10e53e8/degraded.json",
+      "timestamp_utc": "2026-09-30T07:37:58.084901+00:00",
+      "profile": "local",
+      "tested_commit": "10e53e8c3282cca906e19807e7adf6f5eaf55821",
+      "dirty_tree": false,
+      "exit_status": 1,
+      "elapsed_seconds": 157.262,
+      "report_sha256": "9dbb646f1c49ef18a8bee131b03c1d2acba66c23a29d840b70cd94591e871591"
+    }
+  ],
+  "research": {
+    "actual_langgraph": true,
+    "model_responses": 4,
+    "tool_executions": 2,
+    "approval_status": "executed",
+    "external_delivery": false
+  },
+  "rag": {
+    "rag-sqlite": {
+      "cross_page_citations": true,
+      "unanswerable_abstained": true,
+      "injected_source_not_followed": true,
+      "duplicate_same_version": true,
+      "incorrect_page_rejected": true,
+      "conflict_surfaced": true,
+      "replacement_new_version": true,
+      "old_citation_still_valid": true,
+      "old_version_inactive": true,
+      "new_answer_uses_replacement": true,
+      "cross_tenant_search_empty": true,
+      "deleted_citation_unavailable": true,
+      "malformed_rejected": true
+    },
+    "rag-lancedb": {
+      "cross_page_citations": true,
+      "unanswerable_abstained": true,
+      "injected_source_not_followed": true,
+      "duplicate_same_version": true,
+      "incorrect_page_rejected": true,
+      "conflict_surfaced": true,
+      "replacement_new_version": true,
+      "old_citation_still_valid": true,
+      "old_version_inactive": true,
+      "new_answer_uses_replacement": true,
+      "cross_tenant_search_empty": true,
+      "deleted_citation_unavailable": true,
+      "malformed_rejected": true
+    }
+  },
+  "browser": {
+    "test_counts": {
+      "startTime": "2026-09-30T07:35:03.057Z",
+      "duration": 19705.142,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "mocked_responses": false,
+    "screenshot_sha256": "44de9c467910d52c3d406eb2ae11f35e9a4666d8cd2d3b8da9406679ae7bce0a"
+  },
+  "evaluations": {
+    "release": {
+      "total": 144,
+      "passed": 144,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "gate_passed": true
+    },
+    "degraded": {
+      "total": 144,
+      "passed": 96,
+      "failed": 48,
+      "errors": 0,
+      "skipped": 0,
+      "gate_passed": false
+    }
+  },
+  "actual_qwen_responses": 56,
+  "linux_ci": {
+    "url": "https://github.com/builtbyhuy/production-ai-systems/actions/runs/36684470475",
+    "tested_merge_commit": "6c4a215f3b0874aa86ba45d6517e49f133237427",
+    "tree": "38c6fb2e78b4c745c4f52a37e9fa764917bc2a19",
+    "conclusion": "success",
+    "python_tests": 337,
+    "langgraph_tests": 11,
+    "guardrails_tests": 3,
+    "browser_tests": 14,
+    "high_critical_findings": 0,
+    "secret_findings": 0,
+    "training": {
+      "sft_steps": 3,
+      "dpo_steps": 3,
+      "sft_adapter_changed": true,
+      "dpo_adapter_changed": true,
+      "frozen_backbone_unchanged": true,
+      "release_approved": false,
+      "substantive_quality_verified": false
+    },
+    "reloads": {
+      "sft_export": {
+        "reload_verified": true,
+        "max_logit_absolute_difference": 0.0
+      },
+      "dpo_export": {
+        "reload_verified": true,
+        "max_logit_absolute_difference": 0.0
+      }
+    }
+  },
+  "preserved_historical_evidence": 139,
+  "command_note": "Private output paths normalized; exact commands and full reports retained outside the public source."
+}

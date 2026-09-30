@@ -6,10 +6,10 @@ Upload a PDF, ask a question, open the exact source page and review a proposed a
 before it executes. The project brings retrieval, identity, output validation, evaluation
 and recovery together in one working application.
 
-![Local copilot answering an operational question with a source-page citation](docs/images/copilot-local.png)
+![Local copilot answering an operational question with a source-page citation](docs/images/copilot-interface-local-20260930.png)
 
-*Actual local-model browser run from 29 September 2026. The current redteam revision
-has separate verification; this image is evidence of the original tested application.*
+*Actual Qwen local-model browser run on clean `0a7c94e`, 30 September 2026.
+[Current verification](docs/FUNCTIONAL_VERIFICATION.md) records the application and CI results.*
 
 This is an independent, AI-assisted engineering portfolio. It demonstrates a local
 application and 18 related modules or experiments. Production acceptance remains
@@ -42,6 +42,7 @@ the fixture demo. Fixture responses are deterministic and visibly labelled.
 git clone https://github.com/builtbyhuy/production-ai-systems.git
 cd production-ai-systems
 uv sync --frozen --group dev --extra vectors --extra router --extra workflows
+uv run --no-sync pais setup --profile fixture
 uv run --no-sync pais demo 01 --profile fixture
 ```
 
@@ -65,6 +66,30 @@ upload a text PDF, ask a question and open its citation. The
 [UI guide](projects/08-streaming-ui/README.md) documents credentials, approval and recovery.
 For actual local generation, embeddings and reranking, follow
 [local-model provisioning](projects/07-local-first/README.md).
+
+Once those small models are provisioned and locked, install the complete local runtime:
+
+```bash
+uv run --no-sync pais setup --profile local
+```
+
+Start the native Ollama server in the repository root, using the same model store as
+provisioning (keep this terminal open):
+
+```bash
+OLLAMA_HOST=127.0.0.1:11434 OLLAMA_MODELS="$PWD/models/ollama" OLLAMA_NO_CLOUD=1 OLLAMA_CONTEXT_LENGTH=2048 ollama serve
+```
+
+In another terminal, start the API; the frontend commands above stay the same:
+
+```bash
+PAIS_ALLOW_FIXTURE_AUTH=1 uv run --no-sync pais dev --profile local
+```
+
+Choose **Open local test workspace**. The CLI selects the isolated Guardrails validator
+and standard model lock; explicit environment settings take precedence. Test identities
+are restricted to the opted-in development workspace. Answers use the actual local model
+and never fall back to fixture responses.
 
 ## Verify the behavior
 
@@ -96,7 +121,7 @@ Other experiments expose useful failures: routing did not improve over the cheap
 hybrid recall@1 fell to 0.21 at 10,000 synthetic documents; tiny SFT/DPO models achieved
 0% held-out exact match. Hostile-code execution stays disabled, vLLM serving did not start,
 and external SaaS, cluster and upstream submission criteria remain unfinished.
-Reported dependency advisories also block production promotion. The
+Current dependency remediation is tracked in [the audit](docs/dependencies/AUDIT.md). The
 [verification report](docs/VERIFICATION.md) preserves these results and remaining work.
 
 ## Explore the lab
