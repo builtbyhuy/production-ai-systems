@@ -6,6 +6,26 @@ from types import SimpleNamespace
 from pais import cli
 
 
+def test_p03_tool_failure_returns_nonzero_and_preserves_failed_runs(monkeypatch, tmp_path):
+    from pais.research import ResearchService
+
+    def unavailable(*args):
+        raise RuntimeError("controlled corpus unavailable")
+
+    # Exercise the in-process P03 dispatcher; LangGraph itself still runs.
+    monkeypatch.setattr(cli.sys, "prefix", str(cli.ROOT / "projects/03-multi-agent-research/.venv"))
+    monkeypatch.setattr(ResearchService, "_lookup", unavailable)
+    target = tmp_path / "failed-research.json"
+    assert cli._demo("03", "fixture", target, "sqlite") == 1
+    report = json.loads(target.read_text())
+    assert report["exit_status"] == 1
+    assert report["result"]["acceptance"] is False
+    for name in ("accepted_run", "rejected_run"):
+        run = report["result"][name]
+        assert run["status"] == "failed" and run["actual_langgraph"] is True
+        assert run["tools_executed"] == [] and run["calls"] == 2
+
+
 def test_demo_failed_check_returns_nonzero_and_preserves_report(monkeypatch, tmp_path):
     module = SimpleNamespace(
         demo=lambda profile: {

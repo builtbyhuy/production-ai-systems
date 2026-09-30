@@ -120,6 +120,7 @@ def _demo(project: str, profile: str, output: Path, backend: str) -> int:
     blocked = isinstance(result, dict) and result.get("status") in {"blocked", "not-run", "not_run"}
     failed = isinstance(result, dict) and (
         result.get("status") == "failed" or result.get("passed") is False
+        or result.get("acceptance") is False
     )
     if isinstance(result, dict) and isinstance(result.get("checks"), dict):
         failed = failed or any(value is not True for value in result["checks"].values())
