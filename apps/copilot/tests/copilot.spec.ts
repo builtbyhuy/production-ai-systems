@@ -145,21 +145,58 @@ test("PDF upload, first display, exact source page, keyboard return, actual scre
 test("cancel partial delivery and retry without duplicate messages", async ({
   page,
 }) => {
+  const sent: { message_id: string; conversation_id: string }[] = [];
+  page.on("request", (request) => {
+    if (request.url().endsWith("/api/chat/stream")) {
+      sent.push(request.postDataJSON());
+    }
+  });
   await connect(page);
   await ask(page);
-  await expect(
-    page.locator(".message.assistant .message-text").last(),
-  ).toContainText("8 bar");
-  const assistantId = await page
-    .locator(".message.assistant")
-    .last()
-    .getAttribute("data-message-id");
-  await page.getByRole("button", { name: "Stop response" }).click();
+  // Observe partial API delivery and stop in the same browser turn. Separate
+  // driver round trips can outlast the fixture's 180 ms frame interval.
+  const stoppedMessage = await page.waitForFunction(() => {
+    const assistant = [...document.querySelectorAll(".message.assistant")].at(
+      -1,
+    );
+    const stop = document.querySelector<HTMLButtonElement>(".stop-button");
+    const id = assistant?.getAttribute("data-message-id");
+    if (
+      !id ||
+      !assistant
+        ?.querySelector(".message-text")
+        ?.textContent?.includes("8 bar") ||
+      assistant.querySelector(".citations") ||
+      !stop ||
+      stop.disabled
+    )
+      return null;
+    const style = getComputedStyle(stop);
+    const bounds = stop.getBoundingClientRect();
+    if (
+      style.display === "none" ||
+      style.visibility !== "visible" ||
+      Number(style.opacity) <= 0 ||
+      bounds.width <= 0 ||
+      bounds.height <= 0 ||
+      bounds.right <= 0 ||
+      bounds.bottom <= 0 ||
+      bounds.left >= window.innerWidth ||
+      bounds.top >= window.innerHeight
+    )
+      return null;
+    stop.click();
+    return id;
+  });
+  const assistantId = await stoppedMessage.jsonValue();
   await expect(
     page.getByRole("status").filter({ hasText: "Delivery stopped" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Retry message" }).click();
   await finished(page);
+  expect(sent).toHaveLength(2);
+  expect(sent[0].message_id).toBe(sent[1].message_id);
+  expect(sent[0].conversation_id).toBe(sent[1].conversation_id);
   await expect(page.locator(".message.user")).toHaveCount(1);
   await expect(page.locator(".message.assistant")).toHaveCount(1);
   await expect(page.locator(".message.assistant")).toHaveAttribute(

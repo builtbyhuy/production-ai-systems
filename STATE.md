@@ -71,6 +71,13 @@ error is preserved separately; its provider cause remains unknown. No exception 
 swallowed. Linux Actions36687370179 passed the full unchanged CI on an identical
 merge tree. The new bounded interface record preserves the earlier 10e evidence.
 
+The mobile cancellation fixture check now observes partial delivery and activates the
+visible Stop control in one browser turn. This removes a race between driver commands
+within the unchanged 180 ms frame interval. It retains stopped/retry/message-count
+checks and also verifies identical request/conversation IDs. Targeted desktop/mobile
+checks pass without retries or timing/expectation changes. Application handlers and
+model dependencies are unchanged; full CI remains the publication gate.
+
 The model regression is synthetic and does not establish broad quality or authorize a
 production cluster. Remaining acceptance gates above remain independent. Continue with:
 
