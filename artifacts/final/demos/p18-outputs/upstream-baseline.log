@@ -1,0 +1,65 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+______ test_delete_thread_rolls_back_both_tables_on_second_delete_failure ______
+
+    def test_delete_thread_rolls_back_both_tables_on_second_delete_failure():
+        with SqliteSaver.from_conn_string(":memory:") as saver:
+            config = saver.put(
+                {"configurable": {"thread_id": "atomic-thread", "checkpoint_ns": ""}},
+                empty_checkpoint(),
+                {"source": "input", "step": 0, "parents": {}},
+                {},
+            )
+            saver.put_writes(config, [("channel", "pending value")], "task-1")
+            saver.conn.execute("""
+                CREATE TRIGGER reject_pending_delete BEFORE DELETE ON writes
+                BEGIN SELECT RAISE(ABORT, 'injected second-delete failure'); END
+            """)
+            saver.conn.commit()
+            with pytest.raises(sqlite3.IntegrityError, match="second-delete failure"):
+                saver.delete_thread("atomic-thread")
+>           assert saver.conn.execute("SELECT count(*) FROM checkpoints").fetchone()[0] == 1
+E           assert 0 == 1
+
+libs/checkpoint-sqlite/tests/test_transaction_atomicity.py:26: AssertionError
+_______________ test_cursor_rolls_back_when_body_is_interrupted ________________
+
+    def test_cursor_rolls_back_when_body_is_interrupted():
+        with SqliteSaver.from_conn_string(":memory:") as saver:
+            saver.setup()
+            with pytest.raises(KeyboardInterrupt), saver.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO writes VALUES('t','','c','task',0,'channel','json',?)", (b'"value"',)
+                )
+                raise KeyboardInterrupt
+>           assert saver.conn.execute("SELECT count(*) FROM writes").fetchone()[0] == 0
+E           assert 1 == 0
+
+libs/checkpoint-sqlite/tests/test_transaction_atomicity.py:44: AssertionError
+______________ test_cursor_closes_and_rolls_back_if_commit_fails _______________
+
+    def test_cursor_closes_and_rolls_back_if_commit_fails():
+        class FailingCommitConnection(sqlite3.Connection):
+            def commit(self):
+                raise sqlite3.OperationalError("injected commit failure")
+    
+        connection = sqlite3.connect(":memory:", factory=FailingCommitConnection)
+        try:
+            saver = SqliteSaver(connection)
+            saver.setup()
+            with (
+                pytest.raises(sqlite3.OperationalError, match="commit failure"),
+                saver.cursor() as cursor,
+            ):
+                cursor.execute(
+                    "INSERT INTO writes VALUES('t','','c','task',0,'channel','json',?)", (b'"value"',)
+                )
+>           assert connection.execute("SELECT count(*) FROM writes").fetchone()[0] == 0
+E           assert 1 == 0
+
+libs/checkpoint-sqlite/tests/test_transaction_atomicity.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../dev::test_delete_thread_rolls_back_both_tables_on_second_delete_failure
+FAILED ../../../dev::test_cursor_rolls_back_when_body_is_interrupted - assert...
+FAILED ../../../dev::test_cursor_closes_and_rolls_back_if_commit_fails - asse...
+3 failed, 1 passed in 0.24s

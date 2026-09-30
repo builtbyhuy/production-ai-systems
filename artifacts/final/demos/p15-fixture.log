@@ -1,0 +1,41 @@
+{
+  "profile": "fixture",
+  "langgraph_executed": true,
+  "durable_restart": true,
+  "status": "executed",
+  "history": [
+    {
+      "seq": 1,
+      "actor": "reviewer-a",
+      "event": "requested",
+      "detail": {
+        "action_hash": "bdbfab432af3317b9c469161a52c74fd27c31e9a3a102e9902b7c623d5ce6075"
+      },
+      "occurred_at": "2026-09-29T11:05:15.334132+00:00"
+    },
+    {
+      "seq": 2,
+      "actor": "reviewer-a",
+      "event": "approved",
+      "detail": {
+        "action_hash": "bdbfab432af3317b9c469161a52c74fd27c31e9a3a102e9902b7c623d5ce6075"
+      },
+      "occurred_at": "2026-09-29T11:05:15.974882+00:00"
+    },
+    {
+      "seq": 3,
+      "actor": "reviewer-a",
+      "event": "executed",
+      "detail": {
+        "action_hash": "bdbfab432af3317b9c469161a52c74fd27c31e9a3a102e9902b7c623d5ce6075",
+        "adapter": "durable-local-effect-store",
+        "effect_id": "7765b08c617da2f3f77231afd94968b415810c4e82891beb8f5f7812d42a713c",
+        "external_delivery": false
+      },
+      "occurred_at": "2026-09-29T11:05:15.980771+00:00"
+    }
+  ],
+  "external_delivery": false,
+  "uncertainty_calibration": "unverified"
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p15-fixture.json

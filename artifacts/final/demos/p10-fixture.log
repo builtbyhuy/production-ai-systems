@@ -1,0 +1,10 @@
+{
+  "profile": "fixture",
+  "quota_blocked": true,
+  "tenant_a_units": 1,
+  "tenant_b_units": 0,
+  "supabase_authenticated_users": "unverified",
+  "stripe_test_mode_reconciliation": "unverified",
+  "billable_unit": "accepted_application_request"
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p10-fixture.json

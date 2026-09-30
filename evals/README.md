@@ -12,9 +12,11 @@ groups live in their projects and must never ingest these data. The source gener
 expected answers and oracle metadata never enter the model prompt or retrieval index.
 
 The public release suite is a regression suite, not an unseen generalization benchmark.
-The eight-case audit holdout is intentionally small and not statistically conclusive.
-Accessing or running it is logged under `artifacts/evals/audit-exposures.jsonl`. Any repeated
-audit exposure must be disclosed; no development uses audit answers for tuning.
+The eight audit cases are a small source-separated smoke check, not a blind quality
+benchmark. They reuse the development inspection-interval template and numeric values
+with renamed subjects, so they provide little distribution shift. Audit executions are
+logged under `artifacts/evals/audit-exposures.jsonl`; direct source reads are not captured
+by that execution log. Prior source inspection and repeated execution must be disclosed.
 
 Metrics: a real DeepEval custom BaseMetric evaluates exact supporting evidence; RAGAS
 ExactMatch scores structured expected decisions (authorization/abstention/etc.). Raw term

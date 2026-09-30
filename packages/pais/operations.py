@@ -14,7 +14,10 @@ import json
 import math
 import re
 import sqlite3
+import subprocess
 import tempfile
+from collections import Counter
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -272,7 +275,82 @@ class CapabilityFlags:
             ]
 
 
+def _committed_release_contract(commit: str) -> tuple[dict[str, str], dict, list[dict], dict]:
+    """Read the immutable Git objects; a report cannot register its own smaller suite."""
+    from pais.evidence import ROOT
+
+    tree = subprocess.run(
+        ["git", "ls-tree", "-r", "-z", commit], cwd=ROOT, capture_output=True, check=False,
+    )
+    if tree.returncode:
+        raise ReleaseRejected("The tested commit is unavailable in the candidate repository")
+    entries = []
+    for entry in tree.stdout.split(b"\0"):
+        if not entry:
+            continue
+        metadata, raw_name = entry.split(b"\t", 1)
+        mode, kind, object_id = metadata.decode().split()
+        name = raw_name.decode()
+        if name.startswith("artifacts/") or "/evidence/" in name or name.endswith("/EVIDENCE.json"):
+            continue
+        if kind != "blob" or mode not in {"100644", "100755"}:
+            raise ReleaseRejected("Release source snapshots require regular committed files")
+        entries.append((name, object_id))
+    if not entries:
+        raise ReleaseRejected("The tested commit has no source snapshot")
+    objects = subprocess.run(
+        ["git", "cat-file", "--batch"], cwd=ROOT, capture_output=True, check=False,
+        input="".join(object_id + "\n" for _, object_id in entries).encode(),
+    )
+    if objects.returncode:
+        raise ReleaseRejected("Unable to read tested source objects")
+    hashes, contract_files = {}, {}
+    contract_names = {"evals/release.json", "evals/corpus.json", "evals/thresholds.json", "evals/manifest.json"}
+    cursor = 0
+    try:
+        for name, object_id in entries:
+            end = objects.stdout.index(b"\n", cursor)
+            header = objects.stdout[cursor:end].decode().split()
+            if len(header) != 3 or header[:2] != [object_id, "blob"]:
+                raise ValueError("Invalid Git object response")
+            size = int(header[2])
+            data = objects.stdout[end + 1:end + 1 + size]
+            if len(data) != size or objects.stdout[end + 1 + size:end + 2 + size] != b"\n":
+                raise ValueError("Incomplete Git object response")
+            cursor = end + 2 + size
+            hashes[name] = hashlib.sha256(data).hexdigest()
+            if name in contract_names:
+                contract_files[name] = json.loads(data)
+        if set(contract_files) != contract_names:
+            raise ValueError("Required frozen evaluation files are missing")
+        dataset_manifest = contract_files["evals/manifest.json"]
+        for name in ("release.json", "corpus.json"):
+            if dataset_manifest["files"][name] != hashes["evals/" + name]:
+                raise ValueError("Frozen dataset manifest does not match its source files")
+        cases = contract_files["evals/release.json"]
+        if dataset_manifest["counts"]["release"] != len(cases) or dataset_manifest["release_categories"] != dict(
+            Counter(case["category"] for case in cases)
+        ) or any(case.get("split") != "release" for case in cases):
+            raise ValueError("Frozen case counts, categories or splits do not match registration")
+        return (
+            hashes, contract_files["evals/thresholds.json"]["release"],
+            contract_files["evals/release.json"], contract_files["evals/corpus.json"],
+        )
+    except (ValueError, KeyError, TypeError) as exc:
+        raise ReleaseRejected("Invalid frozen release contract: " + str(exc)) from exc
+
+
 def validate_release_evaluation(report: dict, expected_commit: str | None = None) -> dict:
+    """Validate trusted-runner evidence; JSON metadata is not a signed execution attestation."""
+    try:
+        return _validate_release_evaluation(report, expected_commit)
+    except ReleaseRejected:
+        raise
+    except (AttributeError, KeyError, TypeError, ValueError, OSError) as exc:
+        raise ReleaseRejected("Malformed or unavailable required release evidence: " + str(exc)) from exc
+
+
+def _validate_release_evaluation(report: dict, expected_commit: str | None = None) -> dict:
     """Reject fixture, partial, skipped, duplicate, inconsistent, or unbound release reports."""
     if report.get("profile") != "local" or report.get("suite") != "release":
         raise ReleaseRejected("Release requires the actual local-model release suite")
@@ -284,8 +362,8 @@ def validate_release_evaluation(report: dict, expected_commit: str | None = None
     if not isinstance(summary, dict) or not isinstance(results, list):
         raise ReleaseRejected("Malformed release report")
     total = summary.get("total")
-    if type(total) is not int or total < 100:
-        raise ReleaseRejected("Release requires at least 100 executed cases")
+    if type(total) is not int or total < 1:
+        raise ReleaseRejected("Release requires executed cases")
     if any(summary.get(name) != 0 for name in ("failed", "errors", "skipped")):
         raise ReleaseRejected("Failed, errored, or skipped cases prevent release")
     if summary.get("passed") != total or summary.get("gate_passed") is not True:
@@ -297,6 +375,8 @@ def validate_release_evaluation(report: dict, expected_commit: str | None = None
         raise ReleaseRejected("Each case must have an identity")
     if len(set(ids)) != total:
         raise ReleaseRejected("Duplicate case identities cannot satisfy the release minimum")
+    if any(item.get("case_id") is not None and item.get("id") is not None and item["case_id"] != item["id"] for item in results):
+        raise ReleaseRejected("Ambiguous case identities cannot satisfy the frozen suite")
     if any(item.get("passed") is not True or item.get("error") for item in results):
         raise ReleaseRejected("Individual case results do not all pass")
     if any(item.get("profile") != "local" for item in results):
@@ -306,26 +386,141 @@ def validate_release_evaluation(report: dict, expected_commit: str | None = None
     commit = manifest.get("commit", manifest.get("git_commit"))
     if not re.fullmatch(r"[a-f0-9]{40}", str(commit or "")):
         raise ReleaseRejected("A full tested Git commit is required")
+    if expected_commit is not None and commit != expected_commit:
+        raise ReleaseRejected("Evaluation commit does not match the candidate")
     if manifest.get("dirty_tree") is not False:
         raise ReleaseRejected("Release evidence must come from a clean committed source tree")
     if manifest.get("profile") != "local" or not manifest.get("timestamp_utc"):
         raise ReleaseRejected("Profile and timestamp evidence are required")
+    timestamp = datetime.fromisoformat(manifest["timestamp_utc"])
+    if timestamp.utcoffset() is None:
+        raise ReleaseRejected("Evidence timestamps must include a timezone")
     if not re.fullmatch(r"[a-f0-9]{64}", str(manifest.get("source_snapshot_sha256", ""))):
         raise ReleaseRejected("Source snapshot hash is missing")
     if not manifest.get("dataset_hashes") or not manifest.get("dependency_versions"):
         raise ReleaseRejected("Dataset hashes and runtime versions are required")
-    if not manifest.get("models") or not report.get("framework_metrics"):
+    frameworks = report.get("framework_metrics", {})
+    versions = frameworks.get("versions", {}) if isinstance(frameworks, dict) else {}
+    if not manifest.get("models") or any(
+        not isinstance(versions.get(name), str) or not versions[name]
+        for name in ("deepeval", "ragas")
+    ):
         raise ReleaseRejected("Actual model provenance and required evaluator evidence are missing")
     if report.get("required_cases") != total:
         raise ReleaseRejected("The complete required suite must be executed")
     if summary.get("deployment_eligible") is not True:
         raise ReleaseRejected("The release evaluator did not mark this evidence deployable")
-    if expected_commit is not None and commit != expected_commit:
-        raise ReleaseRejected("Evaluation commit does not match the candidate")
+    hashes, thresholds, cases, corpus = _committed_release_contract(str(commit))
+    snapshot = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
+    if manifest.get("source_file_hashes") != hashes or manifest["source_snapshot_sha256"] != snapshot:
+        raise ReleaseRejected("Source snapshot does not match the tested Git commit")
+    registered = {case["id"]: case for case in cases}
+    if len(registered) != len(cases) or set(ids) != registered.keys() or total != len(cases):
+        raise ReleaseRejected("Every registered frozen release case must execute exactly once")
+    if total < thresholds["minimum_cases"]:
+        raise ReleaseRejected("Frozen release minimum was not met")
+    configuration = manifest.get("configuration", {})
+    if configuration.get("suite") != "release" or configuration.get("thresholds") != thresholds or configuration.get("degraded") is not False:
+        raise ReleaseRejected("Thresholds or candidate mode differ from the frozen release contract")
+    dataset_hashes = manifest["dataset_hashes"]
+    if not isinstance(dataset_hashes, dict) or any(
+        dataset_hashes.get(name) != digest
+        for name, digest in hashes.items() if name.startswith("evals/") and name.endswith(".json")
+    ):
+        raise ReleaseRejected("Dataset hashes do not match the tested commit")
+    dependency_versions = manifest["dependency_versions"]
+    if not isinstance(dependency_versions, dict) or any(
+        not isinstance(versions.get(name, dependency_versions.get(name)), str)
+        or not versions.get(name, dependency_versions.get(name))
+        for name in thresholds["required_dependencies"]
+    ):
+        raise ReleaseRejected("Required runtime or evaluator dependency versions are missing")
+    models = manifest["models"]
+    if not isinstance(models, dict) or not re.fullmatch(r"[a-f0-9]{64}", str(models.get("lock_sha256", ""))):
+        raise ReleaseRejected("An exact local model-lock identity is required")
+    generation_config = models.get("configuration", {}).get("generation", {})
+    if not isinstance(generation_config.get("name"), str) or not generation_config["name"] or not re.fullmatch(
+        r"[a-f0-9]{64}", str(generation_config.get("digest", ""))
+    ):
+        raise ReleaseRejected("The local generator name and model digest are required")
+    generator_id = f"ollama:{generation_config['name']}@{generation_config['digest']}"
+    categories = summary.get("per_category", {})
+    expected_categories = {case["category"] for case in cases}
+    if not isinstance(categories, dict) or set(categories) != expected_categories or not set(
+        thresholds["required_categories"]
+    ) <= expected_categories:
+        raise ReleaseRejected("Frozen release categories are incomplete")
+    latencies = []
+    for item in results:
+        case = registered[item.get("case_id", item.get("id"))]
+        source = corpus[case["source_id"]]
+        if item.get("category") != case["category"] or item.get("scenario") != case["scenario"]:
+            raise ReleaseRejected("Case category or scenario differs from its frozen registration")
+        if item.get("question") != case.get("question", source["pages"][0]):
+            raise ReleaseRejected("Case question differs from its frozen registration")
+        checks, metrics = item.get("source_checks"), item.get("metrics", {})
+        if not isinstance(checks, list) or not checks or any(check is not True for check in checks):
+            raise ReleaseRejected("Required source checks did not all pass")
+        if not isinstance(metrics, dict):
+            raise ReleaseRejected("Required per-case framework metrics are missing")
+        for metric in ("deepeval_source_support", "ragas_reference_exact_match", "ragas_reference_similarity"):
+            value = metrics.get(metric)
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 1:
+                raise ReleaseRejected("Required per-case metric is missing or invalid")
+        if metrics["deepeval_source_support"] != 1.0 or metrics["deepeval_source_support"] < thresholds["citation_support_minimum"]:
+            raise ReleaseRejected("Source-support metric contradicts passed source checks")
+        expected_reference = {
+            "answer": source["pages"][0], "injection": source["pages"][0],
+            "abstain": "abstain", "conflict": "conflict-visible",
+            "citation": str(case.get("mutation") in {"valid", "archived"}),
+            "authorization": "denied-or-isolated", "malformed": "rejected", "recovery": "recovered",
+        }[case["scenario"]]
+        if item.get("expected_reference") != expected_reference:
+            raise ReleaseRejected("Reference oracle differs from the frozen case")
+        if metrics["ragas_reference_exact_match"] != float(item.get("actual_reference") == expected_reference):
+            raise ReleaseRejected("Reference metric contradicts its captured strings")
+        if case["scenario"] not in {"answer", "injection"} and item.get("actual_reference") != expected_reference:
+            raise ReleaseRejected("Required contract outcome differs from the frozen case")
+        if case["scenario"] in {"answer", "injection", "conflict"}:
+            details = item.get("details", {})
+            answer = details.get("answer", {}) if isinstance(details, dict) else {}
+            generation = answer.get("evidence", {}).get("generation", {})
+            if case["category"] == "cross-page":
+                if generation.get("real_inference") is not False or generation.get("generation_mode") != "deterministic bounded source-excerpt assembly":
+                    raise ReleaseRejected("Summary evidence must disclose its deterministic assembly")
+            elif generation.get("real_inference") is not True:
+                raise ReleaseRejected("A required actual-model response is missing")
+            elif generation.get("model") != generator_id or not isinstance(generation.get("raw_model_output"), str) or not generation["raw_model_output"]:
+                raise ReleaseRejected("Captured model response does not match the declared local generator")
+            if case["scenario"] in {"answer", "injection"}:
+                text = answer.get("text", "").casefold()
+                citations = answer.get("citations", [])
+                if answer.get("abstained") is not False or not citations or any(
+                    term.casefold() not in text for term in case["expected_terms"]
+                ) or any(term.casefold() in text for term in case.get("forbidden_terms", [])) or not set(
+                    case.get("expected_pages", [])
+                ) <= {citation.get("page_number") for citation in citations}:
+                    raise ReleaseRejected("Captured answer does not satisfy its frozen content/citation checks")
+        latency = item.get("latency_ms")
+        if isinstance(latency, bool) or not isinstance(latency, (int, float)) or not math.isfinite(latency) or latency < 0:
+            raise ReleaseRejected("A measured finite per-case latency is required")
+        latencies.append(latency)
+    p95 = sorted(latencies)[max(0, math.ceil(total * 0.95) - 1)]
+    if summary.get("p95_latency_ms") != p95 or p95 > thresholds["operational_p95_ms_target"]:
+        raise ReleaseRejected("Measured latency does not satisfy the frozen operational target")
+    for category in expected_categories:
+        count = sum(case["category"] == category for case in cases)
+        category_summary = categories[category]
+        if not isinstance(category_summary, dict) or any(
+            category_summary.get(key) != value
+            for key, value in {"total": count, "passed": count, "errors": 0, "pass_rate": 1.0}.items()
+        ):
+            raise ReleaseRejected("Per-category summary contradicts the registered results")
     return {
         "accepted": True,
         "executed_cases": total,
         "commit": commit,
+        "scope": "Trusted-runner report integrity and frozen local synthetic regression; no model-quality or cluster-readiness attestation",
         "report_sha256": hashlib.sha256(
             json.dumps(report, sort_keys=True, separators=(",", ":")).encode()
         ).hexdigest(),

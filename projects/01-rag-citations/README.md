@@ -108,7 +108,7 @@ workload; it is not a claim of distributed index atomicity or high write concurr
 `RAGService(db_path, profile='fixture', backend='sqlite')` provides `ingest`, `answer`,
 `search`, `validate_citation`, `list_documents`, `get_pdf`, and `delete` exactly as specified
 in [CONTRACTS.md](../../docs/CONTRACTS.md). Every operation accepts a trusted `Principal`.
-Readers may read; editors and admins may mutate. No tenant header grants authorization.
+Readers and writers may read; writers and admins may mutate. No tenant header grants authorization.
 
 Citation support is intentionally extractive: `claim` must equal one complete source
 sentence and preserve its negation, numbers and context. Arbitrary paraphrases fail this

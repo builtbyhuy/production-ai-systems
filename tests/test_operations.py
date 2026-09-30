@@ -1,9 +1,14 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 import multiprocessing
 import sqlite3
+import subprocess
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 import pytest
 from pais.contracts import Principal
@@ -125,58 +130,182 @@ def test_action_and_flag_admission_share_transaction(tmp_path):
         assert conn.in_transaction and state["version"] == 1
 
 
-def _report():
+@pytest.fixture
+def release_report(tmp_path, monkeypatch):
+    """Mock captured outcomes, but bind their structure to real temporary Git objects.
+
+    This unit fixture tests the evidence consumer. It is not model execution evidence.
+    """
+    from pais import evidence
+
+    repository = tmp_path / "candidate"
+    repository.mkdir()
+    (repository / "evals").mkdir()
+    original = Path(__file__).resolve().parents[1]
+    for name in ("release.json", "corpus.json", "manifest.json", "thresholds.json"):
+        (repository / "evals" / name).write_bytes((original / "evals" / name).read_bytes())
+    for command in (
+        ["git", "init", "--quiet"], ["git", "add", "evals"],
+        ["git", "-c", "user.name=Contract Test", "-c", "user.email=test@example.invalid",
+         "commit", "--quiet", "-m", "Isolated frozen contract fixture"],
+    ):
+        subprocess.run(command, cwd=repository, check=True, capture_output=True)
+    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repository, text=True).strip()
+    monkeypatch.setattr(evidence, "ROOT", repository)
+    cases = json.loads((repository / "evals/release.json").read_text())
+    corpus = json.loads((repository / "evals/corpus.json").read_text())
+    thresholds = json.loads((repository / "evals/thresholds.json").read_text())["release"]
+    hashes = {
+        str(path.relative_to(repository)): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in (repository / "evals").glob("*.json")
+    }
+    results = []
+    for case in cases:
+        source = corpus[case["source_id"]]
+        reference = {
+            "answer": source["pages"][0], "injection": source["pages"][0],
+            "abstain": "abstain", "conflict": "conflict-visible",
+            "citation": str(case.get("mutation") in {"valid", "archived"}),
+            "authorization": "denied-or-isolated", "malformed": "rejected", "recovery": "recovered",
+        }[case["scenario"]]
+        summary = case["category"] == "cross-page"
+        results.append({
+            "id": case["id"], "category": case["category"], "scenario": case["scenario"],
+            "question": case.get("question", source["pages"][0]), "passed": True,
+            "profile": "local", "source_checks": [True], "latency_ms": 1.0,
+            "expected_reference": reference, "actual_reference": reference,
+            "metrics": {"deepeval_source_support": 1.0, "ragas_reference_exact_match": 1.0,
+                        "ragas_reference_similarity": 1.0},
+            "details": {"answer": {
+                "text": "\n".join(case.get("expected_terms") or [source["pages"][0]]),
+                "abstained": False,
+                "citations": [{"page_number": page} for page in case.get("expected_pages", [1])],
+                "evidence": {"generation": {
+                    "real_inference": not summary, "model": "ollama:unit-test@" + "a" * 64,
+                    "raw_model_output": '{"sentence_ids":["s1"],"abstain":false}',
+                    "generation_mode": "deterministic bounded source-excerpt assembly" if summary
+                    else "constrained evidence sentence selection",
+                }},
+            }},
+        })
+    counts = Counter(case["category"] for case in cases)
     return {
         "profile": "local",
         "suite": "release",
         "summary": {
-            "total": 100,
-            "passed": 100,
+            "total": len(cases),
+            "passed": len(cases),
             "failed": 0,
             "errors": 0,
             "skipped": 0,
             "gate_passed": True,
             "deployment_eligible": True,
+            "p95_latency_ms": 1.0,
+            "per_category": {
+                category: {"total": count, "passed": count, "errors": 0, "pass_rate": 1.0}
+                for category, count in counts.items()
+            },
         },
-        "results": [
-            {"case_id": f"case-{i}", "passed": True, "profile": "local"} for i in range(100)
-        ],
-        "required_cases": 100,
-        "framework_metrics": {"fixture_contract_only": True},
+        "results": results,
+        "required_cases": len(cases),
+        "framework_metrics": {"versions": {"deepeval": "test-version", "ragas": "test-version"}},
         "manifest": {
-            "commit": "a" * 40, "dirty_tree": False, "profile": "local",
-            "timestamp_utc": "2026-09-29T00:00:00Z", "source_snapshot_sha256": "b" * 64,
-            "dataset_hashes": {"fixture": "c" * 64},
-            "dependency_versions": {"contract-fixture": "1"},
-            "models": {"lock_sha256": "d" * 64},
+            "git_commit": commit, "dirty_tree": False, "profile": "local",
+            "timestamp_utc": "2026-09-29T00:00:00Z",
+            "source_snapshot_sha256": hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest(),
+            "source_file_hashes": hashes, "dataset_hashes": dict(hashes),
+            "dependency_versions": {name: "test-version" for name in thresholds["required_dependencies"]},
+            "models": {"lock_sha256": "d" * 64,
+                       "configuration": {"generation": {"name": "unit-test", "digest": "a" * 64}}},
+            "configuration": {"suite": "release", "thresholds": thresholds, "degraded": False},
         },
     }
 
 
-def test_release_evidence_requires_real_complete_unique_cases():
-    assert validate_release_evaluation(_report(), "a" * 40)["accepted"]
+def test_release_evidence_requires_real_complete_unique_cases(release_report):
+    commit = release_report["manifest"]["git_commit"]
+    assert validate_release_evaluation(release_report, commit)["accepted"]
     variants = []
     for key, value in (("profile", "fixture"), ("manifest", {})):
-        report = _report()
+        report = copy.deepcopy(release_report)
         report[key] = value
         variants.append(report)
-    report = _report()
+    report = copy.deepcopy(release_report)
     report["summary"]["skipped"] = 1
     variants.append(report)
-    report = _report()
-    report["results"][1]["case_id"] = report["results"][0]["case_id"]
+    report = copy.deepcopy(release_report)
+    report["results"][1]["id"] = report["results"][0]["id"]
     variants.append(report)
-    report = _report()
+    report = copy.deepcopy(release_report)
     report["results"][0]["profile"] = "fixture"
     variants.append(report)
-    report = _report()
+    report = copy.deepcopy(release_report)
     report["results"][0]["passed"] = False
     variants.append(report)
     for invalid in variants:
         with pytest.raises(ReleaseRejected):
-            validate_release_evaluation(invalid, "a" * 40)
+            validate_release_evaluation(invalid, commit)
     with pytest.raises(ReleaseRejected):
-        validate_release_evaluation(_report(), "b" * 40)
+        validate_release_evaluation(release_report, "b" * 40)
+
+
+def test_release_rejects_self_registered_subsets_and_wrong_registered_cases(release_report):
+    mutations = [
+        lambda r: (r.__setitem__("results", r["results"][:100]), r.__setitem__("required_cases", 100),
+                   r["summary"].update(total=100, passed=100)),
+        lambda r: r["results"][0].__setitem__("id", "not-a-registered-case"),
+        lambda r: r["results"][0].__setitem__("case_id", "not-a-registered-case"),
+        lambda r: r["results"][0].__setitem__("category", "cross-page"),
+        lambda r: r["results"][0].__setitem__("question", "A different easy question"),
+        lambda r: r["summary"]["per_category"].pop("adversarial"),
+    ]
+    for mutate in mutations:
+        report = copy.deepcopy(release_report)
+        mutate(report)
+        with pytest.raises(ReleaseRejected):
+            validate_release_evaluation(report)
+
+
+def test_release_rejects_forged_provenance_thresholds_and_metric_flags(release_report):
+    mutations = [
+        lambda r: r["manifest"].__setitem__("source_snapshot_sha256", "f" * 64),
+        lambda r: r["manifest"]["source_file_hashes"].__setitem__("evals/release.json", "f" * 64),
+        lambda r: r["manifest"]["dataset_hashes"].__setitem__("evals/release.json", "f" * 64),
+        lambda r: r["manifest"]["configuration"]["thresholds"].__setitem__("minimum_cases", 100),
+        lambda r: r["manifest"]["configuration"].__setitem__("suite", "audit"),
+        lambda r: r.__setitem__("framework_metrics", {"fixture_contract_only": True}),
+        lambda r: r["results"][0]["metrics"].__setitem__("deepeval_source_support", 0.0),
+        lambda r: r["results"][0]["metrics"].__setitem__("ragas_reference_exact_match", 0.0),
+        lambda r: r["results"][0]["metrics"].__setitem__("ragas_reference_similarity", float("nan")),
+        lambda r: r["results"][0].__setitem__("source_checks", [False]),
+        lambda r: r["results"][0].__setitem__("expected_reference", "An easier oracle"),
+        lambda r: r["results"][0]["details"]["answer"]["evidence"]["generation"].__setitem__("real_inference", False),
+        lambda r: r["results"][0]["details"]["answer"]["evidence"]["generation"].__setitem__("model", "fixture"),
+        lambda r: r["results"][0]["details"]["answer"].__setitem__("citations", []),
+        lambda r: r["summary"].__setitem__("p95_latency_ms", 0),
+        lambda r: r["results"][0].__setitem__("latency_ms", float("nan")),
+    ]
+    for mutate in mutations:
+        report = copy.deepcopy(release_report)
+        mutate(report)
+        with pytest.raises(ReleaseRejected):
+            validate_release_evaluation(report)
+
+
+def test_release_rejects_malformed_nested_evidence_and_missing_commit(release_report):
+    mutations = [
+        lambda r: r.__setitem__("summary", []),
+        lambda r: r["manifest"].__setitem__("configuration", None),
+        lambda r: r["manifest"].__setitem__("models", []),
+        lambda r: r["results"][0].__setitem__("details", None),
+        lambda r: r["results"][0]["details"]["answer"].__setitem__("evidence", None),
+        lambda r: r["manifest"].__setitem__("git_commit", "f" * 40),
+    ]
+    for mutate in mutations:
+        report = copy.deepcopy(release_report)
+        mutate(report)
+        with pytest.raises(ReleaseRejected):
+            validate_release_evaluation(report)
 
 
 def test_release_bundle_requires_digest_and_migration_compatibility():

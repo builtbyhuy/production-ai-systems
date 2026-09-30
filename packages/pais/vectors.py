@@ -15,6 +15,7 @@ from uuid import NAMESPACE_URL, uuid5
 
 from pais.contracts import Principal, StrictModel, utcnow
 from pais.db import Database
+from pais.retrieval import require_read
 
 
 class VectorConflict(ValueError):
@@ -115,6 +116,7 @@ class QdrantIndex:
         return str(uuid5(NAMESPACE_URL, json.dumps([tenant, document])))
 
     def _dense(self, principal: Principal, text: str) -> list[float]:
+        require_read(principal)
         content_hash = hashlib.sha256(text.encode()).hexdigest()
         fingerprint = self.config.fingerprint()
         if self.cache_enabled:
@@ -146,6 +148,7 @@ class QdrantIndex:
 
     @staticmethod
     def _filter(principal: Principal, metadata: dict[str, Any] | None = None) -> Any:
+        require_read(principal)
         from qdrant_client import models
         clauses = [models.FieldCondition(key="tenant_id", match=models.MatchValue(value=principal.tenant_id))]
         for key, value in (metadata or {}).items():
@@ -221,6 +224,7 @@ class QdrantIndex:
 
     def search(self, principal: Principal, query: str, limit: int = 5, *, metadata: dict[str, Any] | None = None,
                mode: str = "hybrid") -> list[VectorHit]:
+        require_read(principal)
         from qdrant_client import models
         if not 1 <= limit <= 100 or not query.strip():
             raise ValueError("Search query and 1..100 limit are required")

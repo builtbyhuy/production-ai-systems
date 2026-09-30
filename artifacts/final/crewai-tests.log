@@ -1,0 +1,59 @@
+.....                                                                    [100%]
+=============================== warnings summary ===============================
+projects/03-multi-agent-research/test_crewai.py: 32 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/agent/core.py:431: DeprecationWarning: function_calling_llm is deprecated and will be removed in a future release.
+    if self.function_calling_llm and not isinstance(
+
+projects/03-multi-agent-research/test_crewai.py: 32 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/agent/core.py:439: DeprecationWarning: deprecated
+    if self.allow_code_execution:
+
+projects/03-multi-agent-research/test_crewai.py: 32 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/agent/core.py:450: DeprecationWarning: deprecated
+    if self.reasoning and self.planning_config is None:
+
+projects/03-multi-agent-research/test_crewai.py::test_actual_four_role_orchestration_and_human_approval
+projects/03-multi-agent-research/test_crewai.py::test_unsupported_claim_rejected_then_bounded_revision_fixes_it
+projects/03-multi-agent-research/test_crewai.py::test_conflicts_and_poisoned_sources_do_not_gain_authority
+projects/03-multi-agent-research/test_crewai.py::test_budget_exhaustion_missing_agent_and_isolation
+projects/03-multi-agent-research/test_crewai.py::test_authorized_web_adapter_uses_bounded_pinned_policy_and_actual_crewai
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/pydantic/main.py:250: UserWarning: function callbacks cannot be serialized and will prevent checkpointing. Use a module-level named function instead.
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+
+projects/03-multi-agent-research/test_crewai.py: 72 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/crew.py:650: DeprecationWarning: function_calling_llm is deprecated and will be removed in a future release.
+    if self.function_calling_llm and not isinstance(self.function_calling_llm, LLM):
+
+projects/03-multi-agent-research/test_crewai.py::test_actual_four_role_orchestration_and_human_approval
+projects/03-multi-agent-research/test_crewai.py::test_unsupported_claim_rejected_then_bounded_revision_fixes_it
+projects/03-multi-agent-research/test_crewai.py::test_unsupported_claim_rejected_then_bounded_revision_fixes_it
+projects/03-multi-agent-research/test_crewai.py::test_unsupported_claim_rejected_then_bounded_revision_fixes_it
+projects/03-multi-agent-research/test_crewai.py::test_conflicts_and_poisoned_sources_do_not_gain_authority
+projects/03-multi-agent-research/test_crewai.py::test_conflicts_and_poisoned_sources_do_not_gain_authority
+projects/03-multi-agent-research/test_crewai.py::test_budget_exhaustion_missing_agent_and_isolation
+projects/03-multi-agent-research/test_crewai.py::test_authorized_web_adapter_uses_bounded_pinned_policy_and_actual_crewai
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/crews/utils.py:372: DeprecationWarning: function_calling_llm is deprecated and will be removed in a future release.
+    crew.function_calling_llm,
+
+projects/03-multi-agent-research/test_crewai.py: 32 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/crews/utils.py:87: DeprecationWarning: function_calling_llm is deprecated and will be removed in a future release.
+    if not agent.function_calling_llm:  # type: ignore[attr-defined]
+
+projects/03-multi-agent-research/test_crewai.py: 32 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/agent/core.py:1299: DeprecationWarning: function_calling_llm is deprecated and will be removed in a future release.
+    function_calling_llm=self.function_calling_llm,
+
+projects/03-multi-agent-research/test_crewai.py: 62 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/crew.py:1675: DeprecationWarning: deprecated
+    if hasattr(agent, "allow_code_execution") and getattr(
+
+projects/03-multi-agent-research/test_crewai.py: 31 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/crew.py:1682: DeprecationWarning: deprecated
+    and hasattr(agent, "multimodal")
+
+projects/03-multi-agent-research/test_crewai.py: 31 warnings
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/crewai/crew.py:1683: DeprecationWarning: deprecated
+    and getattr(agent, "multimodal", False)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 369 warnings in 3.06s

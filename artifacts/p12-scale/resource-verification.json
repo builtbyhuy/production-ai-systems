@@ -1,0 +1,51 @@
+{
+  "purpose": "Verify worker-owned resource visibility under the benchmark's same one-thread numerical settings; not a repeated benchmark",
+  "source_commit": "c7b8a793f34795f3d2de148c1c5c211845e8b222",
+  "loaded_documents": 10000,
+  "cpu_affinity": [
+    0,
+    1
+  ],
+  "samples": [
+    {
+      "stage": "before_open",
+      "VmHWM": 27131904,
+      "VmRSS": 27131904,
+      "Threads": 1,
+      "ru_maxrss_bytes": 26808320
+    },
+    {
+      "stage": "store_open",
+      "VmHWM": 156123136,
+      "VmRSS": 156123136,
+      "Threads": 1,
+      "ru_maxrss_bytes": 155811840
+    },
+    {
+      "stage": "after_dense",
+      "VmHWM": 161079296,
+      "VmRSS": 156770304,
+      "Threads": 1,
+      "ru_maxrss_bytes": 161079296
+    },
+    {
+      "stage": "after_sparse",
+      "VmHWM": 161079296,
+      "VmRSS": 156839936,
+      "Threads": 1,
+      "ru_maxrss_bytes": 161079296
+    },
+    {
+      "stage": "after_hybrid",
+      "VmHWM": 162062336,
+      "VmRSS": 162062336,
+      "Threads": 1,
+      "ru_maxrss_bytes": 161812480
+    }
+  ],
+  "actual_points": 10000,
+  "elapsed_seconds": 1.3741185140024754,
+  "peak_process_rss_bytes": 161812480,
+  "max_sampled_threads": 1,
+  "status": "completed"
+}

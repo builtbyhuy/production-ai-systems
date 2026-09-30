@@ -1,0 +1,29 @@
+{
+  "project": "P18",
+  "profile": "fixture",
+  "passed": true,
+  "real_dependency": "Pinned upstream SqliteSaver implementation and tests",
+  "upstream_commit": "07b33185eab893be2ed031eedae52f09314bf77c",
+  "runs": {
+    "baseline": {
+      "exit_status": 1,
+      "output_tail": "           with pytest.raises(KeyboardInterrupt), saver.cursor() as cursor:\n                cursor.execute(\n                    \"INSERT INTO writes VALUES('t','','c','task',0,'channel','json',?)\", (b'\"value\"',)\n                )\n                raise KeyboardInterrupt\n>           assert saver.conn.execute(\"SELECT count(*) FROM writes\").fetchone()[0] == 0\nE           assert 1 == 0\n\nlibs/checkpoint-sqlite/tests/test_transaction_atomicity.py:44: AssertionError\n______________ test_cursor_closes_and_rolls_back_if_commit_fails _______________\n\n    def test_cursor_closes_and_rolls_back_if_commit_fails():\n        class FailingCommitConnection(sqlite3.Connection):\n            def commit(self):\n                raise sqlite3.OperationalError(\"injected commit failure\")\n    \n        connection = sqlite3.connect(\":memory:\", factory=FailingCommitConnection)\n        try:\n            saver = SqliteSaver(connection)\n            saver.setup()\n            with (\n                pytest.raises(sqlite3.OperationalError, match=\"commit failure\"),\n                saver.cursor() as cursor,\n            ):\n                cursor.execute(\n                    \"INSERT INTO writes VALUES('t','','c','task',0,'channel','json',?)\", (b'\"value\"',)\n                )\n>           assert connection.execute(\"SELECT count(*) FROM writes\").fetchone()[0] == 0\nE           assert 1 == 0\n\nlibs/checkpoint-sqlite/tests/test_transaction_atomicity.py:66: AssertionError\n=========================== short test summary info ============================\nFAILED ../../../dev::test_delete_thread_rolls_back_both_tables_on_second_delete_failure\nFAILED ../../../dev::test_cursor_rolls_back_when_body_is_interrupted - assert...\nFAILED ../../../dev::test_cursor_closes_and_rolls_back_if_commit_fails - asse...\n3 failed, 1 passed in 0.24s\n"
+    },
+    "patched": {
+      "exit_status": 0,
+      "output_tail": ".............                                                            [100%]\n13 passed in 0.23s\n"
+    }
+  },
+  "publication": {
+    "patch_prepared": true,
+    "pr_submitted": false,
+    "maintainer_response": null,
+    "merged": false
+  },
+  "evidence": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p18-outputs/upstream-verification.json",
+  "limits": [
+    "Full upstream make format/lint/test and asynchronous saver paths are not verified",
+    "Maintainer-approved assigned issue required before an external PR"
+  ]
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p18-fixture.json

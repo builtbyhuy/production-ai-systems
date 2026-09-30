@@ -1,5 +1,9 @@
+import hashlib
 import json
+import sys
+from types import SimpleNamespace
 
+import pytest
 from pais.evaluation import load_suite, run_case
 from pais.evidence import ROOT
 from pais.rag import RAGService
@@ -47,3 +51,64 @@ def test_release_thresholds_require_full_evidence():
     assert t["minimum_cases"] >= 120
     assert t["maximum_skipped"] == t["maximum_errors"] == 0
     assert t["requires_local_model_profile_for_deployment"]
+
+
+@pytest.mark.parametrize("mutation", ["hash", "count", "split", "category"])
+def test_frozen_dataset_mutations_fail_before_execution(tmp_path, monkeypatch, mutation):
+    from pais import evaluation
+
+    folder = tmp_path / "evals"
+    folder.mkdir()
+    for name in ("release.json", "corpus.json", "manifest.json"):
+        (folder / name).write_bytes((ROOT / "evals" / name).read_bytes())
+    cases = json.loads((folder / "release.json").read_text())
+    manifest = json.loads((folder / "manifest.json").read_text())
+    if mutation == "count":
+        cases = cases[:100]
+    elif mutation == "split":
+        cases[0]["split"] = "audit"
+    elif mutation == "category":
+        cases[0]["category"] = "cross-page"
+    else:
+        cases[0]["question"] = "An unregistered easy question"
+    (folder / "release.json").write_text(json.dumps(cases))
+    if mutation != "hash":
+        manifest["files"]["release.json"] = hashlib.sha256((folder / "release.json").read_bytes()).hexdigest()
+        (folder / "manifest.json").write_text(json.dumps(manifest))
+    monkeypatch.setattr(evaluation, "ROOT", tmp_path)
+    with pytest.raises(ValueError):
+        load_suite("release")
+
+
+@pytest.mark.parametrize("mutation", ["identity", "missing", "nan", "contradiction", "versions"])
+def test_invalid_worker_metrics_fail_closed(tmp_path, monkeypatch, mutation):
+    from pais import evaluation
+
+    report = {
+        "versions": {"deepeval": "test-version", "ragas": "test-version"},
+        "results": {"case-1": {"deepeval_source_support": 1.0,
+                               "ragas_reference_exact_match": 1.0,
+                               "ragas_reference_similarity": 1.0}},
+    }
+    if mutation == "identity":
+        report["results"]["unknown-case"] = report["results"].pop("case-1")
+    elif mutation == "missing":
+        report["results"]["case-1"].pop("ragas_reference_exact_match")
+    elif mutation == "nan":
+        report["results"]["case-1"]["ragas_reference_similarity"] = float("nan")
+    elif mutation == "contradiction":
+        report["results"]["case-1"]["deepeval_source_support"] = 0.0
+    else:
+        report["versions"] = {}
+
+    def mock_worker(command, **kwargs):
+        from pathlib import Path
+
+        Path(command[-1]).write_text(json.dumps(report))
+        return SimpleNamespace(returncode=0, stderr="")
+
+    monkeypatch.setenv("PAIS_EVAL_PYTHON", sys.executable)
+    monkeypatch.setattr(evaluation.subprocess, "run", mock_worker)
+    rows = [{"id": "case-1", "passed": True, "source_checks": [True]}]
+    with pytest.raises(evaluation.EvaluationPrerequisite):
+        evaluation._framework_metrics(rows, tmp_path / "metrics.json")

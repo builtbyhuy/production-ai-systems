@@ -1,0 +1,41 @@
+{
+  "profile": "fixture",
+  "celery_executed": true,
+  "broker_durability": "unverified",
+  "duplicate_same_job": true,
+  "status": "succeeded",
+  "history": [
+    {
+      "seq": 1,
+      "event": "accepted",
+      "detail": {
+        "request_id": "dfdf5e50-2e0d-4320-bf44-71b5f9e06530"
+      },
+      "timestamp": "2026-09-29T11:05:16.482675+00:00"
+    },
+    {
+      "seq": 2,
+      "event": "running",
+      "detail": {
+        "attempt": 1
+      },
+      "timestamp": "2026-09-29T11:05:16.563407+00:00"
+    },
+    {
+      "seq": 3,
+      "event": "succeeded",
+      "detail": {
+        "cancel_requested": false
+      },
+      "timestamp": "2026-09-29T11:05:16.564529+00:00"
+    },
+    {
+      "seq": 4,
+      "event": "published",
+      "detail": {},
+      "timestamp": "2026-09-29T11:05:16.571678+00:00"
+    }
+  ],
+  "external_delivery": false
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p16-fixture.json

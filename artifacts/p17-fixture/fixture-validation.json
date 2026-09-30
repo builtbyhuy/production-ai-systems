@@ -1,0 +1,60 @@
+{
+  "project": "P17",
+  "profile": "fixture",
+  "timestamp_utc": "2026-09-29T10:10:57.574664+00:00",
+  "command": [
+    "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/benchmark.py",
+    "fixture",
+    "--output",
+    "artifacts/p17-fixture"
+  ],
+  "git": {
+    "commit": null,
+    "dirty": true
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_sha256": "0a94e94f44d974766289dd529dee23c4d04e40ebdf215d211c2bf185b9b1ce7c",
+  "exit_status": 0,
+  "corpus": {
+    "dataset_id": "pais-python-maintenance-v1",
+    "dataset_sha256": "c76215ca42e8d33254ceff5146a2f1c92833c9156ccbe5ec9b57b63ebf25a8bd",
+    "tasks": 100,
+    "executable_checks": 325,
+    "distinct_reference_asts": 100,
+    "source_groups": 100,
+    "categories": {
+      "collections": 10,
+      "text": 10,
+      "numeric": 10,
+      "time": 10,
+      "validation": 10,
+      "http_api": 10,
+      "state": 10,
+      "serialization": 10,
+      "algorithms": 10,
+      "security_logic": 10
+    },
+    "difficulties": {
+      "easy": 31,
+      "medium": 53,
+      "hard": 16
+    },
+    "splits": {
+      "train": 60,
+      "dev": 20,
+      "test": 20
+    },
+    "verification_kind": "trusted-corpus-authoring-QA",
+    "reference_contracts_passed": 100,
+    "seeded_defects_reproduced": 100,
+    "failures": [],
+    "duration_seconds": 0.03822717200091574,
+    "untrusted_submissions_executed": 0,
+    "leaderboard_eligible": false
+  },
+  "malformed_submission_rejected": true,
+  "disabled_sandbox_rejected": true,
+  "scored_baselines": [],
+  "leaderboard_rows": 0,
+  "acceptance": "incomplete: actual sandbox scoring and reproduction await a verified rootless Docker host"
+}

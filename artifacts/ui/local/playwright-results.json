@@ -1,0 +1,125 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/scratch/708ae715c693/production-ai-systems/apps/copilot/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/workspace/scratch/708ae715c693/production-ai-systems/apps/copilot/playwright.config.ts",
+    "rootDir": "/workspace/scratch/708ae715c693/production-ai-systems/apps/copilot/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/ui/local/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "/workspace/scratch/708ae715c693/production-ai-systems/apps/copilot/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "local.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/ui/local/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "local.spec.ts",
+      "file": "local.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "actual local inference reaches the browser with a working page citation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21495,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T11:25:11.338Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "local-smoke-measurements",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9maWxlIjoibG9jYWwiLCJtb2RlbCI6Im9sbGFtYTpxd2VuMi41OjEuNWJANjVlYzA2NTQ4MTQ5YjA0YzA5NmExMjBlNGE2ZGE5ZDQwMTdlYTgwOWM5MTczNGVhNTYzMWU4OWY5NmRkYzU3YiIsIm1ldGFkYXRhIjp7InByb2ZpbGUiOiJsb2NhbCIsIm1vZGVsIjoib2xsYW1hOnF3ZW4yLjU6MS41YkA2NWVjMDY1NDgxNDliMDRjMDk2YTEyMGU0YTZkYTlkNDAxN2VhODA5YzkxNzM0ZWE1NjMxZTg5Zjk2ZGRjNTdiIiwiYWJzdGFpbmVkIjpmYWxzZSwiYnVmZmVyZWQiOnRydWUsInJlcGxheWVkIjpmYWxzZSwicmVxdWVzdElkIjoiY2ZhOWM0ODQtM2MzMC01ZTQwLWI5YzQtYWVlODE0ODMxNjdjIiwicHJvdmlkZXJDYW5jZWxsYXRpb24iOiJ1bnN1cHBvcnRlZC1ieS1zeW5jaHJvbm91cy1yYWctY29udHJhY3QiLCJmaXJzdERpc3BsYXlNcyI6MTQ3NjYuMzkzLCJwcm92aWRlclRURlRNcyI6bnVsbH0sImVsYXBzZWRNcyI6MTUwNzIsImJyb3dzZXJGaXJzdERpc3BsYXkiOiJGaXJzdCBkaXNwbGF5OiAxNDc4NSBtcyIsIm1vY2tlZFJlc3BvbnNlcyI6ZmFsc2UsImV4dGVybmFsRGVsaXZlcnkiOmZhbHNlLCJib3VuZGFyeSI6IkFjdHVhbCBsb2NhbCBpbmZlcmVuY2UsIHByb3RlY3RlZCBidWZmZXJlZCBvdXRwdXQsIE5leHQgcHJveHksIEFJIFNESyBicm93c2VyLCBvcmlnaW5hbCBQREYgcGFnZSJ9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f8ab1ecd5facf788fad0-b49b58b045fdef3db6e6",
+          "file": "local.spec.ts",
+          "line": 11,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-29T11:25:07.169Z",
+    "duration": 25820.908,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -23,14 +23,14 @@ from pais.models import MissingPrerequisite, validate_vectors
 def require_read(principal: Principal) -> None:
     if not principal.subject or not principal.tenant_id:
         raise PermissionError("Trusted subject and tenant identity are required")
-    if not {"reader", "editor", "admin"}.intersection(principal.roles):
+    if not {"reader", "writer", "admin"}.intersection(principal.roles):
         raise PermissionError("Reader role required")
 
 
 def require_write(principal: Principal) -> None:
     require_read(principal)
-    if not {"editor", "admin"}.intersection(principal.roles):
-        raise PermissionError("Editor role required")
+    if not {"writer", "admin"}.intersection(principal.roles):
+        raise PermissionError("Writer role required")
 
 
 @dataclass(frozen=True)

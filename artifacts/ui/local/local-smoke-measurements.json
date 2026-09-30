@@ -1,0 +1,20 @@
+{
+  "profile": "local",
+  "model": "ollama:qwen2.5:1.5b@65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+  "metadata": {
+    "profile": "local",
+    "model": "ollama:qwen2.5:1.5b@65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+    "abstained": false,
+    "buffered": true,
+    "replayed": false,
+    "requestId": "cfa9c484-3c30-5e40-b9c4-aee81483167c",
+    "providerCancellation": "unsupported-by-synchronous-rag-contract",
+    "firstDisplayMs": 14766.393,
+    "providerTTFTMs": null
+  },
+  "elapsedMs": 15072,
+  "browserFirstDisplay": "First display: 14785 ms",
+  "mockedResponses": false,
+  "externalDelivery": false,
+  "boundary": "Actual local inference, protected buffered output, Next proxy, AI SDK browser, original PDF page"
+}

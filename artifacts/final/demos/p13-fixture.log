@@ -1,0 +1,23 @@
+{
+  "profile": "fixture",
+  "real_redis": true,
+  "real_qdrant": true,
+  "redis_aof_restart": true,
+  "recalled": 1,
+  "stale_session_blocked": true,
+  "summary_invalidated": true,
+  "deleted_after_restart": true,
+  "summary": {
+    "summary": "Approval timeout is 15 minutes.",
+    "references": {
+      "timeout": 1
+    },
+    "lossy": false,
+    "authority": "untrusted_memory",
+    "original_characters": 31,
+    "summary_characters": 31
+  },
+  "model_task_success_comparison": "unverified",
+  "embedding_profile": "fixture-feature-hash"
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p13-fixture.json

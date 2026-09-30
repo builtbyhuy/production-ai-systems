@@ -1,0 +1,741 @@
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.
+
+Adding EOS to train dataset:   0%|          | 0/36 [00:00<?, ? examples/s]
+Adding EOS to train dataset: 100%|██████████| 36/36 [00:00<00:00, 13733.06 examples/s]
+
+Tokenizing train dataset:   0%|          | 0/36 [00:00<?, ? examples/s]
+Tokenizing train dataset: 100%|██████████| 36/36 [00:00<00:00, 5515.60 examples/s]
+
+Truncating train dataset:   0%|          | 0/36 [00:00<?, ? examples/s]
+Truncating train dataset: 100%|██████████| 36/36 [00:00<00:00, 20983.18 examples/s]
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+/workspace/scratch/708ae715c693/production-ai-systems/projects/09-lora-training/.venv/lib/python3.12/site-packages/transformers/trainer.py:4360: UserWarning: mtime may not be reliable on this filesystem, falling back to numerical ordering
+  warnings.warn("mtime may not be reliable on this filesystem, falling back to numerical ordering")
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+/workspace/scratch/708ae715c693/production-ai-systems/projects/09-lora-training/.venv/lib/python3.12/site-packages/transformers/trainer.py:4360: UserWarning: mtime may not be reliable on this filesystem, falling back to numerical ordering
+  warnings.warn("mtime may not be reliable on this filesystem, falling back to numerical ordering")
+{'loss': 5.7724, 'grad_norm': 0.19127556681632996, 'learning_rate': 0.01, 'entropy': 5.726761341094971, 'num_tokens': 36.0, 'mean_token_accuracy': 0.0, 'epoch': 0.05555555555555555}
+{'loss': 5.7229, 'grad_norm': 0.11215391755104065, 'learning_rate': 0.006666666666666666, 'entropy': 5.726534843444824, 'num_tokens': 59.0, 'mean_token_accuracy': 0.0, 'epoch': 0.1111111111111111}
+{'loss': 5.6547, 'grad_norm': 0.20263822376728058, 'learning_rate': 0.003333333333333333, 'entropy': 5.726632118225098, 'num_tokens': 86.0, 'mean_token_accuracy': 0.0, 'epoch': 0.16666666666666666}
+{'train_runtime': 0.1017, 'train_samples_per_second': 58.988, 'train_steps_per_second': 29.494, 'train_loss': 5.71666161219279, 'epoch': 0.16666666666666666}
+
+Extracting prompt in train dataset:   0%|          | 0/36 [00:00<?, ? examples/s]
+Extracting prompt in train dataset: 100%|██████████| 36/36 [00:00<00:00, 12515.12 examples/s]
+
+Applying chat template to train dataset:   0%|          | 0/36 [00:00<?, ? examples/s]
+Applying chat template to train dataset: 100%|██████████| 36/36 [00:00<00:00, 15042.33 examples/s]
+
+Tokenizing train dataset:   0%|          | 0/36 [00:00<?, ? examples/s]
+Tokenizing train dataset: 100%|██████████| 36/36 [00:00<00:00, 5394.41 examples/s]
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+/workspace/scratch/708ae715c693/production-ai-systems/projects/09-lora-training/.venv/lib/python3.12/site-packages/transformers/trainer.py:4360: UserWarning: mtime may not be reliable on this filesystem, falling back to numerical ordering
+  warnings.warn("mtime may not be reliable on this filesystem, falling back to numerical ordering")
+Using the `WANDB_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+/workspace/scratch/708ae715c693/production-ai-systems/projects/09-lora-training/.venv/lib/python3.12/site-packages/transformers/trainer.py:4360: UserWarning: mtime may not be reliable on this filesystem, falling back to numerical ordering
+  warnings.warn("mtime may not be reliable on this filesystem, falling back to numerical ordering")
+{'loss': 0.6931, 'grad_norm': 0.017246337607502937, 'learning_rate': 0.01, 'rewards/chosen': 0.0, 'rewards/rejected': -4.7683716530855236e-08, 'rewards/accuracies': 0.5, 'rewards/margins': 4.7683716530855236e-08, 'logps/chosen': -11.462394714355469, 'logps/rejected': -11.431501388549805, 'logits/chosen': 0.00456420611590147, 'logits/rejected': 0.0022766669280827045, 'epoch': 0.05555555555555555}
+{'loss': 0.6927, 'grad_norm': 0.01361999660730362, 'learning_rate': 0.006666666666666666, 'rewards/chosen': 0.002191781997680664, 'rewards/rejected': 0.0013107776176184416, 'rewards/accuracies': 0.5, 'rewards/margins': 0.0008810043800622225, 'logps/chosen': -11.395919799804688, 'logps/rejected': -11.377239227294922, 'logits/chosen': 0.003156899707391858, 'logits/rejected': 0.003611349267885089, 'epoch': 0.1111111111111111}
+{'loss': 0.6919, 'grad_norm': 0.017690669745206833, 'learning_rate': 0.003333333333333333, 'rewards/chosen': 0.00464520463719964, 'rewards/rejected': 0.002210998674854636, 'rewards/accuracies': 0.5, 'rewards/margins': 0.002434205962345004, 'logps/chosen': -11.246904373168945, 'logps/rejected': -11.44343376159668, 'logits/chosen': 0.0049866498447954655, 'logits/rejected': 0.005006005056202412, 'epoch': 0.16666666666666666}
+{'train_runtime': 0.0904, 'train_samples_per_second': 66.335, 'train_steps_per_second': 33.168, 'train_loss': 0.6925957600275675, 'epoch': 0.16666666666666666}
+{
+  "project": "P09",
+  "profile": "local",
+  "verification_kind": "genuine-tiny-training-smoke",
+  "timestamp_utc": "2026-09-29T11:27:07.122469+00:00",
+  "command": [
+    "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/__main__.py",
+    "demo",
+    "09",
+    "--profile",
+    "local",
+    "--backend",
+    "sqlite",
+    "--output",
+    "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/p09-cli/run.json"
+  ],
+  "git": {
+    "commit": "9f8e0fdf41f3a170004c297c24b18ab01da7f25b",
+    "dirty": false
+  },
+  "exit_status": 0,
+  "configuration_sha256": "d4583b380801401f504eb5830f012cc2fd5317c8253529889dd595dd2cca5bec",
+  "dataset_manifest": {
+    "dataset_version": "ops-instructions-v1",
+    "dataset_sha256": "9fb549124d9b7b96cc2a92f4555d7908f5ea820b9f68749d01bc2c199b04d0cb",
+    "split_seed": 20260929,
+    "split_policy": "source-grouped, hash-sorted, stratified by domain/general; 60/20/20",
+    "counts": {
+      "train": 36,
+      "dev": 12,
+      "test": 12
+    },
+    "suite_counts": {
+      "train": {
+        "domain": 18,
+        "general": 18
+      },
+      "dev": {
+        "domain": 6,
+        "general": 6
+      },
+      "test": {
+        "domain": 6,
+        "general": 6
+      }
+    },
+    "source_assignment": {
+      "authored-domain-duplicate-event": "train",
+      "authored-domain-privacy-log": "train",
+      "authored-domain-cancel-new-action": "train",
+      "authored-domain-empty-evidence": "train",
+      "authored-domain-outbox-gap": "train",
+      "authored-domain-retry-cap": "train",
+      "authored-domain-tenant-boundary": "train",
+      "authored-domain-health-readiness": "train",
+      "authored-domain-sandbox-boundary": "train",
+      "authored-domain-billing-reconcile": "train",
+      "authored-domain-poison-job": "train",
+      "authored-domain-forgetting-risk": "train",
+      "authored-domain-missing-metric": "train",
+      "authored-domain-source-conflict": "train",
+      "authored-domain-signature-verification": "train",
+      "authored-domain-stream-protection": "train",
+      "authored-domain-quota-transaction": "train",
+      "authored-domain-idempotency-scope": "train",
+      "authored-domain-model-license": "dev",
+      "authored-domain-unknown-cost": "dev",
+      "authored-domain-stale-session": "dev",
+      "authored-domain-backup-proof": "dev",
+      "authored-domain-expired-memory": "dev",
+      "authored-domain-data-leakage": "dev",
+      "authored-domain-expired-lease": "test",
+      "authored-domain-index-authority": "test",
+      "authored-domain-uncertain-external-effect": "test",
+      "authored-domain-stale-approval": "test",
+      "authored-domain-source-injection": "test",
+      "authored-domain-citation-revision": "test",
+      "authored-general-addition": "train",
+      "authored-general-zero": "train",
+      "authored-general-hours": "train",
+      "authored-general-identity": "train",
+      "authored-general-square": "train",
+      "authored-general-reverse": "train",
+      "authored-general-double": "train",
+      "authored-general-alphabet": "train",
+      "authored-general-division": "train",
+      "authored-general-even": "train",
+      "authored-general-shape": "train",
+      "authored-general-maximum": "train",
+      "authored-general-unknown": "train",
+      "authored-general-odd": "train",
+      "authored-general-minutes": "train",
+      "authored-general-days": "train",
+      "authored-general-months": "train",
+      "authored-general-lowercase": "train",
+      "authored-general-comparison": "dev",
+      "authored-general-subtraction": "dev",
+      "authored-general-first": "dev",
+      "authored-general-color": "dev",
+      "authored-general-multiplication": "dev",
+      "authored-general-minimum": "dev",
+      "authored-general-last": "test",
+      "authored-general-half": "test",
+      "authored-general-animal": "test",
+      "authored-general-sequence": "test",
+      "authored-general-count": "test",
+      "authored-general-opposite": "test"
+    },
+    "split_sha256": {
+      "train": "063ce263b6bd6242300ac43137f0853dddec6d78d8a324ddb675e502c724178a",
+      "dev": "a7dfa1ba5032a95b47684cfb683d6de38b820a0dcbbde312ddf975609962fdde",
+      "test": "4d676d6909b0d1ac87393a4ebe6f12aecf717d17f3bfa6de38d4746ac2a757ae"
+    },
+    "example_fingerprints": {
+      "train": [
+        "0f7fc58a9856c097ad3f929c42c916dfe8f1c52fb3cc0355dc874c01cf4a629f",
+        "d6b69f3b3b8b63f3babe25733a3908a3dc547a2901f6b782e94f7f59c0b545ad",
+        "ef6c40b9698dad1d54b9d60210a54443ed1fe9586dd7e2484b25bf7864e478d7",
+        "8c34905f30d5709472c6b7eedf8d466b896da0ce7b63270fabac1295d6cd6113",
+        "23a81f299a2057b302c3cd529bd3564f1dfb4394c733b87d2cb6917dcdc6a8a2",
+        "e06a04d944fdd53e7cccba310976f6eb64b0866027af27d4aa7d59637c94ccca",
+        "0832ded3d8a038a27f44668a872ee6b1c44084a9faf9d1fc7c990272a76122f8",
+        "a4e147faaae26c6c1a5e9faf45578db6a57b878e586a131de0b7b6a0b9b3bfb4",
+        "6cfbe246ee29a7f182bb461d986bd400374fd7022769c06dc8ef391eefdc35e6",
+        "5f471c7ffca3d993e7741d542b5ec161197ad3d69b647ea86329371ebf071375",
+        "902adfcb02ae930fb34d50c83f8c8ccb6784836b79b8781d8abe87d8057d0038",
+        "eb222b77aed77ed1fe897f75f76f4313ad6530adccfe419f02ba23c08786cacc",
+        "d9f52cf278b928dcdc63ce5e539be5de0c34a976ac29b48c1241ed4bfb6a7f9a",
+        "149dd66689e735eba97bb59e2137d4ddd5459f6cde72a783311eb555dbe5eb64",
+        "90ba25821b9418e89ebf1b96af9e7ef09f8518ffbe418e917fb0dc985d111e69",
+        "13632c2cd8acc46c3e708bcdd649483c6ccd5b8f6d4bb2714fd285def26df2f5",
+        "5613409fcb876388129f84f1014ad3eee43c3ae276df918ef16cf367ab747527",
+        "7e9633597cb0de0c8a6eefc43fa45ad3c4a21a0604f402a0fcba3355f7bf006d",
+        "27ee934ef50a33d3fe85a7055abbe7c5cae5dc3e9da8b04297bea798f986116a",
+        "954e3fe33aab202992df3c987f4552a63213bb3e8e4f56b6baef672d4ba6647f",
+        "ad9eeab7a665437ac169b004bca29fda6e5474532ef2e2ffd243c13b0d793d8a",
+        "999e157293c925898d858f294331f0bcb6223cdc273f8507eea2faf4d63f2002",
+        "f4394f60eebe273fd11b81bd5f3dd620c5f5f73cbd93e30077582836f7603e00",
+        "55cdf145807c26ac5aa9460849f8bfb08ded4ff34d0de409567f75ece04fe93e",
+        "84908f57e12646ba6035a41534dfbb1d89a0b7ac6deaa79598c3a52973c948e1",
+        "52ae37c81489511384ffde47c17bf946e1ee88e2391ba8cc218053e79c661cf8",
+        "333fcf2026c1a24bf70d46a0ab13421909920231a39b66e49acf3883592d6de4",
+        "bb6525c5764e96224708e79e1047a0d623d77315579782c90afe72dc84fcc4e6",
+        "b0aa1a0483010996661002a8c082cbcb73dcf3cfe434a3b372c12aeb20e909dc",
+        "7391ab7a57c38ab9821fc7b7f20770ea594648bf6eff4b6c405f964259a8f004",
+        "8628e70c98032ff306d1739baa0829a947ccc91b52f18e88ca31b2bfb2554d5c",
+        "ae050370749615e6a4f0f135d4f81e70b8043b1701d2fb38ac5b34db5df3e6f0",
+        "b4ba3d6f902571514d147e9620108537db3fa35f6c35b4e2e981210ff2ac4c9a",
+        "7424d46d9b1960575882adafc93e1abbc12f2b095516b501ffc8c9c482baa68e",
+        "f8865ab2170eaec8baeb0c275d10d45d63dc31e8e6d242112f5fa86c39b98073",
+        "8d72307055b36932c9c384580cac5a872629065b21e42450e1b79c13e2624558"
+      ],
+      "dev": [
+        "bcaf4ce304bbd35ff5c7ed59525a2239c105e29b14861d9d8fb6ddc300bbd0f3",
+        "775a478d95f097dc29fe5f2f177324d49907b45c0205b823cbc2612930d0a796",
+        "6db6207bc53d3db2191dc70003fe3fa58dfd3914e2c7eb7ab9cd87a51da93289",
+        "874b5aa9572df7946f0000fcdf97b5d886b2d3e585df84b9fabc808ff81bce3b",
+        "cc5687750350e00c9d150805a59bf9a2d277ab1bdda15c67521493d3064d677d",
+        "c892af33e9335f2a623fac2d0288d4cb0221cb9dd99d51b8098a5232244473a5",
+        "46ed9a871047f9ee496892cda150fc614a2f227a4e6fead49fa9f6855e3bc3ce",
+        "056a7eb4c7a106974e1d18ac43278f42a5a28f3b45e44d84d1a0fe7b3613a6e1",
+        "2dd8e5241f446ac36614ff9be0450c7467822a9245fe9b23aa169dfdaaa85dcb",
+        "a7cd268b26a1c96ae4d338a02dca21819b06348b910021aac4bb340a0874ad8b",
+        "9bbeee72dfdfa2d73544e3e8e1398efaeeb25c0856c83756facfcc03d5c77783",
+        "0ca8ef95328ae06ec98302766a7b1ab6c7297f49b572818a77d5fe005255ba55"
+      ],
+      "test": [
+        "3455fc08b3ca719376a13b49a578407f17e35c3353b7f643ff90e6a800434771",
+        "67d6477d2193f535b16fb42582d4aaf98c0bc6149f2ef06561adfad0101b0076",
+        "698a0f1e8bd5aa0f0d90149770a4a42d9b1f916aa450d6d05b590d08fde3cd09",
+        "c304eb02af40c2e49baafcffc0ac9865b4087bc60a0a423899d6c6864dd6c775",
+        "ce05ba20d0094b793208d65bc7289fcb386eb3ec30a338a4e611fef5899b422c",
+        "d850b524f822650f53f0bcc64c95cfce1d5e93ca9f87d86f3662c0d870e1543f",
+        "faf05eaa283930a37a65c25874a85184a3e86adabbc92aaefdc73a60ad32f1e8",
+        "1e82f3796229f3ad0b705f4002b916a0a4fa941b69bca3dce84948670287abb7",
+        "c6ea1f3586cec97875c9badaaed35c482a1dfb92ecffbd3402f70a4e53d32f0c",
+        "765a867a1d97a2a41c0d5ac6e6a2c0e9b55143786a2559ba71fef8c30f776c7b",
+        "f6b00cc9516020fe11fb3c1c4b2b6a3a3c800787f1b8226c85160cefeadaf1c5",
+        "2a720073ead972f93d07385944c7b5a80821bf274fbe109fb5ab1a8759e2f78f"
+      ]
+    },
+    "licenses": [
+      "MIT"
+    ],
+    "deduplicated_records": 0,
+    "forbidden_fingerprint_count": 1516,
+    "forbidden_source_count": 148,
+    "contamination_limits": "Exact normalized and high-overlap trigram checks cannot prove absence of semantic paraphrases or prior pretraining exposure."
+  },
+  "exclusions": [
+    {
+      "path": "evals/release.json",
+      "sha256": "bd1b14b140771975cb9f9364437c0276e04d1c63271225565ec5d63ff5dd5c1a",
+      "new_text_fingerprints": 492
+    },
+    {
+      "path": "evals/development.json",
+      "sha256": "5ef533bdd5e2b91ea5de5bfe93b8508bcf3d243e068dbadcd215319d491dad51",
+      "new_text_fingerprints": 49
+    },
+    {
+      "path": "evals/audit.json",
+      "sha256": "a710224f34bd9861567d424146c5f1301dd922575c12cc3e1b3032f1557cb7ef",
+      "new_text_fingerprints": 41
+    },
+    {
+      "path": "evals/corpus.json",
+      "sha256": "19b6826c771c1b122bda03e792c2193f4d540a5d4e917714e7d08097cdfc009b",
+      "new_text_fingerprints": 115
+    },
+    {
+      "path": "projects/17-domain-benchmark/data/tasks-v1.jsonl",
+      "sha256": "c76215ca42e8d33254ceff5146a2f1c92833c9156ccbe5ec9b57b63ebf25a8bd",
+      "new_text_fingerprints": 819
+    }
+  ],
+  "audit_access": "Hash/overlap access only; release and audit examples are excluded, never used for training, checkpoint selection or threshold tuning.",
+  "dependency_versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "4.56.2",
+    "peft": "0.17.1",
+    "datasets": "4.1.1",
+    "trl": "0.23.1",
+    "accelerate": "1.10.1",
+    "tokenizers": "0.22.0",
+    "safetensors": "0.6.2"
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "hardware": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "torch_threads": 2,
+  "model": {
+    "origin": "randomly initialized GPT-2 architecture, no pretrained weights",
+    "revision": "pais-tiny-gpt2-v1-seed-20260929",
+    "license": "Apache-2.0 implementation; original random weights MIT",
+    "parameters": 39456,
+    "tokenizer_fit_split": "train only",
+    "tokenizer_vocabulary_size": 309,
+    "files": {
+      "config.json": "7e367bf7127392256f1772799f8f51db58cd2086c76d54991ddf8eff5a42f6fe",
+      "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+      "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    }
+  },
+  "tokenization": {
+    "examples": 36,
+    "max_lengths": {
+      "prompt": 20,
+      "chosen_total": 22,
+      "rejected_total": 22
+    },
+    "truncation": "rejected",
+    "tokenizer_vocabulary_size": 309
+  },
+  "sft_steps": 3,
+  "dpo_steps": 3,
+  "sft_train_loss": 5.71666161219279,
+  "dpo_train_loss": 0.6925957600275675,
+  "adapter_parameters": 1024,
+  "sft_adapter_changed": true,
+  "frozen_backbone_unchanged": true,
+  "dpo_adapter_changed": true,
+  "sft_export": {
+    "adapter_format": "PEFT LoRA safetensors",
+    "reload_verified": true,
+    "max_logit_absolute_difference": 0.0,
+    "base_provenance": {
+      "origin": "randomly initialized GPT-2 architecture, no pretrained weights",
+      "revision": "pais-tiny-gpt2-v1-seed-20260929",
+      "license": "Apache-2.0 implementation; original random weights MIT",
+      "parameters": 39456,
+      "tokenizer_fit_split": "train only",
+      "tokenizer_vocabulary_size": 309,
+      "files": {
+        "config.json": "7e367bf7127392256f1772799f8f51db58cd2086c76d54991ddf8eff5a42f6fe",
+        "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+        "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+        "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+        "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+        "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+      }
+    },
+    "files": {
+      "README.md": "ace46c4090b841528464c1a0526c3c286f9a4ff5c4d53c16d49e72a74666b5b4",
+      "adapter_config.json": "171ed12407fcfc086ade12c71e1f446d6ada20c6b75cd4d0486306e5dcc4440a",
+      "adapter_model.safetensors": "9a3da37d4dbee8aa2318b354d2f503dc8cf2d496e7f8f3258acabc9e8daee259",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    }
+  },
+  "dpo_export": {
+    "adapter_format": "PEFT LoRA safetensors",
+    "reload_verified": true,
+    "max_logit_absolute_difference": 0.0,
+    "base_provenance": {
+      "origin": "randomly initialized GPT-2 architecture, no pretrained weights",
+      "revision": "pais-tiny-gpt2-v1-seed-20260929",
+      "license": "Apache-2.0 implementation; original random weights MIT",
+      "parameters": 39456,
+      "tokenizer_fit_split": "train only",
+      "tokenizer_vocabulary_size": 309,
+      "files": {
+        "config.json": "7e367bf7127392256f1772799f8f51db58cd2086c76d54991ddf8eff5a42f6fe",
+        "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+        "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+        "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+        "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+        "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+      }
+    },
+    "files": {
+      "README.md": "410d18c25276265e23b4d22e949dbb66028ef6289f591d4bf34782c44b60603f",
+      "adapter_config.json": "171ed12407fcfc086ade12c71e1f446d6ada20c6b75cd4d0486306e5dcc4440a",
+      "adapter_model.safetensors": "02374e915a2fa5ad469987d36e145be85df13b6a3c4480322e6ef0c3e80efbc3",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    }
+  },
+  "metrics": {
+    "base": {
+      "domain": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.793780167897542,
+        "suite_sha256": "ce0ae6951e38cb9221aeb328e991c083bb1bbd5fed0ba9d00a3f1f50b977de9f",
+        "details": [
+          {
+            "id": "authored-domain-citation-revision",
+            "completion_nll": 5.7949724197387695,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "keep_old_reference",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-expired-lease",
+            "completion_nll": 5.751392364501953,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "claim",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-index-authority",
+            "completion_nll": 5.799900054931641,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "rebuild_index",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-source-injection",
+            "completion_nll": 5.780797958374023,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "disregard",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-stale-approval",
+            "completion_nll": 5.817882537841797,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "reapprove",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-uncertain-external-effect",
+            "completion_nll": 5.81773567199707,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "reconcile_or_review",
+            "target_tokens": 2
+          }
+        ]
+      },
+      "general": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.737117687861125,
+        "suite_sha256": "5ba2ac26c122d25889770762a2b05053bbe03415b752b07b3588a6418b605c42",
+        "details": [
+          {
+            "id": "authored-general-animal",
+            "completion_nll": 5.70786190032959,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "cat",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-count",
+            "completion_nll": 5.748964309692383,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "3",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-half",
+            "completion_nll": 5.675110340118408,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "9",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-last",
+            "completion_nll": 5.770996570587158,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "south",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-opposite",
+            "completion_nll": 5.757022857666016,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "cold",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-sequence",
+            "completion_nll": 5.762750148773193,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "8",
+            "target_tokens": 2
+          }
+        ]
+      }
+    },
+    "sft": {
+      "domain": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.78711732228597,
+        "suite_sha256": "ce0ae6951e38cb9221aeb328e991c083bb1bbd5fed0ba9d00a3f1f50b977de9f",
+        "details": [
+          {
+            "id": "authored-domain-citation-revision",
+            "completion_nll": 5.788638114929199,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "keep_old_reference",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-expired-lease",
+            "completion_nll": 5.746267318725586,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "claim",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-index-authority",
+            "completion_nll": 5.791591644287109,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "rebuild_index",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-source-injection",
+            "completion_nll": 5.771784782409668,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "disregard",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-stale-approval",
+            "completion_nll": 5.812247276306152,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "reapprove",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-uncertain-external-effect",
+            "completion_nll": 5.8121747970581055,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "reconcile_or_review",
+            "target_tokens": 2
+          }
+        ]
+      },
+      "general": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.721898714701335,
+        "suite_sha256": "5ba2ac26c122d25889770762a2b05053bbe03415b752b07b3588a6418b605c42",
+        "details": [
+          {
+            "id": "authored-general-animal",
+            "completion_nll": 5.698596000671387,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "cat",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-count",
+            "completion_nll": 5.7241716384887695,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "3",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-half",
+            "completion_nll": 5.662844657897949,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "9",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-last",
+            "completion_nll": 5.762679576873779,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "south",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-opposite",
+            "completion_nll": 5.744954586029053,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "cold",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-sequence",
+            "completion_nll": 5.73814582824707,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "8",
+            "target_tokens": 2
+          }
+        ]
+      }
+    },
+    "dpo": {
+      "domain": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.784539620081584,
+        "suite_sha256": "ce0ae6951e38cb9221aeb328e991c083bb1bbd5fed0ba9d00a3f1f50b977de9f",
+        "details": [
+          {
+            "id": "authored-domain-citation-revision",
+            "completion_nll": 5.787581920623779,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "keep_old_reference",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-expired-lease",
+            "completion_nll": 5.7444305419921875,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "claim",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-index-authority",
+            "completion_nll": 5.787643909454346,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "rebuild_index",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-source-injection",
+            "completion_nll": 5.766432285308838,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "disregard",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-stale-approval",
+            "completion_nll": 5.8099212646484375,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "reapprove",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-domain-uncertain-external-effect",
+            "completion_nll": 5.811227798461914,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "reconcile_or_review",
+            "target_tokens": 2
+          }
+        ]
+      },
+      "general": {
+        "cases": 6,
+        "exact_match": 0.0,
+        "completion_nll": 5.708777745564778,
+        "suite_sha256": "5ba2ac26c122d25889770762a2b05053bbe03415b752b07b3588a6418b605c42",
+        "details": [
+          {
+            "id": "authored-general-animal",
+            "completion_nll": 5.692634105682373,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "cat",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-count",
+            "completion_nll": 5.69520378112793,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "3",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-half",
+            "completion_nll": 5.661531448364258,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "9",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-last",
+            "completion_nll": 5.758679389953613,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "south",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-opposite",
+            "completion_nll": 5.7389020919799805,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "cold",
+            "target_tokens": 2
+          },
+          {
+            "id": "authored-general-sequence",
+            "completion_nll": 5.705715656280518,
+            "exact_match": false,
+            "prediction": "Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer: Answer:",
+            "expected": "8",
+            "target_tokens": 2
+          }
+        ]
+      }
+    }
+  },
+  "retention_gate": {
+    "accepted": false,
+    "reasons": [
+      "base/domain:insufficient_cases",
+      "base/general:insufficient_cases",
+      "sft/domain:insufficient_cases",
+      "sft/general:insufficient_cases",
+      "dpo/domain:insufficient_cases",
+      "dpo/general:insufficient_cases"
+    ],
+    "thresholds": {
+      "minimum_cases_per_suite": 20,
+      "max_general_score_drop": 0.05,
+      "max_domain_score_drop": 0.02,
+      "max_nll_ratio": 1.1
+    },
+    "policy": "Both SFT and DPO must retain base capabilities on identical held-out suites. This does not guarantee the absence of forgetting outside those suites."
+  },
+  "timing_seconds": {
+    "sft": 0.28591857999708736,
+    "dpo": 0.2804240320037934,
+    "total": 1.2083579480022308
+  },
+  "release_approved": false,
+  "substantive_quality_verified": false,
+  "limitations": [
+    "Random tiny model is not a pretrained assistant; pipeline behavior is the only smoke claim.",
+    "The small synthetic held-out suites cannot establish broad capability retention or task utility.",
+    "No adapter is released when retention checks fail."
+  ]
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/p09-cli/run.json

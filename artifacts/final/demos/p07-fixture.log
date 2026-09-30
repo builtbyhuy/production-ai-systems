@@ -1,0 +1,553 @@
+{
+  "project": "P07",
+  "profile": "fixture",
+  "backend": "sqlite",
+  "dataset_sha256": "a720372efcff524d550cb2adf65082656554654acb757d149bce81ce03f69e67",
+  "models": {
+    "profile": "fixture",
+    "real_inference": false,
+    "embedding_model": "fixture:sha256-signed-term-vector-v1:128",
+    "generation_model": "fixture:extractive-sentence-selector-v1",
+    "reranker_model": "fixture:query-term-coverage-v1",
+    "dimensions": 128,
+    "warning": "Deterministic fixture models; metrics do not measure real-model quality."
+  },
+  "answer": {
+    "message_id": "81b6a85d-9fc8-4faf-947d-59e5421a9aa1",
+    "request_id": "7541c337-e7f1-44cd-bfee-ddadeace10df",
+    "text": "Recovery time objective is 30 minutes. [1]\nRecovery point objective is 5 minutes. [2]\nBackup retention is 30 days. [3]",
+    "citations": [
+      {
+        "chunk_id": "0a2d7840cd8d9603e1d5570782f9bb3e89e4913ef41fdec039feae1c0b40daea",
+        "document_id": "ca36c337-bec9-4c27-ae30-c3171696192f",
+        "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+        "page_number": 1,
+        "page_label": null,
+        "start": 0,
+        "end": 38,
+        "quote": "Recovery time objective is 30 minutes.",
+        "claim": "Recovery time objective is 30 minutes."
+      },
+      {
+        "chunk_id": "0a2d7840cd8d9603e1d5570782f9bb3e89e4913ef41fdec039feae1c0b40daea",
+        "document_id": "ca36c337-bec9-4c27-ae30-c3171696192f",
+        "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+        "page_number": 1,
+        "page_label": null,
+        "start": 39,
+        "end": 77,
+        "quote": "Recovery point objective is 5 minutes.",
+        "claim": "Recovery point objective is 5 minutes."
+      },
+      {
+        "chunk_id": "b024785f7d36a6d18cef0d78afdd8404a8d11101b33a13c84f6322f33f2799db",
+        "document_id": "ca36c337-bec9-4c27-ae30-c3171696192f",
+        "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+        "page_number": 2,
+        "page_label": null,
+        "start": 0,
+        "end": 28,
+        "quote": "Backup retention is 30 days.",
+        "claim": "Backup retention is 30 days."
+      }
+    ],
+    "abstained": false,
+    "conflicts": [],
+    "profile": "fixture",
+    "model": "fixture:extractive-sentence-selector-v1",
+    "evidence": {
+      "models": {
+        "profile": "fixture",
+        "real_inference": false,
+        "embedding_model": "fixture:sha256-signed-term-vector-v1:128",
+        "generation_model": "fixture:extractive-sentence-selector-v1",
+        "reranker_model": "fixture:query-term-coverage-v1",
+        "dimensions": 128,
+        "warning": "Deterministic fixture models; metrics do not measure real-model quality."
+      },
+      "backend": "sqlite",
+      "retrieval_mode": "hybrid-rerank",
+      "rrf_k": 60,
+      "retrieval_ms": 4.53476799884811,
+      "retrieval": [
+        {
+          "chunk_id": "0a2d7840cd8d9603e1d5570782f9bb3e89e4913ef41fdec039feae1c0b40daea",
+          "page_number": 1,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": 1,
+          "dense_rank": 1,
+          "rrf_score": 0.03278688524590164,
+          "rerank_score": 0.6
+        },
+        {
+          "chunk_id": "b024785f7d36a6d18cef0d78afdd8404a8d11101b33a13c84f6322f33f2799db",
+          "page_number": 2,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": 2,
+          "dense_rank": 2,
+          "rrf_score": 0.03225806451612903,
+          "rerank_score": 0.4
+        },
+        {
+          "chunk_id": "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db",
+          "page_number": 3,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 3,
+          "rrf_score": 0.015873015873015872,
+          "rerank_score": 0.0
+        }
+      ],
+      "quarantined_chunk_ids": [
+        "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db"
+      ],
+      "grounding_policy": "extractive-v1",
+      "query_coverage_min": 0.25,
+      "local_rerank_min": 0.2,
+      "graph_nodes": [
+        "retrieve",
+        "generate",
+        "validate",
+        "finalize"
+      ],
+      "intent": "question-answering",
+      "summary_filename_scoped_documents": [],
+      "summary_content_scoped_documents": [],
+      "conflict_detector": "same-wording numeric/negation disagreement; not general NLI",
+      "source_conflicts": [],
+      "generation": {
+        "real_inference": false,
+        "model": "fixture:extractive-sentence-selector-v1",
+        "selection_rule": "at most two matching source sentences per retrieved chunk"
+      },
+      "generation_ms": 0.332682000589557,
+      "citation_validation": [
+        {
+          "exists": true,
+          "span": true,
+          "support": true,
+          "active": true,
+          "reason": "Validated complete extractive assertion",
+          "policy": "extractive-v1"
+        },
+        {
+          "exists": true,
+          "span": true,
+          "support": true,
+          "active": true,
+          "reason": "Validated complete extractive assertion",
+          "policy": "extractive-v1"
+        },
+        {
+          "exists": true,
+          "span": true,
+          "support": true,
+          "active": true,
+          "reason": "Validated complete extractive assertion",
+          "policy": "extractive-v1"
+        }
+      ],
+      "conflict_source_assertions_added": 0,
+      "latency_ms": 14.21064000169281
+    }
+  },
+  "unanswerable": {
+    "message_id": "03f1802d-90da-4966-be3d-d537329983d5",
+    "request_id": "1742056c-20c3-458d-a5fe-65d19459966d",
+    "text": "I do not have sufficient validated evidence in the uploaded documents to answer this question.",
+    "citations": [],
+    "abstained": true,
+    "conflicts": [],
+    "profile": "fixture",
+    "model": "fixture:extractive-sentence-selector-v1",
+    "evidence": {
+      "models": {
+        "profile": "fixture",
+        "real_inference": false,
+        "embedding_model": "fixture:sha256-signed-term-vector-v1:128",
+        "generation_model": "fixture:extractive-sentence-selector-v1",
+        "reranker_model": "fixture:query-term-coverage-v1",
+        "dimensions": 128,
+        "warning": "Deterministic fixture models; metrics do not measure real-model quality."
+      },
+      "backend": "sqlite",
+      "retrieval_mode": "hybrid-rerank",
+      "rrf_k": 60,
+      "retrieval_ms": 2.0529570028884336,
+      "retrieval": [
+        {
+          "chunk_id": "0a2d7840cd8d9603e1d5570782f9bb3e89e4913ef41fdec039feae1c0b40daea",
+          "page_number": 1,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 1,
+          "rrf_score": 0.01639344262295082,
+          "rerank_score": 0.0
+        },
+        {
+          "chunk_id": "b024785f7d36a6d18cef0d78afdd8404a8d11101b33a13c84f6322f33f2799db",
+          "page_number": 2,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 2,
+          "rrf_score": 0.016129032258064516,
+          "rerank_score": 0.0
+        },
+        {
+          "chunk_id": "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db",
+          "page_number": 3,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 3,
+          "rrf_score": 0.015873015873015872,
+          "rerank_score": 0.0
+        }
+      ],
+      "quarantined_chunk_ids": [
+        "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db"
+      ],
+      "grounding_policy": "extractive-v1",
+      "query_coverage_min": 0.25,
+      "local_rerank_min": 0.2,
+      "graph_nodes": [
+        "retrieve",
+        "finalize"
+      ],
+      "intent": "question-answering",
+      "summary_filename_scoped_documents": [],
+      "summary_content_scoped_documents": [],
+      "conflict_detector": "same-wording numeric/negation disagreement; not general NLI",
+      "source_conflicts": [],
+      "latency_ms": 3.6240010012988932
+    }
+  },
+  "injected_document_question": {
+    "message_id": "6d116f78-c7f3-4059-8f7a-1507d00f4a01",
+    "request_id": "1e6afe8f-fcf9-466b-b403-aac1a57bffd7",
+    "text": "I do not have sufficient validated evidence in the uploaded documents to answer this question.",
+    "citations": [],
+    "abstained": true,
+    "conflicts": [],
+    "profile": "fixture",
+    "model": "fixture:extractive-sentence-selector-v1",
+    "evidence": {
+      "models": {
+        "profile": "fixture",
+        "real_inference": false,
+        "embedding_model": "fixture:sha256-signed-term-vector-v1:128",
+        "generation_model": "fixture:extractive-sentence-selector-v1",
+        "reranker_model": "fixture:query-term-coverage-v1",
+        "dimensions": 128,
+        "warning": "Deterministic fixture models; metrics do not measure real-model quality."
+      },
+      "backend": "sqlite",
+      "retrieval_mode": "hybrid-rerank",
+      "rrf_k": 60,
+      "retrieval_ms": 1.9683319987962022,
+      "retrieval": [
+        {
+          "chunk_id": "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db",
+          "page_number": 3,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": 1,
+          "dense_rank": 1,
+          "rrf_score": 0.03278688524590164,
+          "rerank_score": 0.3333333333333333
+        },
+        {
+          "chunk_id": "b024785f7d36a6d18cef0d78afdd8404a8d11101b33a13c84f6322f33f2799db",
+          "page_number": 2,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 2,
+          "rrf_score": 0.016129032258064516,
+          "rerank_score": 0.0
+        },
+        {
+          "chunk_id": "0a2d7840cd8d9603e1d5570782f9bb3e89e4913ef41fdec039feae1c0b40daea",
+          "page_number": 1,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 3,
+          "rrf_score": 0.015873015873015872,
+          "rerank_score": 0.0
+        }
+      ],
+      "quarantined_chunk_ids": [
+        "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db"
+      ],
+      "grounding_policy": "extractive-v1",
+      "query_coverage_min": 0.25,
+      "local_rerank_min": 0.2,
+      "graph_nodes": [
+        "retrieve",
+        "finalize"
+      ],
+      "intent": "question-answering",
+      "summary_filename_scoped_documents": [],
+      "summary_content_scoped_documents": [],
+      "conflict_detector": "same-wording numeric/negation disagreement; not general NLI",
+      "source_conflicts": [],
+      "latency_ms": 3.3853479981189594
+    }
+  },
+  "conflict_answer": {
+    "message_id": "32c18232-8a42-4ae8-a6c7-505f3683777c",
+    "request_id": "72ec051f-24f7-4265-a6a8-30dc65808c10",
+    "text": "The retrieved sources conflict; verify which policy is authoritative.\nBackup retention is 7 days. [1]\nBackup retention is 30 days. [2]",
+    "citations": [
+      {
+        "chunk_id": "bb9b75d238ecde1d5e65564b29dc206695f2824cf7cab82cd0804a93a3273024",
+        "document_id": "20c70532-92c5-46bf-a0d7-eccdc92921ec",
+        "version_id": "75641862-b027-4688-a27c-546691eee5ac",
+        "page_number": 1,
+        "page_label": null,
+        "start": 0,
+        "end": 27,
+        "quote": "Backup retention is 7 days.",
+        "claim": "Backup retention is 7 days."
+      },
+      {
+        "chunk_id": "b024785f7d36a6d18cef0d78afdd8404a8d11101b33a13c84f6322f33f2799db",
+        "document_id": "ca36c337-bec9-4c27-ae30-c3171696192f",
+        "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+        "page_number": 2,
+        "page_label": null,
+        "start": 0,
+        "end": 28,
+        "quote": "Backup retention is 30 days.",
+        "claim": "Backup retention is 30 days."
+      }
+    ],
+    "abstained": false,
+    "conflicts": [
+      "Backup retention is 7 days. (page 1, version 75641862-b027-4688-a27c-546691eee5ac) | Backup retention is 30 days. (page 2, version 8894b764-3fca-49e9-a86a-b4dbb5ca9088)"
+    ],
+    "profile": "fixture",
+    "model": "fixture:extractive-sentence-selector-v1",
+    "evidence": {
+      "models": {
+        "profile": "fixture",
+        "real_inference": false,
+        "embedding_model": "fixture:sha256-signed-term-vector-v1:128",
+        "generation_model": "fixture:extractive-sentence-selector-v1",
+        "reranker_model": "fixture:query-term-coverage-v1",
+        "dimensions": 128,
+        "warning": "Deterministic fixture models; metrics do not measure real-model quality."
+      },
+      "backend": "sqlite",
+      "retrieval_mode": "hybrid-rerank",
+      "rrf_k": 60,
+      "retrieval_ms": 2.3128920001909137,
+      "retrieval": [
+        {
+          "chunk_id": "bb9b75d238ecde1d5e65564b29dc206695f2824cf7cab82cd0804a93a3273024",
+          "page_number": 1,
+          "version_id": "75641862-b027-4688-a27c-546691eee5ac",
+          "lexical_rank": 1,
+          "dense_rank": 1,
+          "rrf_score": 0.03278688524590164,
+          "rerank_score": 1.0
+        },
+        {
+          "chunk_id": "b024785f7d36a6d18cef0d78afdd8404a8d11101b33a13c84f6322f33f2799db",
+          "page_number": 2,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": 2,
+          "dense_rank": 2,
+          "rrf_score": 0.03225806451612903,
+          "rerank_score": 1.0
+        },
+        {
+          "chunk_id": "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db",
+          "page_number": 3,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 3,
+          "rrf_score": 0.015873015873015872,
+          "rerank_score": 0.0
+        },
+        {
+          "chunk_id": "0a2d7840cd8d9603e1d5570782f9bb3e89e4913ef41fdec039feae1c0b40daea",
+          "page_number": 1,
+          "version_id": "8894b764-3fca-49e9-a86a-b4dbb5ca9088",
+          "lexical_rank": null,
+          "dense_rank": 4,
+          "rrf_score": 0.015625,
+          "rerank_score": 0.0
+        }
+      ],
+      "quarantined_chunk_ids": [
+        "808bfc5b2ff7da02deac364b32e3345d2e1ea38af666fd8f35d504bee114f1db"
+      ],
+      "grounding_policy": "extractive-v1",
+      "query_coverage_min": 0.25,
+      "local_rerank_min": 0.2,
+      "graph_nodes": [
+        "retrieve",
+        "generate",
+        "validate",
+        "finalize"
+      ],
+      "intent": "question-answering",
+      "summary_filename_scoped_documents": [],
+      "summary_content_scoped_documents": [],
+      "conflict_detector": "same-wording numeric/negation disagreement; not general NLI",
+      "source_conflicts": [
+        "Backup retention is 7 days. (page 1, version 75641862-b027-4688-a27c-546691eee5ac) | Backup retention is 30 days. (page 2, version 8894b764-3fca-49e9-a86a-b4dbb5ca9088)"
+      ],
+      "generation": {
+        "real_inference": false,
+        "model": "fixture:extractive-sentence-selector-v1",
+        "selection_rule": "at most two matching source sentences per retrieved chunk"
+      },
+      "generation_ms": 0.2314529992872849,
+      "citation_validation": [
+        {
+          "exists": true,
+          "span": true,
+          "support": true,
+          "active": true,
+          "reason": "Validated complete extractive assertion",
+          "policy": "extractive-v1"
+        },
+        {
+          "exists": true,
+          "span": true,
+          "support": true,
+          "active": true,
+          "reason": "Validated complete extractive assertion",
+          "policy": "extractive-v1"
+        }
+      ],
+      "conflict_source_assertions_added": 0,
+      "latency_ms": 9.469488002650905
+    }
+  },
+  "replacement_answer": {
+    "message_id": "532a879c-13f3-43a2-a93d-4b1305a0cf23",
+    "request_id": "13f165a0-4afc-4e01-840a-d319fed30914",
+    "text": "Backup retention is 14 days. [1]",
+    "citations": [
+      {
+        "chunk_id": "130a1c0e82227f1dec1a4f20db9142f729757e59a4f72b68e18152a46aa1ab34",
+        "document_id": "ca36c337-bec9-4c27-ae30-c3171696192f",
+        "version_id": "209957e6-fdac-4383-8a83-494e7e89881e",
+        "page_number": 1,
+        "page_label": null,
+        "start": 39,
+        "end": 67,
+        "quote": "Backup retention is 14 days.",
+        "claim": "Backup retention is 14 days."
+      }
+    ],
+    "abstained": false,
+    "conflicts": [],
+    "profile": "fixture",
+    "model": "fixture:extractive-sentence-selector-v1",
+    "evidence": {
+      "models": {
+        "profile": "fixture",
+        "real_inference": false,
+        "embedding_model": "fixture:sha256-signed-term-vector-v1:128",
+        "generation_model": "fixture:extractive-sentence-selector-v1",
+        "reranker_model": "fixture:query-term-coverage-v1",
+        "dimensions": 128,
+        "warning": "Deterministic fixture models; metrics do not measure real-model quality."
+      },
+      "backend": "sqlite",
+      "retrieval_mode": "hybrid-rerank",
+      "rrf_k": 60,
+      "retrieval_ms": 2.557283005444333,
+      "retrieval": [
+        {
+          "chunk_id": "130a1c0e82227f1dec1a4f20db9142f729757e59a4f72b68e18152a46aa1ab34",
+          "page_number": 1,
+          "version_id": "209957e6-fdac-4383-8a83-494e7e89881e",
+          "lexical_rank": 1,
+          "dense_rank": 1,
+          "rrf_score": 0.03278688524590164,
+          "rerank_score": 1.0
+        }
+      ],
+      "quarantined_chunk_ids": [],
+      "grounding_policy": "extractive-v1",
+      "query_coverage_min": 0.25,
+      "local_rerank_min": 0.2,
+      "graph_nodes": [
+        "retrieve",
+        "generate",
+        "validate",
+        "finalize"
+      ],
+      "intent": "question-answering",
+      "summary_filename_scoped_documents": [],
+      "summary_content_scoped_documents": [],
+      "conflict_detector": "same-wording numeric/negation disagreement; not general NLI",
+      "source_conflicts": [],
+      "generation": {
+        "real_inference": false,
+        "model": "fixture:extractive-sentence-selector-v1",
+        "selection_rule": "at most two matching source sentences per retrieved chunk"
+      },
+      "generation_ms": 0.18508399807615206,
+      "citation_validation": [
+        {
+          "exists": true,
+          "span": true,
+          "support": true,
+          "active": true,
+          "reason": "Validated complete extractive assertion",
+          "policy": "extractive-v1"
+        }
+      ],
+      "conflict_source_assertions_added": 0,
+      "latency_ms": 6.308521005848888
+    }
+  },
+  "checks": {
+    "cross_page_citations": true,
+    "unanswerable_abstained": true,
+    "injected_source_not_followed": true,
+    "duplicate_same_version": true,
+    "incorrect_page_rejected": true,
+    "conflict_surfaced": true,
+    "replacement_new_version": true,
+    "old_citation_still_valid": true,
+    "old_version_inactive": true,
+    "new_answer_uses_replacement": true,
+    "cross_tenant_search_empty": true,
+    "deleted_citation_unavailable": true,
+    "malformed_rejected": true
+  },
+  "invalid_citation": {
+    "exists": true,
+    "span": false,
+    "support": false,
+    "active": true,
+    "reason": "Page or span mismatch",
+    "policy": "extractive-v1"
+  },
+  "old_citation_validation": {
+    "exists": true,
+    "span": true,
+    "support": true,
+    "active": false,
+    "reason": "Validated complete extractive assertion",
+    "policy": "extractive-v1"
+  },
+  "deleted_citation_validation": {
+    "exists": false,
+    "span": false,
+    "support": false,
+    "active": false,
+    "reason": "Source unavailable",
+    "policy": "extractive-v1"
+  },
+  "storage_bytes_after_full_lifecycle": 712704,
+  "acceptance_scope": "fixture contracts only",
+  "elapsed_ms": 833.3231159995194,
+  "offline_network_isolation_verified": false,
+  "offline_verification_note": "A local endpoint and disabled model downloads do not prove network isolation. Use the P07 externally blocked network acceptance runner."
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p07-fixture.json

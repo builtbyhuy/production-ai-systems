@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "profile": "fixture",
+  "evidence": "actual_admission_controller_without_model_or_network",
+  "inference_identity_verified": false,
+  "model_requests": 0,
+  "checks": {
+    "overflow_rejected": true,
+    "capacity_recovered": true,
+    "drain_rejected": true,
+    "rejections_recorded": true
+  }
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p14-fixture.json

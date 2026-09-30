@@ -1,0 +1,15 @@
+........................................................................ [ 27%]
+........................................................................ [ 54%]
+........................................................................ [ 82%]
+..............................................                           [100%]
+=============================== warnings summary ===============================
+tests/test_tenancy.py::test_real_sdk_adapters_reject_privileged_or_live_keys
+  /workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/lib/python3.12/site-packages/supabase/_sync/client.py:309: DeprecationWarning: The 'timeout' parameter is deprecated. Please configure it in the http client instead.
+    return SyncPostgrestClient(
+
+tests/test_tenancy.py::test_real_sdk_adapters_reject_privileged_or_live_keys
+  /workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/lib/python3.12/site-packages/supabase/_sync/client.py:309: DeprecationWarning: The 'verify' parameter is deprecated. Please configure it in the http client instead.
+    return SyncPostgrestClient(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+262 passed, 2 warnings in 15.46s

@@ -27,8 +27,8 @@ def runtime_environment() -> dict[str, str]:
                    for key in ("subject", "tenant_id")):
             raise ValueError("Each credential needs a trusted subject and tenant")
         roles = principal.get("roles")
-        if not isinstance(roles, list) or not roles or not set(roles) <= {"reader", "editor", "admin"}:
-            raise ValueError("Credential roles must be explicit reader/editor/admin values")
+        if not isinstance(roles, list) or not roles or not set(roles) <= {"reader", "writer", "admin"}:
+            raise ValueError("Credential roles must be explicit reader/writer/admin values")
     env.update(PAIS_AUTH_TOKENS=json.dumps(credentials), PAIS_PROFILE="local",
                PAIS_ALLOW_FIXTURE_AUTH="0", HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1",
                HF_HUB_DISABLE_TELEMETRY="1", DO_NOT_TRACK="1")

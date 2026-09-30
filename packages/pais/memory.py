@@ -17,6 +17,7 @@ from pydantic import Field
 
 from pais.contracts import Principal, StrictModel, new_id, utcnow
 from pais.db import Database
+from pais.retrieval import require_read
 from pais.vectors import QdrantIndex
 
 
@@ -141,6 +142,7 @@ class MemoryService:
 
     def put(self, principal: Principal, memory_id: str, text: str, *, expected_version: int = 0,
             confidence: float = 1.0, provenance: list[dict[str, str]], ttl_seconds: int = 3600) -> MemoryRecord:
+        require_read(principal)
         principal.require("writer")
         if not memory_id or not text.strip() or len(text) > 20000:
             raise ValueError("Memory identifier and bounded content are required")
@@ -181,6 +183,7 @@ class MemoryService:
         self._change(conn, principal.tenant_id, memory_id, version + 1, kind)
 
     def delete(self, principal: Principal, memory_id: str, expected_version: int) -> MemoryRecord:
+        require_read(principal)
         principal.require("writer")
         with self.db.transaction() as conn:
             row = conn.execute("SELECT * FROM mem_records WHERE tenant_id=? AND memory_id=?",
@@ -194,6 +197,7 @@ class MemoryService:
         return self.get(principal, memory_id, include_deleted=True)
 
     def expire(self, principal: Principal) -> int:
+        require_read(principal)
         with self.db.transaction() as conn:
             rows = conn.execute("SELECT memory_id,version FROM mem_records WHERE tenant_id=? AND deleted=0 AND expires_at<=?",
                                 (principal.tenant_id, self.clock())).fetchall()
@@ -204,6 +208,7 @@ class MemoryService:
         return len(rows)
 
     def get(self, principal: Principal, memory_id: str, *, include_deleted: bool = False) -> MemoryRecord:
+        require_read(principal)
         with self.db.transaction(False) as conn:
             row = conn.execute("SELECT * FROM mem_records WHERE tenant_id=? AND memory_id=?",
                                (principal.tenant_id, memory_id)).fetchone()
@@ -220,6 +225,7 @@ class MemoryService:
 
     def flush(self, principal: Principal) -> int:
         """Reconcile derived Redis/Qdrant state after a crash between durable writes."""
+        require_read(principal)
         with self.db.transaction(False) as conn:
             rows = conn.execute("SELECT r.* FROM mem_pending p JOIN mem_records r USING(tenant_id,memory_id) WHERE p.tenant_id=?",
                                 (principal.tenant_id,)).fetchall()
@@ -248,6 +254,7 @@ class MemoryService:
         return len(rows)
 
     def recall(self, principal: Principal, query: str, limit: int = 5, confidence_floor: float = 0.8) -> list[MemoryRecord]:
+        require_read(principal)
         if not 0 <= confidence_floor <= 1 or not 1 <= limit <= 100:
             raise ValueError("Confidence floor or result limit out of range")
         self.expire(principal)
@@ -272,12 +279,14 @@ class MemoryService:
         return result
 
     def start_session(self, principal: Principal, session_id: str | None = None) -> str:
+        require_read(principal)
         identifier = session_id or new_id()
         with self.db.transaction() as conn:
             conn.execute("INSERT INTO mem_sessions VALUES(?,?,?,?)", (principal.tenant_id, identifier, principal.subject, utcnow()))
         return identifier
 
     def _session(self, principal: Principal, session_id: str) -> None:
+        require_read(principal)
         with self.db.transaction(False) as conn:
             row = conn.execute("SELECT subject FROM mem_sessions WHERE tenant_id=? AND session_id=?",
                                (principal.tenant_id, session_id)).fetchone()
@@ -332,6 +341,7 @@ class MemoryService:
         return {"summary": row["summary"], "references": refs, "authority": "untrusted_memory"}
 
     def changes(self, principal: Principal, after: int = 0) -> list[dict[str, Any]]:
+        require_read(principal)
         with self.db.transaction(False) as conn:
             return [dict(row) for row in conn.execute("SELECT * FROM mem_changes WHERE tenant_id=? AND sequence>? ORDER BY sequence LIMIT 1000",
                                                      (principal.tenant_id, after)).fetchall()]

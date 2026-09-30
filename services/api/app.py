@@ -307,15 +307,27 @@ def create_app(
         lease = env["limiter"].acquire(principal, str(uuid4()))
         try:
             claim = env["messages"].claim(principal, body.message_id, body.conversation_id, question)
-            if claim.answer is not None:
-                validate_saved(principal, claim.answer)
-                claim = replace(claim, answer=protect_answer(claim.answer))
-                env["limiter"].release(lease)
-                return claim, question, None
             return claim, question, lease
         except BaseException:
             env["limiter"].release(lease)
             raise
+
+    def protect_replay(principal: Principal, claim: Claim, lease) -> Claim:
+        # Required validators can launch bounded subprocesses. Keep them off the ASGI
+        # event loop, and retain admission until the worker finishes even if delivery stops.
+        try:
+            validate_saved(principal, claim.answer)
+            return replace(claim, answer=protect_answer(claim.answer))
+        finally:
+            resources()["limiter"].release(lease)
+
+    async def prepare_chat(principal: Principal, body: ChatRequest):
+        claim, question, lease = prepare(principal, body)
+        if claim.answer is None:
+            return claim, question, lease
+        job = track_job(asyncio.create_task(asyncio.to_thread(protect_replay, principal, claim, lease)))
+        protected_claim = await asyncio.shield(job)
+        return protected_claim, question, None
 
     def generate(principal: Principal, body: ChatRequest, claim: Claim, question: str, lease,
                  force_failure: bool = False) -> Answer:
@@ -357,7 +369,7 @@ def create_app(
 
     @application.post("/api/chat")
     async def chat(body: ChatRequest, principal: Trusted):
-        claim, question, lease = prepare(principal, body)
+        claim, question, lease = await prepare_chat(principal, body)
         if claim.answer:
             return claim.answer
         # shield preserves the single durable generation claim if the waiting HTTP request times out.
@@ -369,7 +381,7 @@ def create_app(
 
     @application.post("/api/chat/stream")
     async def chat_stream(body: ChatRequest, principal: Trusted, request: Request):
-        claim, question, lease = prepare(principal, body)
+        claim, question, lease = await prepare_chat(principal, body)
         force_failure = test_faults and request.headers.get("x-pais-test-fault") == "fail-once"
 
         async def stream():

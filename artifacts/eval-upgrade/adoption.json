@@ -1,0 +1,23 @@
+{
+  "status": "adopted_and_verified_in_fresh_environment",
+  "command": "UV_PROJECT_ENVIRONMENT=projects/04-eval-harness/.venv-final uv sync --frozen --project projects/04-eval-harness; unchanged worker replay on preserved144release-fixture observations",
+  "cases": 144,
+  "numeric_values": 432,
+  "exact_numeric_match": true,
+  "versions": {
+    "deepeval": "4.2.6",
+    "ragas": "0.4.3",
+    "langchain": "1.4.3",
+    "langchain-community": "0.3.31"
+  },
+  "worker_sha256": "36bee85a3edbd2dbba6353b3b7865deb7691a59c9d7542bece1b77dba86ae8e1",
+  "lock_sha256": "e56fc70bdc61d806fceeacb04cdb6c4dd0c0ed700f49722b00b4e981eddf6e8a",
+  "pyproject_sha256": "a6d7313a58ff86b9fd8beacb517a0a07ee97d9230e93f96519543f7fc81277cf",
+  "metrics_sha256": "c81554cb2076041b9789343206ef9d51ec1b72dae0e14088af2f1941146d6b5c",
+  "remaining_advisories": [
+    "PYSEC-2026-2447",
+    "PYSEC-2026-3046"
+  ],
+  "audit_holdout_accessed": false,
+  "prior_failed_attempts": "Offline re-lock lacked registry metadata; in-place upgrade retained conflicting old distributions. Both attempts and logs preserved; fresh environment required."
+}

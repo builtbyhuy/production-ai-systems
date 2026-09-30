@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/__main__.py", line 1, in <module>
+    from pais.cli import main
+  File "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/cli.py", line 15, in <module>
+    from pais.evidence import ROOT, capture, doctor, manifest, write_report
+  File "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/evidence.py", line 19, in <module>
+    from pais.contracts import utcnow
+  File "/workspace/scratch/708ae715c693/production-ai-systems/packages/pais/contracts.py", line 10, in <module>
+    from pydantic import BaseModel, ConfigDict, Field
+ModuleNotFoundError: No module named 'pydantic'

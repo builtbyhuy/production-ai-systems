@@ -1,165 +1,114 @@
-# Production AI Systems
+# AI Systems Lab
 
-**Eighteen engineering projects around one technical-operations copilot.**
+**A local PDF copilot with traceable answers, durable approvals and inspectable engineering evidence.**
 
-Upload a versioned PDF, ask an operational question, inspect the exact page behind an
-answer, and require an authorized reviewer before a proposed action executes. Follow the
-same identity, provenance, usage, approval and job contracts into separate research,
-memory, training, inference and deployment projects.
+Upload a PDF, ask a question, open the exact source page and review a proposed action
+before it executes. The project brings retrieval, identity, output validation, evaluation
+and recovery together in one working application.
 
-This is a reproducible engineering portfolio under validation. Read the
-[project ledger](docs/PROJECT_LEDGER.md) for each project's implementation, acceptance
-results, evidence and next command. A passing component demonstration establishes its
-stated scope; outstanding integration and deployment requirements remain visible.
+![Local copilot answering an operational question with a source-page citation](docs/images/copilot-local.png)
 
-## Verified snapshot
+*Actual local-model browser run from 29 September 2026. The current redteam revision
+has separate verification; this image is evidence of the original tested application.*
 
-The clean application commit `c7b8a793f34795f3d2de148c1c5c211845e8b222` passed 262 core
-checks, all 18 fixture demo entrypoints, 14 desktop/mobile fixture browser cases and one
-actual local-model browser case. Its full local release passed 144/144; the deliberately
-degraded full run failed 48 cases and was rejected. The small audit passed 8/8.
+This is an independent, AI-assisted engineering portfolio. It demonstrates a local
+application and 18 related modules or experiments. Production acceptance remains
+incomplete. Start with the [redteam review](docs/REDTEAM.md), then inspect the
+[measured verification report](docs/VERIFICATION.md) and [criterion ledger](docs/PROJECT_LEDGER.md).
 
-The separate P09 CLI dependency correction at
-`9f8e0fdf41f3a170004c297c24b18ab01da7f25b` passed a genuine tiny SFT/DPO reproduction;
-model-quality promotion remained rejected. The later documentation commit records these
-runs and is not a separately tested deployment candidate.
+## What to inspect first
 
-Measured limits include 10k-document hybrid recall@1 of 0.21 with the default feature hashes,
-0% held-out training exact match, a timed-out local research run, and unavailable vLLM IPC
-and hostile-code isolation. External SaaS/cluster/upstream acceptance remains incomplete.
-The production dependency gate is blocked by reported advisories and scanner coverage gaps.
-Read [VERIFICATION.md](docs/VERIFICATION.md) for measured values, evidence and next actions.
+| Capability | Implementation | Failure behavior |
+|---|---|---|
+| Versioned PDF retrieval | [RAG](packages/pais/rag.py), [vector adapters](packages/pais/retrieval.py) | Tenant filtering, source version retention, malformed/scanned input handling and invalid citation rejection. |
+| Checked answers and source pages | [API](services/api/app.py), [Next.js UI](apps/copilot) | Required output validation before delivery, inert rendering of model text, cancellation and retry reconciliation. |
+| Durable human approval | [Workflow](packages/pais/workflows.py) | Reviewer, action hash, source version and expiry are rechecked; local effects use durable replay handling. |
+| Regression and release evidence | [Evaluation](packages/pais/evaluation.py), [release binding](packages/pais/operations.py) | Frozen case identities, metrics, thresholds and source provenance are verified; degraded candidates fail. |
+| Worker recovery | [Jobs](packages/pais/jobs.py), [memory](packages/pais/memory.py) | Real Redis/Celery restart tests, explicit uncertain/dead states, correction and deletion markers. |
 
-## Start locally
+The [architecture](docs/ARCHITECTURE.md) explains state ownership and trust boundaries.
+[Shared contracts](docs/CONTRACTS.md) describe identity, citations, usage, approvals and jobs.
 
-Verified on Linux/POSIX with Python 3.12, uv, and Node.js 24 for the UI. The commands below use the checked-in
-lockfiles. The complete test suite also needs `redis-server` on `PATH` for actual memory
-and broker crash/recovery tests (on Ubuntu: `sudo apt-get install redis-server`). Redis is
-started on temporary loopback ports by the tests. Model downloads are a separate explicit step.
+## Try the PDF demo
+
+Use Linux/POSIX with **Python 3.12 and uv**. The full test suite also needs
+`redis-server` on `PATH`; the UI needs **Node.js 24**. No model download is required for
+the fixture demo. Fixture responses are deterministic and visibly labelled.
 
 ```bash
+git clone https://github.com/builtbyhuy/production-ai-systems.git
 cd production-ai-systems
 uv sync --frozen --group dev --extra vectors --extra router --extra workflows
-uv sync --frozen --project projects/04-eval-harness
-uv run --no-sync pais doctor
-uv run --no-sync pais smoke
 uv run --no-sync pais demo 01 --profile fixture
+```
+
+To open the application, run the API:
+
+```bash
 uv run --no-sync pais dev --profile fixture
 ```
 
-In another terminal:
+In a second terminal:
 
 ```bash
-cd production-ai-systems/apps/copilot
+cd apps/copilot
 npm ci
-npm run dev
+npm run build
+npm run start
 ```
 
-Open [http://127.0.0.1:3000](http://127.0.0.1:3000). The fixture profile visibly labels
-deterministic responses and explicitly enables its synthetic local identity. Uploaded
-PDFs still pass through actual extraction, storage, retrieval and citation validation.
-Follow [P07](projects/07-local-first/README.md) to provision the actual Ollama generation,
-embedding and cross-encoder models, then run the local profile. Use the fixture identity
-only for these local demonstrations.
+Open [http://127.0.0.1:3000](http://127.0.0.1:3000), choose **Open fixture workspace**,
+upload a text PDF, ask a question and open its citation. The
+[UI guide](projects/08-streaming-ui/README.md) documents credentials, approval and recovery.
+For actual local generation, embeddings and reranking, follow
+[local-model provisioning](projects/07-local-first/README.md).
 
-## The portfolio
-
-Each guide contains setup, a repeatable demo, verification commands, an acceptance
-checklist, a case study and an interview walkthrough. The ledger binds results to
-evidence files instead of inferring readiness from the framework names below.
-
-| Project | Capability and critical failure | Main implementation |
-| --- | --- | --- |
-| [01 · RAG with citations](projects/01-rag-citations/README.md) | Versioned PDF → hybrid retrieval → reranking → grounded answer; invalid source spans fail | [rag.py](packages/pais/rag.py), [models.py](packages/pais/models.py) |
-| [02 · Model router](projects/02-model-router/README.md) | Cost/quality routing and persistent reservations; concurrent requests cannot overspend the declared cap | [reliability.py](packages/pais/reliability.py) |
-| [03 · Multi-agent research](projects/03-multi-agent-research/README.md) | Four actual CrewAI roles with evidence and audit; unsupported claims can be rejected | [research.py](packages/pais/research.py) |
-| [04 · Evaluation harness](projects/04-eval-harness/README.md) | 144 frozen cases and actual DeepEval/RAGAS metrics; incomplete or degraded candidates block | [evaluation.py](packages/pais/evaluation.py) |
-| [05 · Observability](projects/05-observability/README.md) | OTel traces, Prometheus metrics, Grafana and alert drill; sensitive telemetry is filtered | [observability.py](packages/pais/observability.py) |
-| [06 · Security middleware](projects/06-security-guardrails/README.md) | Guardrails AI, authorization, shared limits and execution boundary; unavailable required validation fails closed | [security.py](packages/pais/security.py), [sandbox.py](packages/pais/sandbox.py) |
-| [07 · Local-first environment](projects/07-local-first/README.md) | Actual local models and two selectable retrieval adapters; offline prerequisites are actively checked | [retrieval.py](packages/pais/retrieval.py) |
-| [08 · Streaming copilot](projects/08-streaming-ui/README.md) | Next.js/AI SDK upload, citations, approvals and recovery; stable IDs reconcile retries | [UI](apps/copilot), [API](services/api) |
-| [09 · LoRA training](projects/09-lora-training/README.md) | Genuine tiny SFT/DPO, adapter reload and held-out comparison; retention rejects inadequate evidence | [training.py](packages/pais/training.py) |
-| [10 · Multi-tenant SaaS](projects/10-multi-tenant-saas/README.md) | Membership, metering, Supabase/Stripe adapters; tenant headers and webhook replay cannot grant privileges | [tenancy.py](packages/pais/tenancy.py) |
-| [11 · CI/CD](projects/11-cicd/README.md) | Immutable release evidence, Argo configuration and emergency disable; missing observations block promotion | [operations.py](packages/pais/operations.py), [workflows](.github/workflows) |
-| [12 · Vector database](projects/12-vector-database/README.md) | Qdrant hybrid/filter/cache/reindex/restore; stale derived records cannot revive deleted content | [vectors.py](packages/pais/vectors.py) |
-| [13 · Agent memory](projects/13-agent-memory/README.md) | Redis buffers and versioned long-term memory; stale sessions respect correction and deletion markers | [memory.py](packages/pais/memory.py) |
-| [14 · Inference server](projects/14-inference-server/README.md) | vLLM profiles and bounded serving gateway; admission and instance failures are observable | [inference.py](packages/pais/inference.py) |
-| [15 · Human approval](projects/15-human-approval/README.md) | Durable LangGraph interruption; changed, expired and replayed actions are revalidated | [workflows.py](packages/pais/workflows.py) |
-| [16 · Automation pipeline](projects/16-automation-pipeline/README.md) | Signed webhook → transactional outbox → Celery job; retries and uncertain effects have explicit states | [jobs.py](packages/pais/jobs.py) |
-| [17 · Code benchmark](projects/17-domain-benchmark/README.md) | 100 original tasks with executable checks; untrusted scoring requires the P06 sandbox | [benchmark.py](packages/pais/benchmark.py) |
-| [18 · Upstream contribution](projects/18-upstream-contribution/README.md) | Current SQLite-checkpoint transaction reproduction and focused patch; submission/merge tracked separately | [contribution](projects/18-upstream-contribution) |
-
-## Commands and profiles
+## Verify the behavior
 
 ```bash
-uv run --no-sync pais demo 15 --profile fixture
-uv run --no-sync pais test
-uv run --no-sync pais security
+uv sync --frozen --project projects/04-eval-harness
+uv run --no-sync pytest tests projects/13-agent-memory/test_comparison.py projects/14-inference-server/test_supervisor.py -q
 uv run --no-sync pais eval --profile fixture --suite release
-uv run --no-sync pais status
+uv run --no-sync pais eval --profile fixture --suite release --degraded
 ```
 
-`pais demo 01` through `pais demo 18` are individual entrypoints. Specialized demos
-dispatch to their locked environment or explain the missing prerequisite with exit 2.
-Run `uv sync --frozen --project projects/03-multi-agent-research` before P03,
-`projects/06-security-guardrails` before required real Guardrails validation, and
-`projects/09-lora-training` before P09 local training. See each README for dependencies
-that cannot be supplied by Python alone.
+The deliberately degraded evaluation must exit **1**. An unavailable prerequisite exits
+**2** and cannot count as an expected quality rejection. See the
+[evaluation contract](evals/README.md) and [CI workflow](.github/workflows/ci.yml).
+The [redteam report](docs/REDTEAM.md) records independently reproduced checks and fixes.
 
-Fixture checks establish deterministic contracts. Local runs use actual provisioned
-models and dependencies. Connected runs require named authorized test accounts and an
-explicit budget. Deployment/performance runs require the declared hardware, services and
-load. Selecting a smaller profile does not remove a project's other acceptance criteria.
+## Evidence and limits
 
-After P07 provisioning, a Unix local-model evaluation is:
+The original clean application commit `c7b8a79` passed 262 Python checks, 14 fixture
+browser cases and one actual local-model browser flow. Its local regression suite passed
+144/144; the deliberately degraded run failed 48 cases. Historical reports retain their
+own tested commits and do not authorize a newer release.
 
-```bash
-uv run --no-sync python scripts/with_local_models.py -- \
-  .venv/bin/python -m pais eval --profile local --suite release \
-  --output artifacts/evals/release-local.json
-```
+That local suite contained **56 Qwen responses, 16 deterministic excerpt summaries and
+72 contract/abstention cases**. It is a synthetic regression workload. Ordinary answers
+select complete source sentences; summaries assemble disclosed excerpts. Exact page/span
+checks do not establish arbitrary paraphrase entailment or broad-domain model quality.
 
-The wrapper starts and stops its own Ollama instance. It is useful on execution hosts
-where each command gets a separate network namespace. On a normal development machine,
-native Ollama may run separately; set the documented model-lock and local service URL.
-`PAIS_EVAL_PYTHON` optionally selects the exact isolated evaluation-worker interpreter;
-`PAIS_GUARDRAILS_PYTHON` selects the mandatory validator interpreter for non-fixture API runs.
+Other experiments expose useful failures: routing did not improve over the cheap model;
+hybrid recall@1 fell to 0.21 at 10,000 synthetic documents; tiny SFT/DPO models achieved
+0% held-out exact match. Hostile-code execution stays disabled, vLLM serving did not start,
+and external SaaS, cluster and upstream submission criteria remain unfinished.
+Reported dependency advisories also block production promotion. The
+[verification report](docs/VERIFICATION.md) preserves these results and remaining work.
 
-To capture a command and its provenance:
+## Explore the lab
 
-```bash
-uv run --no-sync pais evidence --profile fixture \
-  --output artifacts/checks.json -- .venv/bin/python -m pytest tests -q
-```
+| Area | Modules |
+|---|---|
+| Application and retrieval | [01 RAG](projects/01-rag-citations/README.md), [07 local-first](projects/07-local-first/README.md), [08 UI](projects/08-streaming-ui/README.md), [12 vector search](projects/12-vector-database/README.md) |
+| Reliability and control | [02 routing](projects/02-model-router/README.md), [04 evaluation](projects/04-eval-harness/README.md), [05 observability](projects/05-observability/README.md), [06 security](projects/06-security-guardrails/README.md), [15 approval](projects/15-human-approval/README.md), [16 automation](projects/16-automation-pipeline/README.md) |
+| Agent and model experiments | [03 research](projects/03-multi-agent-research/README.md), [09 training](projects/09-lora-training/README.md), [13 memory](projects/13-agent-memory/README.md), [14 inference](projects/14-inference-server/README.md), [17 benchmark](projects/17-domain-benchmark/README.md) |
+| Integration and delivery | [10 tenant SaaS](projects/10-multi-tenant-saas/README.md), [11 CI/CD](projects/11-cicd/README.md), [18 prepared upstream patch](projects/18-upstream-contribution/README.md) |
 
-Exit 0 means the requested run succeeded, exit 1 means required assertions failed, and
-exit 2 means a required prerequisite or validator was unavailable. The JSON report
-retains individual results. A fixture success never authorizes deployment.
+Each module has a demo, acceptance scope, evidence and a next action. The original scope is
+in [BUILD_SPEC.md](docs/BUILD_SPEC.md). Read [AGENTS.md](AGENTS.md) and [STATE.md](STATE.md)
+before continuing development. Use this directory as the workspace root.
 
-## Evidence and design decisions
-
-Start with [architecture and state ownership](docs/ARCHITECTURE.md),
-[shared contracts](docs/CONTRACTS.md), [capabilities](docs/CAPABILITIES.md),
-[evaluation data](evals/README.md), and the [verification report](docs/VERIFICATION.md).
-The complete requested scope is preserved in [BUILD_SPEC.md](docs/BUILD_SPEC.md).
-
-Ordinary answers use complete source sentences selected by the model. Explicit document
-summaries use a disclosed page-balanced assembly of retrieved source excerpts. Both paths
-retain exact page/span validation; summary reports identify deterministic assembly and do
-not count it as model generation. This grounding constraint does not prove
-arbitrary paraphrase entailment or broad-domain accuracy. Protected output is validated
-before streamed delivery, so first displayed text and provider time to first token are
-distinct measurements.
-
-Original code and synthetic corpora use the [MIT license](LICENSE). Downloaded models
-and tools retain their own licenses. Dependencies, model weights, indexes, databases
-and raw logs stay outside source control. Small reviewed reports and data manifests
-remain versioned; the delivery archive also contains selected raw evidence.
-
-## Continue the work
-
-Open this directory as the project root. Read [AGENTS.md](AGENTS.md) and [STATE.md](STATE.md)
-before making changes. Use the ledger's next command to resolve a specific remaining
-criterion, retain the failed baseline, and rerun the same acceptance contract. Public
-deployment, billing-account execution and upstream submission each need their own named
-target and evidence.
+Original code and synthetic corpora use [MIT](LICENSE). Models and dependencies retain
+their own licenses. Selected reviewed evidence snapshots are included; large runtime logs,
+model weights, databases, browser binaries and installed dependencies remain excluded.

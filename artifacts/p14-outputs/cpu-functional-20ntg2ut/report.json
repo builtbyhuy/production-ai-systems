@@ -1,0 +1,77 @@
+{
+  "schema_version": "pais.p14.cpu-functional.v1",
+  "status": "blocked",
+  "started_at": "2026-09-29T10:40:50.871749+00:00",
+  "evidence_profile": "local-functional",
+  "inference_identity_verified": false,
+  "command": [
+    "/workspace/scratch/708ae715c693/production-ai-systems/.venv/bin/python",
+    "/workspace/scratch/708ae715c693/production-ai-systems/projects/14-inference-server/run_cpu_smoke.py",
+    "--runtime-python",
+    "/workspace/scratch/708ae715c693/vllm-runtime/.venv/bin/python",
+    "--source-model",
+    "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p09-smoke/base-model",
+    "--output",
+    "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p14-outputs/cpu-functional-20ntg2ut"
+  ],
+  "git": {
+    "commit": null,
+    "unborn_or_unavailable": true,
+    "dirty": true
+  },
+  "hardware": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "cgroup_memory.max": "8589934592",
+    "cgroup_cpu.max": "800000 100000"
+  },
+  "runtime_lock_sha256": "be2ee4679590ee8cbe46420c18a77f5a8f7210d71311d7a5f13a7ddfef8020d0",
+  "supervisor_source_sha256": "0ebfc4e3112cd1efb7601a01cbd1aa2c612c9f0a085f7b2d3a990b279ece0abf",
+  "limitations": [
+    "39,456-parameter random functional derivative; no model quality or trained-adapter claim",
+    "one configured CPU server; no cluster, multi-replica balancing/recovery, or GPU performance evidence",
+    "prefix cache is configured; no batching/cache/quantization comparative experiment",
+    "harness timings, if produced, characterize only the declared tiny workload",
+    "RSS watchdog samples aggregate RSS; no kernel-enforced per-run cgroup memory boundary"
+  ],
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "site": "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages",
+    "versions": {
+      "vllm": "0.30.0+cpu",
+      "torch": "2.13.0+cpu",
+      "transformers": "5.17.0",
+      "tokenizers": "0.23.2",
+      "safetensors": "0.8.0",
+      "uvicorn": "0.54.0",
+      "httpx": "0.28.1"
+    },
+    "cpu_attention_source_sha256": "76fb02a6bd725125565d84bf04f627cf16da5f7ff8f31f87c01ed6a1439398c7",
+    "gpt2_source_sha256": "fe8d8cee50fb9f1f8d0c1ca8d07b935619726b3e129b30166e3fb6d5ab8a3bee",
+    "supported_cpu_head_sizes": [
+      32,
+      64,
+      80,
+      96,
+      112,
+      128,
+      160,
+      192,
+      224,
+      256,
+      512
+    ]
+  },
+  "ipc_prerequisite": {
+    "passed": false,
+    "operation": "socket_creation",
+    "transport": "AF_UNIX/SOCK_STREAM",
+    "errno": 1,
+    "error": "[Errno 1] Operation not permitted"
+  },
+  "error": "vLLM single-engine async serving requires AF_UNIX IPC; socket_creation failed with errno 1. Use a provisioned host that permits this transport.",
+  "error_type": "PrerequisiteMissing",
+  "finished_at": "2026-09-29T10:40:50.947797+00:00",
+  "exit_code": 2,
+  "logs_sha256": {}
+}

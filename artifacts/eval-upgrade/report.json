@@ -1,0 +1,213 @@
+{
+  "started_utc": "2026-09-29T10:51:55.277024+00:00",
+  "scope": "Disposable dependency compatibility experiment; preserved release fixture inputs only; no audit holdout",
+  "input": "artifacts/evals/release-fixture-first.metric-inputs.json",
+  "input_sha256": "9a44d297a9f8c25b0920a2e59aca84e4265ec42c9c4a3e9732f7ad264990015a",
+  "baseline": "artifacts/evals/release-fixture-first.metrics.json",
+  "baseline_sha256": "17732e28b687dcce3d804efd223a2266b482ce7b0c76b89fcea211e23b54c2da",
+  "live_hashes_before": {
+    "projects/04-eval-harness/pyproject.toml": "8fe7838a2c9212609923d70d30139e6ccecdfa8327208994296b222f6fdc158a",
+    "projects/04-eval-harness/uv.lock": "371ccfb256f2e6b080045f195952e3defc95f66a1693e94a5f06f2f58c481d5b",
+    "projects/04-eval-harness/worker.py": "36bee85a3edbd2dbba6353b3b7865deb7691a59c9d7542bece1b77dba86ae8e1"
+  },
+  "steps": [
+    {
+      "label": "sync",
+      "command": [
+        "uv",
+        "sync",
+        "--project",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade",
+        "--python",
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv/bin/python",
+        "--no-dev"
+      ],
+      "exit_status": 0,
+      "elapsed_seconds": 31.57223329000408,
+      "log": "artifacts/eval-upgrade/sync.log",
+      "log_sha256": "7037b4a37cd0d53f9cf9b89e9e1730c9c76ab8045ef7c9b27044cacce01d946d"
+    },
+    {
+      "label": "versions",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade/.venv/bin/python",
+        "-c",
+        "import importlib.metadata,json; print(json.dumps(dict(sorted((d.metadata[\"Name\"],d.version) for d in importlib.metadata.distributions() if d.metadata.get(\"Name\"))),indent=2))"
+      ],
+      "exit_status": 0,
+      "elapsed_seconds": 0.1644627620044048,
+      "log": "artifacts/eval-upgrade/versions.log",
+      "log_sha256": "609d2f74dcea3d635b34918b47653bce8a17bd38f2fb3283a5de49c68ea6bbff"
+    },
+    {
+      "label": "worker",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade/.venv/bin/python",
+        "/workspace/scratch/708ae715c693/production-ai-systems/projects/04-eval-harness/worker.py",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/evals/release-fixture-first.metric-inputs.json",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade/candidate.metrics.json"
+      ],
+      "exit_status": 0,
+      "elapsed_seconds": 6.686108229005185,
+      "log": "artifacts/eval-upgrade/worker.log",
+      "log_sha256": "5f9e7e21b75f7b9d75bd33866a8d26fd1c81e882ed3a9d455117db6b8fd240eb"
+    },
+    {
+      "label": "pip-audit",
+      "command": [
+        "uvx",
+        "--from",
+        "pip-audit",
+        "pip-audit",
+        "--path",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade/.venv/lib/python3.12/site-packages",
+        "--format",
+        "json",
+        "--progress-spinner",
+        "off",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade/pip-audit.json"
+      ],
+      "exit_status": 1,
+      "elapsed_seconds": 30.670178289001342,
+      "log": "artifacts/eval-upgrade/pip-audit.log",
+      "log_sha256": "9c6b1be06331243b493eff60b6a99ceffacf076afc3b27aad4bde7316874b255"
+    }
+  ],
+  "comparison": {
+    "case_count": 144,
+    "numeric_metrics": 432,
+    "exact_match": true,
+    "differences": [],
+    "candidate_versions": {
+      "deepeval": "4.2.6",
+      "ragas": "0.4.3",
+      "langchain": "1.4.3",
+      "langchain-community": "0.3.31"
+    }
+  },
+  "audit": {
+    "exit_status": 1,
+    "affected_packages": [
+      {
+        "name": "diskcache",
+        "version": "5.6.3",
+        "advisories": [
+          "PYSEC-2026-2447"
+        ],
+        "fix_versions": []
+      },
+      {
+        "name": "ragas",
+        "version": "0.4.3",
+        "advisories": [
+          "PYSEC-2026-3046"
+        ],
+        "fix_versions": []
+      }
+    ],
+    "unique_package_advisory_pairs": 2
+  },
+  "lock_sha256": "55262abd96d80ac290a2b5f1e82363f358386bf85853389448f7fab9dcac4920",
+  "live_hashes_after": {
+    "projects/04-eval-harness/pyproject.toml": "8fe7838a2c9212609923d70d30139e6ccecdfa8327208994296b222f6fdc158a",
+    "projects/04-eval-harness/uv.lock": "371ccfb256f2e6b080045f195952e3defc95f66a1693e94a5f06f2f58c481d5b",
+    "projects/04-eval-harness/worker.py": "36bee85a3edbd2dbba6353b3b7865deb7691a59c9d7542bece1b77dba86ae8e1"
+  },
+  "live_files_unchanged": true,
+  "elapsed_seconds": 69.0981766180048,
+  "completed_utc": "2026-09-29T10:53:04.377365+00:00",
+  "baseline_unique_package_advisory_pairs": 8,
+  "candidate_unique_package_advisory_pairs": 2,
+  "baseline_affected_packages": [
+    "diskcache",
+    "langchain",
+    "langchain-core",
+    "langchain-openai",
+    "langchain-text-splitters",
+    "ragas"
+  ],
+  "candidate_affected_packages": [
+    "diskcache",
+    "ragas"
+  ],
+  "remaining_advisories": [
+    {
+      "package": "diskcache",
+      "version": "5.6.3",
+      "id": "PYSEC-2026-2447"
+    },
+    {
+      "package": "ragas",
+      "version": "0.4.3",
+      "id": "PYSEC-2026-3046"
+    }
+  ],
+  "removed_package_advisory_pairs": [
+    {
+      "package": "langchain",
+      "version": "0.3.27",
+      "id": "PYSEC-2026-2192"
+    },
+    {
+      "package": "langchain",
+      "version": "0.3.27",
+      "id": "PYSEC-2026-2555"
+    },
+    {
+      "package": "langchain-core",
+      "version": "0.3.86",
+      "id": "PYSEC-2026-2193"
+    },
+    {
+      "package": "langchain-core",
+      "version": "0.3.86",
+      "id": "PYSEC-2026-2562"
+    },
+    {
+      "package": "langchain-openai",
+      "version": "0.3.35",
+      "id": "PYSEC-2026-76"
+    },
+    {
+      "package": "langchain-text-splitters",
+      "version": "0.3.11",
+      "id": "PYSEC-2026-77"
+    }
+  ],
+  "audit_tool_version": "pip-audit 2.10.1",
+  "followup_commands": [
+    {
+      "label": "audit-version",
+      "command": [
+        "uvx",
+        "--from",
+        "pip-audit",
+        "pip-audit",
+        "--version"
+      ],
+      "exit_status": 0,
+      "log": "artifacts/eval-upgrade/audit-version.log"
+    },
+    {
+      "label": "export",
+      "command": [
+        "uv",
+        "export",
+        "--project",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade",
+        "--frozen",
+        "--no-dev",
+        "--no-emit-project",
+        "--format",
+        "requirements-txt",
+        "--output-file",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/eval-upgrade/requirements.txt"
+      ],
+      "exit_status": 0,
+      "log": "artifacts/eval-upgrade/export.log"
+    }
+  ],
+  "resolved_versions_sha256": "609d2f74dcea3d635b34918b47653bce8a17bd38f2fb3283a5de49c68ea6bbff",
+  "requirements_sha256": "fddce869029bc210a537fe4162b9052726d75b35f93ab89e600a5eb9646e76b8"
+}

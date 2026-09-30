@@ -1,0 +1,4 @@
+/workspace/scratch/708ae715c693/production-ai-systems/projects/04-eval-harness/worker.py:20: DeprecationWarning: Importing ExactMatch from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import ExactMatch
+  from ragas.metrics import ExactMatch, NonLLMStringSimilarity
+/workspace/scratch/708ae715c693/production-ai-systems/projects/04-eval-harness/worker.py:20: DeprecationWarning: Importing NonLLMStringSimilarity from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import NonLLMStringSimilarity
+  from ragas.metrics import ExactMatch, NonLLMStringSimilarity

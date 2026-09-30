@@ -1,0 +1,62 @@
+{
+  "project": "P08",
+  "profile": "fixture",
+  "timestamp": "2026-09-29T11:05:16.279803+00:00",
+  "command": "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python projects/08-streaming-ui/run_browser_tests.py --profile fixture",
+  "parent_orchestration": null,
+  "api_python_executable": "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+  "tested_commit": "c7b8a793f34795f3d2de148c1c5c211845e8b222",
+  "dirty_tree": false,
+  "versions": {
+    "@ai-sdk/react": "4.0.125",
+    "ai": "7.0.122",
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@playwright/test": "1.63.0",
+    "@sparticuz/chromium": "153.0.0",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "prettier": "3.9.9",
+    "typescript": "7.0.2"
+  },
+  "dataset_sha256": "3be958fbf8db86e97d477dd2f4cc972ed175d378e324cf32c8b0acad77050a05",
+  "frontend_build_id": "p57JVxelz6CAGXQnnOrB3",
+  "dependency_lock_sha256": "159c946f4732352b7a3d09b2f2f6cf669497d459570276ae4c65833547693bba",
+  "model_lock_sha256": null,
+  "configuration": {
+    "viewports": [
+      "1440x960",
+      "390x844"
+    ],
+    "workers": 1,
+    "fixture_stream_delay_ms": 180,
+    "buffered_output": true,
+    "browser": "Chromium 153.0.8010.0"
+  },
+  "exit_status": 0,
+  "elapsed_ms": 24510.303,
+  "test_counts": {
+    "startTime": "2026-09-29T11:04:52.606Z",
+    "duration": 23620.934999999998,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "screenshots": [
+    "desktop-approvals.png",
+    "desktop-conversation.png",
+    "desktop-library.png",
+    "desktop-recovery.png",
+    "desktop-source.png",
+    "mobile-approvals.png",
+    "mobile-conversation.png",
+    "mobile-library.png",
+    "mobile-recovery.png",
+    "mobile-source.png"
+  ],
+  "results": "playwright-results.json",
+  "limits": "Fixture browser/stream contracts; no real-model quality or provider TTFT claim."
+}

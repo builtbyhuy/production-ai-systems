@@ -1,0 +1,15 @@
+...                                                                      [100%]
+=============================== warnings summary ===============================
+projects/06-security-guardrails/test_guardrails_real.py::test_actual_guardrails_validates_and_rejects
+projects/06-security-guardrails/test_guardrails_real.py::test_actual_guardrails_validates_and_rejects
+projects/06-security-guardrails/test_guardrails_real.py::test_actual_guardrails_validates_and_rejects
+projects/06-security-guardrails/test_guardrails_real.py::test_actual_guardrails_validates_and_rejects
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/06-security-guardrails/.venv/lib/python3.12/site-packages/typer/params.py:206: DeprecationWarning: The 'is_flag' and 'flag_value' parameters are not supported by Typer and will be removed entirely in a future release.
+    return OptionInfo(
+
+projects/06-security-guardrails/test_guardrails_real.py::test_actual_guardrails_validates_and_rejects
+  /workspace/scratch/708ae715c693/production-ai-systems/projects/06-security-guardrails/.venv/lib/python3.12/site-packages/guardrails/validator_service/__init__.py:61: DeprecationWarning: There is no current event loop
+    return asyncio.get_event_loop()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 5 warnings in 2.69s

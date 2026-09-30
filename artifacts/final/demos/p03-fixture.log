@@ -1,0 +1,283 @@
+/workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/pydantic/main.py:250: UserWarning: function callbacks cannot be serialized and will prevent checkpointing. Use a module-level named function instead.
+  validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+/workspace/scratch/708ae715c693/production-ai-systems/projects/03-multi-agent-research/.venv/lib/python3.12/site-packages/pydantic/main.py:250: UserWarning: function callbacks cannot be serialized and will prevent checkpointing. Use a module-level named function instead.
+  validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+{
+  "profile": "fixture",
+  "accepted_run": {
+    "run_id": "00e5e426-e513-4230-b9c4-2414d7b05694",
+    "profile": "fixture",
+    "status": "needs_approval",
+    "draft": {
+      "title": "approval timeout",
+      "claims": [
+        {
+          "claim_id": "claim-1",
+          "subject": "approval",
+          "predicate": "timeout",
+          "value": "15 minutes",
+          "source_ids": [
+            "runbook-1"
+          ]
+        }
+      ]
+    },
+    "validation": {
+      "accepted": true,
+      "unsupported_claims": [],
+      "conflicts": [],
+      "reasons": []
+    },
+    "tools_executed": [
+      "corpus_lookup",
+      "inspect_evidence"
+    ],
+    "rounds": 1,
+    "actual_crewai": true,
+    "model": "fixture-research-v1",
+    "model_quality_verified": false,
+    "actual_local_inference": false,
+    "approval_id": "2d80f310-48fc-4d89-a917-35173066710d",
+    "calls": 4,
+    "corpus_sha256": "518d38ac4375c799af940b88caaa32f10d6c310b156a64ed5bf283d2dc59d73e"
+  },
+  "rejected_run": {
+    "run_id": "53bba3fb-aada-4ade-8a81-1b76a0024268",
+    "profile": "fixture",
+    "status": "insufficient_evidence",
+    "draft": {
+      "title": "approval timeout",
+      "claims": [
+        {
+          "claim_id": "claim-1",
+          "subject": "approval",
+          "predicate": "timeout",
+          "value": "99 minutes",
+          "source_ids": [
+            "runbook-1"
+          ]
+        }
+      ]
+    },
+    "validation": {
+      "accepted": false,
+      "unsupported_claims": [
+        "claim-1"
+      ],
+      "conflicts": [],
+      "reasons": [
+        "claims_without_matching_quoted_facts"
+      ]
+    },
+    "tools_executed": [
+      "corpus_lookup",
+      "inspect_evidence"
+    ],
+    "rounds": 1,
+    "actual_crewai": true,
+    "model": "fixture-research-v1",
+    "model_quality_verified": false,
+    "actual_local_inference": false,
+    "approval_id": null,
+    "calls": 4,
+    "corpus_sha256": "518d38ac4375c799af940b88caaa32f10d6c310b156a64ed5bf283d2dc59d73e"
+  },
+  "acceptance": true,
+  "audit": [
+    {
+      "seq": 1,
+      "role": "supervisor",
+      "event": "started",
+      "detail": {
+        "allowed_tools": {
+          "fact_checker": [
+            "inspect_evidence"
+          ],
+          "researcher": [
+            "corpus_lookup"
+          ],
+          "supervisor": [],
+          "writer": []
+        },
+        "max_calls": 16,
+        "max_revisions": 1,
+        "roles": [
+          "supervisor",
+          "researcher",
+          "writer",
+          "fact_checker"
+        ]
+      },
+      "created_at": "2026-09-29T11:04:54.179845+00:00"
+    },
+    {
+      "seq": 2,
+      "role": "supervisor",
+      "event": "model_call",
+      "detail": {
+        "accounting": "call_budget",
+        "provider_cost": null
+      },
+      "created_at": "2026-09-29T11:04:54.220398+00:00"
+    },
+    {
+      "seq": 3,
+      "role": "supervisor",
+      "event": "task_completed",
+      "detail": {
+        "output": {
+          "query": "approval timeout",
+          "roles": [
+            "supervisor",
+            "researcher",
+            "writer",
+            "fact_checker"
+          ],
+          "tools": [
+            "corpus_lookup",
+            "inspect_evidence"
+          ]
+        }
+      },
+      "created_at": "2026-09-29T11:04:54.229328+00:00"
+    },
+    {
+      "seq": 4,
+      "role": "researcher",
+      "event": "model_call",
+      "detail": {
+        "accounting": "call_budget",
+        "provider_cost": null
+      },
+      "created_at": "2026-09-29T11:04:54.236427+00:00"
+    },
+    {
+      "seq": 5,
+      "role": "researcher",
+      "event": "tool_result",
+      "detail": {
+        "passage_hashes": [
+          "0d546489fd9549ec17002c124d2d8b85a033d44a6c4daca4935ff1f797420676"
+        ],
+        "source_ids": [
+          "runbook-1"
+        ],
+        "tool": "corpus_lookup"
+      },
+      "created_at": "2026-09-29T11:04:54.238608+00:00"
+    },
+    {
+      "seq": 6,
+      "role": "researcher",
+      "event": "task_completed",
+      "detail": {
+        "output": {
+          "sources": [
+            {
+              "facts": [
+                {
+                  "predicate": "timeout",
+                  "quote": "Approval timeout is 15 minutes.",
+                  "subject": "approval",
+                  "value": "15 minutes"
+                }
+              ],
+              "passage": "Approval timeout is 15 minutes.",
+              "retrieved_at": "2026-09-29T11:04:52.255228+00:00",
+              "source_id": "runbook-1",
+              "tenant_id": "demo",
+              "title": "Approval timeout policy",
+              "uri": "fixture://licensed-synthetic/runbook-1"
+            }
+          ]
+        }
+      },
+      "created_at": "2026-09-29T11:04:54.244508+00:00"
+    },
+    {
+      "seq": 7,
+      "role": "writer",
+      "event": "model_call",
+      "detail": {
+        "accounting": "call_budget",
+        "provider_cost": null
+      },
+      "created_at": "2026-09-29T11:04:54.250362+00:00"
+    },
+    {
+      "seq": 8,
+      "role": "writer",
+      "event": "task_completed",
+      "detail": {
+        "output": {
+          "claims": [
+            {
+              "claim_id": "claim-1",
+              "predicate": "timeout",
+              "source_ids": [
+                "runbook-1"
+              ],
+              "subject": "approval",
+              "value": "15 minutes"
+            }
+          ],
+          "title": "approval timeout"
+        }
+      },
+      "created_at": "2026-09-29T11:04:54.254914+00:00"
+    },
+    {
+      "seq": 9,
+      "role": "fact_checker",
+      "event": "model_call",
+      "detail": {
+        "accounting": "call_budget",
+        "provider_cost": null
+      },
+      "created_at": "2026-09-29T11:04:54.261323+00:00"
+    },
+    {
+      "seq": 10,
+      "role": "fact_checker",
+      "event": "tool_result",
+      "detail": {
+        "fact_check": {
+          "accepted": true,
+          "conflicts": [],
+          "reasons": [],
+          "unsupported_claims": []
+        },
+        "tool": "inspect_evidence"
+      },
+      "created_at": "2026-09-29T11:04:54.263988+00:00"
+    },
+    {
+      "seq": 11,
+      "role": "fact_checker",
+      "event": "task_completed",
+      "detail": {
+        "output": {
+          "accepted": true,
+          "conflicts": [],
+          "reasons": [],
+          "unsupported_claims": []
+        }
+      },
+      "created_at": "2026-09-29T11:04:54.269777+00:00"
+    },
+    {
+      "seq": 12,
+      "role": "supervisor",
+      "event": "consensus",
+      "detail": {
+        "accepted": true,
+        "conflicts": [],
+        "reasons": [],
+        "unsupported_claims": []
+      },
+      "created_at": "2026-09-29T11:04:54.272881+00:00"
+    }
+  ],
+  "external_delivery": false
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p03-fixture.json

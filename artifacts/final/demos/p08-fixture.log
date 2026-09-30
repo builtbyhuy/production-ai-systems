@@ -1,0 +1,44 @@
+{
+  "project": "P08",
+  "profile": "fixture",
+  "timestamp": "2026-09-29T11:05:08.392834+00:00",
+  "command": "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python -m pais demo 08 --profile fixture --output /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p08-fixture.json",
+  "commit": "c7b8a793f34795f3d2de148c1c5c211845e8b222",
+  "dirty_tree": false,
+  "versions": {
+    "fastapi": "0.141.1",
+    "pydantic": "2.13.5",
+    "httpx": "0.28.1",
+    "pypdf": "6.19.0"
+  },
+  "dataset_sha256": "4015ce376fa3cd6759ff3a4604ccf97edf64442448b7960c34029d6697e2b174",
+  "checks": {
+    "invalid_upload_rejected": true,
+    "real_pdf_upload": true,
+    "sdk_protocol": true,
+    "supported_answer": true,
+    "page_citations": true,
+    "working_page_source": true,
+    "original_pdf_bytes": true,
+    "cross_tenant_source_denied": true,
+    "stable_retry": true,
+    "no_duplicate_history": true,
+    "abstention": true,
+    "explicit_execution_enable": true,
+    "approval_created": true,
+    "approved_local_action": true,
+    "approval_replay_idempotent": true
+  },
+  "passed": true,
+  "exit_status": 0,
+  "elapsed_ms": 699.289,
+  "first_display_server_ms": 18.212,
+  "provider_ttft_ms": null,
+  "model": "fixture:extractive-sentence-selector-v1",
+  "answer": "The maximum safe operating pressure is 8 bar. [1]\nThis handbook defines operating rules. [2]",
+  "streaming": "full protected answer buffered, then bounded SSE delivery chunks",
+  "browser_acceptance": "separate required gate; TestClient does not demonstrate browser behavior",
+  "external_delivery": false,
+  "evidence_scope": "fixture contracts only"
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p08-fixture.json

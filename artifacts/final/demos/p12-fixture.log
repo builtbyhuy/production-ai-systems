@@ -1,0 +1,45 @@
+{
+  "profile": "fixture",
+  "real_qdrant_client": true,
+  "fixture_embeddings": true,
+  "size": 100,
+  "ingest_seconds": 0.14572654199582757,
+  "documents_per_second": 686.216790918316,
+  "embedding_model": "fixture-feature-hash",
+  "qdrant_runtime": "client-local-exact-search",
+  "hnsw_performance_verified": false,
+  "remote_server_exercised": false,
+  "corpus_sha256": "60eba58f5b1e3a23ba309545878c1e58eecea9fd7d7cb3790719401fbf4d2bee",
+  "larger_profiles_executed": false,
+  "modes": {
+    "dense": {
+      "recall_at_1": 0.71,
+      "queries": 100,
+      "p50_ms": 1.923845997225726,
+      "p95_ms": 3.0816079961368814,
+      "p99_ms": 4.802043004019652
+    },
+    "sparse": {
+      "recall_at_1": 1.0,
+      "queries": 100,
+      "p50_ms": 1.6641865004203282,
+      "p95_ms": 2.5975129974540323,
+      "p99_ms": 2.7368379960535094
+    },
+    "hybrid": {
+      "recall_at_1": 1.0,
+      "queries": 100,
+      "p50_ms": 4.315843998483615,
+      "p95_ms": 6.500525996671058,
+      "p99_ms": 6.609417003346607
+    }
+  },
+  "cache_hits": 100,
+  "cache_misses": 200,
+  "restored": {
+    "documents": 100,
+    "vectors": 100
+  },
+  "restore_query": "doc-42"
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p12-fixture.json

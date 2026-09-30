@@ -32,6 +32,18 @@ jobs:
       - run: uv run --no-sync mypy packages/pais/contracts.py packages/pais/operations.py
       - name: Required contract tests; real-model release gate is separate
         run: uv run --no-sync pytest tests projects/13-agent-memory/test_comparison.py projects/14-inference-server/test_supervisor.py -m 'not local and not connected and not deployment'
+      - name: Frozen isolated evaluation dependencies
+        run: uv sync --frozen --project projects/04-eval-harness
+      - name: Full fixture evaluation; no model-quality or deployment claim
+        run: uv run --no-sync pais eval --profile fixture --suite release --output artifacts/ci/evals/release-fixture.json
+      - name: Deliberately degraded fixture must fail with assertion status
+        shell: bash
+        run: |
+          set +e
+          uv run --no-sync pais eval --profile fixture --suite release --degraded --output artifacts/ci/evals/degraded-fixture.json
+          status=$?
+          set -e
+          test "$status" -eq 1
       - name: Frozen isolated real-framework tests
         run: |
           uv sync --frozen --project projects/03-multi-agent-research
@@ -61,3 +73,11 @@ jobs:
           exit-code: '1'
           ignore-unfixed: false
           skip-dirs: .venv,artifacts,node_modules
+      - name: Preserve fixture evaluation reports, including failed runs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fixture-evaluation-${{ github.sha }}
+          path: artifacts/ci/evals/
+          if-no-files-found: warn
+          retention-days: 14

@@ -28,6 +28,55 @@ def test_actual_qdrant_hybrid_metadata_and_tenant_filter(setup):
         index.delete(a, "b-1", 1)
 
 
+@pytest.mark.parametrize("roles", [[], ["unknown"], ["reviewer"], ["editor"]])
+@pytest.mark.parametrize("mode", ["hybrid", "dense", "sparse"])
+def test_search_denies_missing_read_role_before_cache_embedding_or_query(setup, monkeypatch, roles, mode):
+    index, a, _b = setup
+    index.upsert(a, "private", "Private tenant approval policy")
+    before = (index.cache_hits, index.cache_misses)
+
+    def unexpected_query(*_args, **_kwargs):
+        pytest.fail("Unauthorized search reached the Qdrant query boundary")
+
+    monkeypatch.setattr(index.client, "query_points", unexpected_query)
+    unauthorized = Principal(subject="alice", tenant_id="a", roles=roles)
+    with pytest.raises(PermissionError, match="Reader role"):
+        index.search(unauthorized, "Private tenant approval policy", mode=mode)
+    assert (index.cache_hits, index.cache_misses) == before
+
+
+@pytest.mark.parametrize("subject,tenant", [("", "a"), ("alice", "")])
+def test_vector_reads_require_nonempty_trusted_identity(setup, subject, tenant):
+    index, _a, _b = setup
+    with pytest.raises(PermissionError, match="Trusted subject"):
+        index.search(Principal(subject=subject, tenant_id=tenant, roles=["admin"]), "approval")
+
+
+@pytest.mark.parametrize("roles", [["reader"], ["writer"], ["admin"]])
+def test_canonical_read_roles_retain_tenant_filtered_search(setup, roles):
+    index, a, b = setup
+    index.upsert(a, "a-policy", "Tenant A approval policy")
+    index.upsert(b, "b-policy", "Tenant B approval policy")
+    principal = Principal(subject="alice", tenant_id="a", roles=roles)
+    assert [hit.document_id for hit in index.search(principal, "approval policy")] == ["a-policy"]
+
+
+def test_nonadmin_writer_can_mutate_but_reader_cannot(setup):
+    index, _a, _b = setup
+    writer = Principal(subject="operator", tenant_id="a", roles=["writer"])
+    reader = Principal(subject="analyst", tenant_id="a", roles=["reader"])
+    version = index.upsert(writer, "policy", "The approval timeout is fifteen minutes")
+    assert index.search(reader, "approval timeout")[0].version == version
+    with pytest.raises(PermissionError, match="writer"):
+        index.upsert(reader, "policy", "Changed", expected_version=version)
+    with pytest.raises(PermissionError, match="writer"):
+        index.delete(reader, "policy", version)
+    with pytest.raises(PermissionError, match="admin"):
+        index.backup(reader)
+    assert index.delete(writer, "policy", version) == version + 1
+    assert index.search(reader, "approval timeout") == []
+
+
 def test_update_delete_crash_window_reconciliation_and_no_resurrection(setup):
     index, a, _b = setup
     version = index.upsert(a, "same", "Old timeout fifteen minutes")

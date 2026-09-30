@@ -1,0 +1,100 @@
+{
+  "project": "P02",
+  "profile": "fixture",
+  "status": "partial",
+  "price_basis": "simulation",
+  "dataset_sha256": "46542c4ab5d8d0a859746c2b1509ece26e7de32e4aa77170d1f8c5df4345e85e",
+  "dataset_scope": "12 synthetic release-comparison cases; development exposure disclosed in source",
+  "comparison": {
+    "always-cheap": {
+      "cases": 12,
+      "errors": 0,
+      "quality_passes": null,
+      "quality_accuracy": null,
+      "mean_seconds": 0.00218661333443985,
+      "p95_seconds": 0.0029951100004836917,
+      "mean_routing_overhead_seconds": 0.0004218273352307733,
+      "ledger": {
+        "cap": 10000000,
+        "attempts": 12,
+        "reserved": 0,
+        "estimated": 4307,
+        "reported": 480,
+        "reconciled": 0,
+        "unknown_hold": 0,
+        "unknown_attempts": 0,
+        "committed": 480
+      }
+    },
+    "always-expensive": {
+      "cases": 12,
+      "errors": 0,
+      "quality_passes": null,
+      "quality_accuracy": null,
+      "mean_seconds": 0.0024672009161198125,
+      "p95_seconds": 0.002778059002594091,
+      "mean_routing_overhead_seconds": 0.0004424754157904924,
+      "ledger": {
+        "cap": 10000000,
+        "attempts": 12,
+        "reserved": 0,
+        "estimated": 43070,
+        "reported": 4800,
+        "reconciled": 0,
+        "unknown_hold": 0,
+        "unknown_attempts": 0,
+        "committed": 4800
+      }
+    },
+    "routed": {
+      "cases": 12,
+      "errors": 0,
+      "quality_passes": null,
+      "quality_accuracy": null,
+      "mean_seconds": 0.0024787621659925207,
+      "p95_seconds": 0.0029243059980217367,
+      "mean_routing_overhead_seconds": 0.00045851491631765384,
+      "ledger": {
+        "cap": 10000000,
+        "attempts": 12,
+        "reserved": 0,
+        "estimated": 21398,
+        "reported": 2280,
+        "reconciled": 0,
+        "unknown_hold": 0,
+        "unknown_attempts": 0,
+        "committed": 2280
+      }
+    }
+  },
+  "fault_drills": {
+    "scope": "fixture fault injection",
+    "retry_attempts": 3,
+    "fallback_model": "fixture-expensive",
+    "cancelled_usage_retains_hold": true,
+    "ledger": {
+      "cap": 100000,
+      "attempts": 4,
+      "reserved": 169,
+      "estimated": 2197,
+      "reported": 400,
+      "reconciled": 0,
+      "unknown_hold": 169,
+      "unknown_attempts": 1,
+      "committed": 569
+    }
+  },
+  "concurrent_budget_drill": {
+    "attempted": 24,
+    "admitted": 3,
+    "cap": 429,
+    "committed": 429
+  },
+  "actual_dollar_savings": null,
+  "limits": [
+    "Fixture responses are not scored for model quality",
+    "Local-zero rates establish no savings over a paid baseline",
+    "Provider invoice reconciliation and connected comparable runs not executed"
+  ]
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p02-fixture.json

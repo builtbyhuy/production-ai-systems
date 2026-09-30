@@ -1,0 +1,86 @@
+WARNING 09-29 18:35:28 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-29 18:35:28 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-29 18:35:28 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:347] 
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.30.0
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:347]   █▄█▀ █     █     █     █  model   /workspace/scratch/708ae715c693/production-ai-systems/artifacts/p14-cpu-functional-first/model
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:347] 
+(APIServer pid=15) INFO 09-29 18:35:29 [api_utils.py:286] non-default args: {'model_tag': '/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p14-cpu-functional-first/model', 'chat_template': '/workspace/scratch/708ae715c693/production-ai-systems/projects/14-inference-server/chat-template.jinja', 'chat_template_content_format': 'string', 'host': '127.0.0.1', 'port': 43115, 'disable_uvicorn_access_log': True, 'model': '/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p14-cpu-functional-first/model', 'dtype': 'float32', 'max_model_len': 128, 'enforce_eager': True, 'served_model_name': ['pais-random-gpt2-one-head-functional'], 'block_size': 32, 'enable_prefix_caching': True, 'max_num_batched_tokens': 128, 'max_num_seqs': 2}
+(APIServer pid=15) WARNING 09-29 18:35:29 [system_utils.py:299] Found ulimit of 16384 and failed to automatically increase with error current limit exceeds maximum limit. This can cause fd limit errors like `OSError: [Errno 24] Too many open files`. Consider increasing with ulimit -n
+(APIServer pid=15) INFO 09-29 18:35:37 [model.py:692] Resolved architecture: GPT2LMHeadModel
+(APIServer pid=15) INFO 09-29 18:35:37 [model.py:2030] Using max model len 128
+(APIServer pid=15) INFO 09-29 18:35:37 [scheduler.py:288] Chunked prefill is enabled with max_num_batched_tokens=128.
+(APIServer pid=15) WARNING 09-29 18:35:37 [vllm.py:1547] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(APIServer pid=15) WARNING 09-29 18:35:37 [vllm.py:1570] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(APIServer pid=15) INFO 09-29 18:35:37 [kernel.py:416] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native'])
+(APIServer pid=15) WARNING 09-29 18:35:37 [cpu.py:293] Reset SSM cache type to float32 for accelerated GDN mamba backend 'none'.
+(APIServer pid=15) WARNING 09-29 18:35:37 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+(APIServer pid=15) INFO 09-29 18:35:37 [compilation.py:336] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=15) Traceback (most recent call last):
+(APIServer pid=15)   File "<frozen runpy>", line 198, in _run_module_as_main
+(APIServer pid=15)   File "<frozen runpy>", line 88, in _run_code
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/cli/main.py", line 112, in <module>
+(APIServer pid=15)     main()
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/cli/main.py", line 106, in main
+(APIServer pid=15)     args.dispatch_function(args)
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/cli/serve.py", line 154, in cmd
+(APIServer pid=15)     uvloop.run(run_server(args))
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/uvloop/__init__.py", line 96, in run
+(APIServer pid=15)     return __asyncio.run(
+(APIServer pid=15)            ^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py", line 195, in run
+(APIServer pid=15)     return runner.run(main)
+(APIServer pid=15)            ^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py", line 118, in run
+(APIServer pid=15)     return self._loop.run_until_complete(task)
+(APIServer pid=15)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/uvloop/__init__.py", line 48, in wrapper
+(APIServer pid=15)     return await main
+(APIServer pid=15)            ^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 176, in run_server
+(APIServer pid=15)     await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 190, in run_server_worker
+(APIServer pid=15)     async with build_async_engine_client(
+(APIServer pid=15)                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=15)     return await anext(self.gen)
+(APIServer pid=15)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+(APIServer pid=15)     async with build_async_engine_client_from_engine_args(
+(APIServer pid=15)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 210, in __aenter__
+(APIServer pid=15)     return await anext(self.gen)
+(APIServer pid=15)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 94, in build_async_engine_client_from_engine_args
+(APIServer pid=15)     async_llm = AsyncLLM.from_vllm_config(
+(APIServer pid=15)                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/v1/engine/async_llm.py", line 235, in from_vllm_config
+(APIServer pid=15)     return cls(
+(APIServer pid=15)            ^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/v1/engine/async_llm.py", line 169, in __init__
+(APIServer pid=15)     self.engine_core = EngineCoreClient.make_async_mp_client(
+(APIServer pid=15)                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=15)     return func(*args, **kwargs)
+(APIServer pid=15)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 163, in make_async_mp_client
+(APIServer pid=15)     return AsyncMPClient(
+(APIServer pid=15)            ^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(APIServer pid=15)     return func(*args, **kwargs)
+(APIServer pid=15)            ^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 1060, in __init__
+(APIServer pid=15)     super().__init__(
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 636, in __init__
+(APIServer pid=15)     self.input_socket = self.resources.input_socket = make_zmq_socket(
+(APIServer pid=15)                                                       ^^^^^^^^^^^^^^^^
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/vllm/utils/network_utils.py", line 364, in make_zmq_socket
+(APIServer pid=15)     socket.bind(path)
+(APIServer pid=15)   File "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages/zmq/sugar/socket.py", line 322, in bind
+(APIServer pid=15)     super().bind(addr)
+(APIServer pid=15)   File "zmq/backend/cython/_zmq.py", line 1009, in zmq.backend.cython._zmq.Socket.bind
+(APIServer pid=15)   File "zmq/backend/cython/_zmq.py", line 190, in zmq.backend.cython._zmq._check_rc
+(APIServer pid=15) zmq.error.ZMQError: Operation not permitted (addr='ipc:///tmp/1784b3f7-dfb7-4594-882e-5f6dd939fb31')

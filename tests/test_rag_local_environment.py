@@ -21,7 +21,7 @@ def launcher():
 
 def test_local_launcher_preserves_trusted_identity_and_disables_fixture_auth(launcher, tmp_path, monkeypatch):
     source = tmp_path / "credentials.json"
-    credentials = {TOKEN: {"subject": "operator", "tenant_id": "authorized-workspace", "roles": ["editor"]}}
+    credentials = {TOKEN: {"subject": "operator", "tenant_id": "authorized-workspace", "roles": ["writer"]}}
     source.write_text(json.dumps(credentials))
     monkeypatch.setenv("PAIS_AUTH_TOKENS_FILE", str(source))
     monkeypatch.setenv("PAIS_ALLOW_FIXTURE_AUTH", "1")

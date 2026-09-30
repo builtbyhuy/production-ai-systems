@@ -1,0 +1,367 @@
+{
+  "source_commit": "c7b8a793f34795f3d2de148c1c5c211845e8b222",
+  "dirty_tree": false,
+  "scope": "CLI demonstrations only; a fixture exit0 is not full project acceptance",
+  "runs": [
+    {
+      "project": "P01",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "01",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p01-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:04:50.017361+00:00",
+      "elapsed_seconds": 1.3720047710012295,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p01-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p01-fixture.log"
+    },
+    {
+      "project": "P02",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "02",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p02-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:04:51.396448+00:00",
+      "elapsed_seconds": 0.46494626899948344,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p02-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p02-fixture.log"
+    },
+    {
+      "project": "P03",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "03",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p03-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:04:51.867464+00:00",
+      "elapsed_seconds": 3.780188074997568,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p03-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p03-fixture.log"
+    },
+    {
+      "project": "P04",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "04",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p04-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:04:55.655931+00:00",
+      "elapsed_seconds": 7.398121685997467,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p04-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p04-fixture.log"
+    },
+    {
+      "project": "P05",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "05",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p05-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:03.062644+00:00",
+      "elapsed_seconds": 2.272948601996177,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p05-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p05-fixture.log"
+    },
+    {
+      "project": "P06",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "06",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p06-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:05.342013+00:00",
+      "elapsed_seconds": 0.4178459960021428,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p06-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p06-fixture.log"
+    },
+    {
+      "project": "P07",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "07",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p07-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:05.766908+00:00",
+      "elapsed_seconds": 1.4203979240046465,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p07-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p07-fixture.log"
+    },
+    {
+      "project": "P08",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "08",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p08-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:07.193110+00:00",
+      "elapsed_seconds": 1.6743990410031984,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p08-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p08-fixture.log"
+    },
+    {
+      "project": "P09",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "09",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p09-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:08.875632+00:00",
+      "elapsed_seconds": 0.37074529100209475,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p09-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p09-fixture.log"
+    },
+    {
+      "project": "P10",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "10",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p10-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:09.252288+00:00",
+      "elapsed_seconds": 0.3170892249981989,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p10-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p10-fixture.log"
+    },
+    {
+      "project": "P11",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "11",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p11-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:09.574783+00:00",
+      "elapsed_seconds": 0.3649498630038579,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p11-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p11-fixture.log"
+    },
+    {
+      "project": "P12",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "12",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p12-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:09.948551+00:00",
+      "elapsed_seconds": 2.3756201550058904,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p12-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p12-fixture.log"
+    },
+    {
+      "project": "P13",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "13",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p13-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:12.341540+00:00",
+      "elapsed_seconds": 1.5272210280018044,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p13-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p13-fixture.log"
+    },
+    {
+      "project": "P14",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "14",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p14-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:13.875367+00:00",
+      "elapsed_seconds": 0.5174441039998783,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p14-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p14-fixture.log"
+    },
+    {
+      "project": "P15",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "15",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p15-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:14.399127+00:00",
+      "elapsed_seconds": 1.831504590001714,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p15-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p15-fixture.log"
+    },
+    {
+      "project": "P16",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "16",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p16-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:16.237237+00:00",
+      "elapsed_seconds": 0.41543862099933904,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p16-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p16-fixture.log"
+    },
+    {
+      "project": "P17",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "17",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p17-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:16.658047+00:00",
+      "elapsed_seconds": 0.3649084450007649,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p17-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p17-fixture.log"
+    },
+    {
+      "project": "P18",
+      "profile": "fixture",
+      "command": [
+        "/workspace/scratch/708ae715c693/production-ai-systems/.venv-verified/bin/python",
+        "-m",
+        "pais",
+        "demo",
+        "18",
+        "--profile",
+        "fixture",
+        "--output",
+        "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p18-fixture.json"
+      ],
+      "started_at": "2026-09-29T11:05:17.030019+00:00",
+      "elapsed_seconds": 1.5717409569988376,
+      "exit_status": 0,
+      "output": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p18-fixture.json",
+      "log": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p18-fixture.log"
+    }
+  ]
+}

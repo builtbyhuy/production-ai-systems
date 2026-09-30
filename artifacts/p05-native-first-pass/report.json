@@ -1,0 +1,45 @@
+{
+  "project": "P05",
+  "profile": "native-observability-fixture-model",
+  "started_at": "2026-09-29T10:36:28.671400+00:00",
+  "status": "verified_scope",
+  "model_quality": "fixture outputs excluded from quality claims",
+  "price_basis": "simulation",
+  "sampling_rate": 1.0,
+  "trace_retention_hours": 24,
+  "metrics_retention_hours": 48,
+  "rss_budget_bytes": 1610612736,
+  "rss_measurement": "sampled sum of supervised process-tree VmRSS; host PID/NSpid mapping; shared pages may be counted more than once",
+  "slow_request_seconds": 0.4141924539944739,
+  "job": {
+    "job_id": "1a8f0cfe-2d3a-4215-96de-abd43a71a02d",
+    "trace_id": "eeee91807304da8cc334af80452b9f51"
+  },
+  "worker_status": "succeeded",
+  "alert_states": [
+    [
+      "PaisErrorSpike",
+      "firing"
+    ],
+    [
+      "PaisErrorSpike",
+      "resolved"
+    ],
+    [
+      "PaisSlowProtectedDelivery",
+      "firing"
+    ],
+    [
+      "PaisSlowProtectedDelivery",
+      "resolved"
+    ]
+  ],
+  "distributed_trace_observed": true,
+  "ledger_reported_microusd": 40,
+  "prometheus_reported_microusd": 40.0,
+  "ledger_metric_matches": true,
+  "grafana_provisioned_panels": 12,
+  "screenshot": "captured",
+  "duration_seconds": 155.37329298300028,
+  "peak_service_rss_bytes": 1448546304
+}

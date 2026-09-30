@@ -1,0 +1,81 @@
+{
+  "actual_document_count": 1000,
+  "benchmark": {
+    "cache_hits": 100,
+    "cache_misses": 1100,
+    "corpus_sha256": "a7ae853d410292e1f63e7d908e9b5b83ac9a559eba4c1463594651ae1c70bf59",
+    "documents_per_second": 793.1445534020459,
+    "embedding_model": "fixture-feature-hash",
+    "hnsw_performance_verified": false,
+    "ingest_seconds": 1.260804220000864,
+    "larger_profiles_executed": false,
+    "modes": {
+      "dense": {
+        "p50_ms": 9.317838499555364,
+        "p95_ms": 12.212445006298367,
+        "p99_ms": 20.303122997574974,
+        "queries": 100,
+        "recall_at_1": 0.12
+      },
+      "hybrid": {
+        "p50_ms": 26.61860549778794,
+        "p95_ms": 31.450593000045046,
+        "p99_ms": 37.963978000334464,
+        "queries": 100,
+        "recall_at_1": 1.0
+      },
+      "sparse": {
+        "p50_ms": 9.799576502700802,
+        "p95_ms": 13.02609899721574,
+        "p99_ms": 14.510583998344373,
+        "queries": 100,
+        "recall_at_1": 1.0
+      }
+    },
+    "qdrant_runtime": "client-local-exact-search",
+    "remote_server_exercised": false,
+    "size": 1000
+  },
+  "cpu_affinity": [
+    0,
+    1
+  ],
+  "disk_while_store_open": {
+    "allocated_bytes": 2654208,
+    "files": 6,
+    "logical_bytes": 2646697
+  },
+  "legacy_flag_note": "benchmark.larger_profiles_executed is a static field in the frozen implementation; actual_document_count records this run's measured scale.",
+  "peak_process_rss_bytes": 99213312,
+  "process_threads_at_end": null,
+  "progress": {
+    "completed_queries": {
+      "dense": 100,
+      "hybrid": 100,
+      "sparse": 100
+    },
+    "ingest_complete": true,
+    "requested_documents": 1000
+  },
+  "settings": {
+    "cache_enabled": true,
+    "collection": "pais_v1",
+    "embedding": {
+      "dimensions": 64,
+      "metric": "cosine",
+      "model": "fixture-feature-hash",
+      "revision": "v1",
+      "sparse": "hashed-term-frequency-v1"
+    },
+    "hnsw_m_configured_but_not_benchmarked": 16,
+    "ingest_batch_size": 64,
+    "queries_per_mode": 100,
+    "query_limit": 1
+  },
+  "source_counts_while_store_open": {
+    "authoritative_documents": 1000,
+    "pending_materialization": 0
+  },
+  "status": "completed",
+  "worker_elapsed_seconds": 6.078989636000188
+}

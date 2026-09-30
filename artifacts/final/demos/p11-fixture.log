@@ -1,0 +1,11 @@
+{
+  "profile": "fixture",
+  "model_calls": 0,
+  "default_disabled": true,
+  "action_admitted_before_stop": true,
+  "new_action_denied_after_stop": true,
+  "stop_survives_adapter_restart": true,
+  "cluster_drill": "not_run",
+  "propagation": "database read at every action admission"
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p11-fixture.json

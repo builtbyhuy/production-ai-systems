@@ -1,0 +1,242 @@
+{
+  "schema_version": "pais.p14.cpu-functional.v1",
+  "status": "failed",
+  "started_at": "2026-09-29T10:35:13.127301+00:00",
+  "evidence_profile": "local-functional",
+  "inference_identity_verified": false,
+  "command": [
+    "/workspace/scratch/708ae715c693/production-ai-systems/.venv/bin/python",
+    "projects/14-inference-server/run_cpu_smoke.py",
+    "--runtime-python",
+    "/workspace/scratch/708ae715c693/vllm-runtime/.venv/bin/python",
+    "--output",
+    "artifacts/p14-cpu-functional-first"
+  ],
+  "git": {
+    "commit": "HEAD",
+    "dirty": true
+  },
+  "hardware": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "cgroup_memory.max": "8589934592",
+    "cgroup_cpu.max": "800000 100000"
+  },
+  "runtime_lock_sha256": "be2ee4679590ee8cbe46420c18a77f5a8f7210d71311d7a5f13a7ddfef8020d0",
+  "supervisor_source_sha256": "f5c64b3ece6a6c744436dd0e1a1d900856270e234db50e53b814524a87d53a16",
+  "limitations": [
+    "39,456-parameter random functional derivative; no model quality or trained-adapter claim",
+    "one CPU server; no cluster, multi-replica balancing/recovery, or GPU performance evidence",
+    "prefix cache enabled; no batching/cache/quantization comparative experiment",
+    "small workload timing is functional evidence, not a capacity benchmark",
+    "RSS watchdog samples aggregate RSS; no kernel-enforced per-run cgroup memory boundary"
+  ],
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "site": "/workspace/scratch/708ae715c693/vllm-runtime/.venv/lib/python3.12/site-packages",
+    "versions": {
+      "vllm": "0.30.0+cpu",
+      "torch": "2.13.0+cpu",
+      "transformers": "5.17.0",
+      "tokenizers": "0.23.2",
+      "safetensors": "0.8.0",
+      "uvicorn": "0.54.0",
+      "httpx": "0.28.1"
+    },
+    "cpu_attention_source_sha256": "76fb02a6bd725125565d84bf04f627cf16da5f7ff8f31f87c01ed6a1439398c7",
+    "gpt2_source_sha256": "fe8d8cee50fb9f1f8d0c1ca8d07b935619726b3e129b30166e3fb6d5ab8a3bee",
+    "supported_cpu_head_sizes": [
+      32,
+      64,
+      80,
+      96,
+      112,
+      128,
+      160,
+      192,
+      224,
+      256,
+      512
+    ]
+  },
+  "model": {
+    "origin": "P09 original random initialization, with separately approved config derivative",
+    "trained_adapter_served": false,
+    "meaningful_model_quality_claim": false,
+    "license": "original random weights MIT; GPT-2 implementation Apache-2.0",
+    "parameters": 39456,
+    "source_directory": "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p09-smoke/base-model",
+    "source_files_sha256": {
+      "config.json": "7e367bf7127392256f1772799f8f51db58cd2086c76d54991ddf8eff5a42f6fe",
+      "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+      "manifest.json": "6b7cbd4001347562535d68cb6706282e09b6081db65107e914f9795f350a1dfe",
+      "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    },
+    "original_profile_rejected": true,
+    "rejection_scope": "outside advertised CPUAttentionBackend head-size contract; no engine attempt",
+    "original_head_size": 16,
+    "supported_cpu_head_sizes": [
+      32,
+      64,
+      80,
+      96,
+      112,
+      128,
+      160,
+      192,
+      224,
+      256,
+      512
+    ],
+    "transformation": {
+      "n_head": {
+        "from": 2,
+        "to": 1
+      },
+      "new_head_size": 32
+    },
+    "attention_semantics_changed": true,
+    "weights_bytes_unchanged": true,
+    "revision_sha256": "c2e96bcb3bdb96b0b47966c531c1ce0ba81ec9c7dde5d573f4b53d10a6f76a87",
+    "files_sha256": {
+      "config.json": "8e1355eeb42ca2c9193eacc5047792efe08f3f4f1cabd0019634af2f39b633fe",
+      "generation_config.json": "070e248cf29c109ffa93d420a4dbe94c85baee4c891c8a3b84a5c738805d184b",
+      "model.safetensors": "210ad2b451c4b7fa8930d4a7ab67d9263dc4b72bdc89de8c119598dfa305ca77",
+      "special_tokens_map.json": "fdd1575e8bd811652f3708f5d70495fd581ca5b59111e6edaa903e43783ce944",
+      "tokenizer.json": "e42e513787e2d8269836df47e5d5ac0d5306525c669b41ced431ddf1830c0e0c",
+      "tokenizer_config.json": "fa0aee4a27fceabf6e897ec96f5c23c1e1b09fd522b6c964dd0d9544f0e13fe4"
+    }
+  },
+  "commands": {
+    "server": [
+      "/workspace/scratch/708ae715c693/vllm-runtime/.venv/bin/python",
+      "-m",
+      "vllm.entrypoints.cli.main",
+      "serve",
+      "/workspace/scratch/708ae715c693/production-ai-systems/artifacts/p14-cpu-functional-first/model",
+      "--served-model-name",
+      "pais-random-gpt2-one-head-functional",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "43115",
+      "--dtype",
+      "float32",
+      "--max-model-len",
+      "128",
+      "--max-num-seqs",
+      "2",
+      "--max-num-batched-tokens",
+      "128",
+      "--block-size",
+      "32",
+      "--enable-prefix-caching",
+      "--enforce-eager",
+      "--chat-template",
+      "/workspace/scratch/708ae715c693/production-ai-systems/projects/14-inference-server/chat-template.jinja",
+      "--chat-template-content-format",
+      "string",
+      "--api-server-count",
+      "1",
+      "--disable-uvicorn-access-log"
+    ],
+    "gateway": [
+      "/workspace/scratch/708ae715c693/production-ai-systems/.venv/bin/python",
+      "-m",
+      "uvicorn",
+      "pais.inference:create_gateway_app",
+      "--factory",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "35629",
+      "--workers",
+      "1",
+      "--no-access-log"
+    ],
+    "cli_compatibility": [
+      "/workspace/scratch/708ae715c693/vllm-runtime/.venv/bin/python",
+      "-m",
+      "vllm.entrypoints.cli.main",
+      "serve",
+      "--help=all"
+    ]
+  },
+  "profile": {
+    "backend": "cpu",
+    "dtype": "float32",
+    "quantization": null,
+    "max_model_len": 128,
+    "max_num_seqs": 2,
+    "max_num_batched_tokens": 128,
+    "block_size": 32,
+    "prefix_caching": true,
+    "cpu_kv_cache_gib": 1,
+    "enforce_eager": true,
+    "cpu_affinity": [
+      0,
+      1
+    ],
+    "omp_threads": 2,
+    "replicas": 1,
+    "gateway_inflight": 1,
+    "gateway_queue": 0
+  },
+  "prompts": [
+    "State the retry limit.",
+    "Describe the request timeout.",
+    "Name the health check."
+  ],
+  "prompts_sha256": "3637c2fd516ba8b48ac25f7732eac60c902de2ce60c8501a7bab58995b23d049",
+  "chat_template_sha256": "a800c13076c83d27084ee456f40238570346a2eb5cbeaaa260dfa0351ddeeac3",
+  "cli_flags_verified": [
+    "--served-model-name",
+    "--host",
+    "--port",
+    "--dtype",
+    "--max-model-len",
+    "--max-num-seqs",
+    "--max-num-batched-tokens",
+    "--block-size",
+    "--enable-prefix-caching",
+    "--enforce-eager",
+    "--chat-template",
+    "--chat-template-content-format",
+    "--api-server-count",
+    "--disable-uvicorn-access-log"
+  ],
+  "resources": {
+    "owned_processes_stopped": true,
+    "remaining_live_pids": [],
+    "process_exit_codes": {
+      "cli-help": 0,
+      "vllm-server": 1
+    },
+    "aggregate_peak_rss_bytes": 1342173184,
+    "sample_count": 515,
+    "sample_period_seconds": 0.05,
+    "stop_threshold_bytes": 4026531840,
+    "observed_within_4_gib": true,
+    "kernel_memory_limit_applied": false,
+    "rss_measurement": "sum of supervised process RSS; shared pages can be counted twice",
+    "pid_mapping": "host /proc PID plus direct-parent/NSpid mapping into the supervisor namespace",
+    "watchdog_failure": null
+  },
+  "checks": {
+    "owned_processes_stopped": true,
+    "observed_within_4_gib": true,
+    "watchdog_not_triggered": true,
+    "p09_original_preserved": true
+  },
+  "error": "http://127.0.0.1:43115/health process exited before readiness with status 1",
+  "error_type": "RuntimeError",
+  "finished_at": "2026-09-29T10:35:39.764232+00:00",
+  "exit_code": 1,
+  "logs_sha256": {
+    "cli-help.log": "e396e5d7a9fb3db36b6106c7580248b31bffe4ea29cd7ad9fe25bdc211fef4b2",
+    "vllm-server.log": "5f57665c94d4665f8877b9f4ad9abe7f17dd176c6731a67d7918993cc5d7123b"
+  }
+}

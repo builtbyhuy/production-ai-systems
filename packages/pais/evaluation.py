@@ -11,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from collections import Counter
 from pathlib import Path
 
 from pais.contracts import Citation, Principal, utcnow
@@ -26,6 +27,16 @@ def load_suite(suite: str = "release") -> tuple[list[dict], dict]:
         raise ValueError("suite must be release, development, or audit")
     cases = json.loads((ROOT / "evals" / f"{suite}.json").read_text())
     corpus = json.loads((ROOT / "evals/corpus.json").read_text())
+    registered = json.loads((ROOT / "evals/manifest.json").read_text())
+    for name in (f"{suite}.json", "corpus.json"):
+        if registered["files"].get(name) != sha256(ROOT / "evals" / name):
+            raise ValueError(f"Frozen dataset hash mismatch: {name}")
+    if len(cases) != registered["counts"].get(suite):
+        raise ValueError("Frozen suite count does not match its registration")
+    if any(case.get("split") != suite for case in cases):
+        raise ValueError("Case split does not match its registered suite")
+    if suite == "release" and dict(Counter(case["category"] for case in cases)) != registered["release_categories"]:
+        raise ValueError("Frozen release category counts do not match their registration")
     ids = [case["id"] for case in cases]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate case IDs")
@@ -419,10 +430,21 @@ def _framework_metrics(results: list[dict], output: Path) -> dict:
     if p.returncode:
         raise EvaluationPrerequisite("Required DeepEval/RAGAS metrics failed: " + p.stderr[-1500:])
     report = json.loads(outputs.read_text())
-    if len(report["results"]) != len(results):
+    if not isinstance(report.get("results"), dict) or set(report["results"]) != {row["id"] for row in results}:
         raise EvaluationPrerequisite("Incomplete required framework metric evidence")
+    versions = report.get("versions", {})
+    if any(not isinstance(versions.get(name), str) or not versions[name] for name in ("deepeval", "ragas")):
+        raise EvaluationPrerequisite("Required evaluator version evidence is missing")
     for row in results:
         row["metrics"] = report["results"][row["id"]]
+        for name in ("deepeval_source_support", "ragas_reference_exact_match", "ragas_reference_similarity"):
+            value = row["metrics"].get(name)
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 1:
+                raise EvaluationPrerequisite("Missing or invalid required framework metric")
+        checks = row["source_checks"]
+        expected_support = sum(check is True for check in checks) / len(checks) if checks else None
+        if row["metrics"]["deepeval_source_support"] != expected_support:
+            raise EvaluationPrerequisite("Source-support metric contradicts captured source checks")
         row["passed"] = row["passed"] and row["metrics"]["deepeval_source_support"] == 1.0
     return {k: v for k, v in report.items() if k != "results"}
 

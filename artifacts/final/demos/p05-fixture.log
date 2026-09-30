@@ -1,0 +1,38 @@
+{
+  "project": "P05",
+  "profile": "fixture",
+  "status": "partial",
+  "evidence_scope": "actual FastAPI traffic with fixture generation; real OTel+Prometheus clients",
+  "requests": [
+    {
+      "case": "protected-buffered-response",
+      "http_status": 200,
+      "stream_error": false,
+      "seconds": 0.9060691349950503
+    },
+    {
+      "case": "error",
+      "http_status": 200,
+      "stream_error": true,
+      "seconds": 0.007874948998505715
+    },
+    {
+      "case": "protected-buffered-response",
+      "http_status": 200,
+      "stream_error": false,
+      "seconds": 0.41090143699693726
+    }
+  ],
+  "exported_spans": 13,
+  "metric_bytes": 8541,
+  "recorded_stream_errors": true,
+  "queue_context_component_verified": true,
+  "duration_seconds": 1.3561638299943297,
+  "deployment": {
+    "grafana": "not_run",
+    "tempo_trace_inspection": "not_run",
+    "alert_firing_and_resolved": "not_run",
+    "ledger_dashboard_reconciliation": "not_run"
+  }
+}
+Evidence: /workspace/scratch/708ae715c693/production-ai-systems/artifacts/final/demos/p05-fixture.json

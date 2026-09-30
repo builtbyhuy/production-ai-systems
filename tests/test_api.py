@@ -77,6 +77,22 @@ def test_role_and_document_authorization(client, document):
     assert client.get(base + "/pdf", headers=READER).content == payload
 
 
+def test_nonadmin_writer_can_upload_read_and_delete_document(tmp_path):
+    token = "writer-contract-token-" + "w" * 32
+    principal = Principal(subject="operator", tenant_id="operations", roles=["reader", "writer"])
+    headers = {"Authorization": "Bearer " + token}
+    payload = create_demo_pdf(["The maximum safe operating pressure is 8 bar."])
+    with TestClient(create_app(tmp_path / "writer.db", auth_tokens={token: principal})) as client:
+        uploaded = client.post("/api/documents", headers=headers,
+                               files={"file": ("manual.pdf", payload, "application/pdf")})
+        assert uploaded.status_code == 201, uploaded.text
+        version = uploaded.json()
+        base = f"/api/documents/{version['document_id']}/versions/{version['version_id']}"
+        assert client.get(base + "/pdf", headers=headers).content == payload
+        assert client.delete(f"/api/documents/{version['document_id']}", headers=headers).status_code == 204
+        assert client.get(base + "/pdf", headers=headers).status_code == 404
+
+
 def test_upload_stream_page_navigation_and_stable_replay(client, document):
     version, _payload = document
     body = {"question": QUESTION, "message_id": "stable-message"}
