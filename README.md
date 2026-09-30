@@ -14,7 +14,8 @@ has separate verification; this image is evidence of the original tested applica
 This is an independent, AI-assisted engineering portfolio. It demonstrates a local
 application and 18 related modules or experiments. Production acceptance remains
 incomplete. Start with the [redteam review](docs/REDTEAM.md), then inspect the
-[measured verification report](docs/VERIFICATION.md) and [criterion ledger](docs/PROJECT_LEDGER.md).
+[publication verification](docs/PUBLICATION.md), [historical measured report](docs/VERIFICATION.md)
+and [criterion ledger](docs/PROJECT_LEDGER.md).
 
 ## What to inspect first
 
@@ -31,7 +32,9 @@ The [architecture](docs/ARCHITECTURE.md) explains state ownership and trust boun
 
 ## Try the PDF demo
 
-Use Linux/POSIX with **Python 3.12 and uv**. The full test suite also needs
+Use **Python 3.12 and uv**. The complete native test suite requires **Linux**; the
+fixture application was also reproduced on macOS/ARM as recorded in the publication report.
+The full test suite also needs
 `redis-server` on `PATH`; the UI needs **Node.js 24**. No model download is required for
 the fixture demo. Fixture responses are deterministic and visibly labelled.
 

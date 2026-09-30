@@ -42,6 +42,20 @@ The eight audit cases reuse development templates; direct source access was revi
 
 ## Continue locally
 
+Publication reproduction on 30 September 2026 used clean `48649a9` on macOS/ARM:
+332 Python checks, 144/144 fixture evaluation, degraded 96/48 with exit 1, 14/14 browser,
+5 CrewAI and 3 Guardrails framework checks, Ruff, scoped Mypy, TypeScript and UI build.
+The complete Python command exits 2 here because P14's three supervisor checks require
+Linux `/proc` and affinity. No tests or security gates were weakened. Historical Linux
+335 remains bound to `c74195a`. See [publication verification](docs/PUBLICATION.md).
+Public target: https://github.com/builtbyhuy/production-ai-systems. Confirm its live
+commit and Actions outcome before describing external status:
+
+```bash
+gh repo view builtbyhuy/production-ai-systems
+gh run list --repo builtbyhuy/production-ai-systems --limit 5
+```
+
 Use Python3.12/uv; Node24 for the UI; redis-server on PATH for full native tests.
 
 ```bash
