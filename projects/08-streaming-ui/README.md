@@ -84,6 +84,11 @@ work is disabled. `/api/health` reports this state; `/api/ready` returns a readi
 
 ## Repeatable demonstrations and verification
 
+The browser launcher creates a separate timestamped `artifacts/ui-runs/` directory for
+each new run, preserving the checked-in historical `artifacts/ui/` evidence. Pass
+`--output-dir artifacts/my-browser-run` to select a new destination. The launcher
+propagates this path to Playwright through `PAIS_UI_EVIDENCE_DIR`.
+
 ```bash
 uv run pais demo 08 --profile fixture --output artifacts/p08-api-demo.json
 uv run pytest tests/test_api.py

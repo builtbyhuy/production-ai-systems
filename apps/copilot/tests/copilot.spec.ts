@@ -3,7 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(__dirname, "../../..");
-const artifacts = path.join(root, "artifacts/ui");
+const artifacts = process.env.PAIS_UI_EVIDENCE_DIR
+  ? path.resolve(process.env.PAIS_UI_EVIDENCE_DIR)
+  : path.join(root, "artifacts/ui-runs/fixture");
 const fixturePath = path.join(artifacts, "operations-manual.pdf");
 const question = "What is the maximum safe operating pressure?";
 const headers = { Authorization: "Bearer fixture-admin" };

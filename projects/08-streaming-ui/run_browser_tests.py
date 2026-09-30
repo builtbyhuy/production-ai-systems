@@ -23,10 +23,12 @@ from pais.rag import create_demo_pdf
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", choices=("fixture", "local"), default="fixture")
+    parser.add_argument("--output-dir", type=Path, help="Separate evidence directory for this run")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[2]
     app = root / "apps/copilot"
-    artifacts = root / "artifacts/ui" / ("local" if args.profile == "local" else "")
+    artifacts = (args.output_dir.resolve() if args.output_dir else root / "artifacts/ui-runs" /
+                 (datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ") + "-" + args.profile))
     artifacts.mkdir(parents=True, exist_ok=True)
     payload = create_demo_pdf([
         "Operations handbook. The Northfield pump station is maintained by the operations team.",
@@ -39,7 +41,8 @@ def main() -> int:
     started = time.perf_counter()
     wall_started = time.time()
     env = {**os.environ, "NEXT_TELEMETRY_DISABLED": "1", "PAIS_E2E_PROFILE": args.profile,
-           "PAIS_E2E_PYTHON": sys.executable}
+           "PAIS_E2E_PYTHON": sys.executable, "PAIS_UI_EVIDENCE_DIR": str(artifacts),
+           "PAIS_BROWSER_RUNTIME": os.getenv("PAIS_BROWSER_RUNTIME", str(root / ".tools/browser-runtime"))}
     if not env.get("PAIS_BROWSER_EXECUTABLE"):
         probe = subprocess.run(["node", "scripts/prepare-browser.mjs"],
                                cwd=app, capture_output=True, text=True, check=False)

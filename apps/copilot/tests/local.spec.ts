@@ -6,7 +6,9 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(__dirname, "../../..");
-const artifacts = path.join(root, "artifacts/ui/local");
+const artifacts = process.env.PAIS_UI_EVIDENCE_DIR
+  ? path.resolve(process.env.PAIS_UI_EVIDENCE_DIR)
+  : path.join(root, "artifacts/ui-runs/local");
 
 test("actual local inference reaches the browser with a working page citation", async ({
   page,

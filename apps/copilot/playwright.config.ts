@@ -3,7 +3,9 @@ import path from "node:path";
 
 const root = path.resolve(__dirname, "../..");
 const local = process.env.PAIS_E2E_PROFILE === "local";
-const evidenceDir = path.join(root, "artifacts/ui", local ? "local" : "");
+const evidenceDir = process.env.PAIS_UI_EVIDENCE_DIR
+  ? path.resolve(process.env.PAIS_UI_EVIDENCE_DIR)
+  : path.join(root, "artifacts/ui-runs", local ? "local" : "fixture");
 // The Python launcher selects its own locked interpreter for the API subprocess.
 // These supervised commands target the documented Unix test profile.
 const apiPython = process.env.PAIS_E2E_PYTHON || path.join(root, ".venv/bin/python");
