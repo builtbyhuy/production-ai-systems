@@ -78,6 +78,14 @@ checks and also verifies identical request/conversation IDs. Targeted desktop/mo
 checks pass without retries or timing/expectation changes. Application handlers and
 model dependencies are unchanged; full CI remains the publication gate.
 
+Main Actions36691053698 exposed a timeout/replay test race: fixed sleeps assumed that
+generation and its subsequent validation/durable completion had finished. HTTP409
+correctly retained the active generation claim. The test now holds generation with
+an event, verifies504 and409, then releases it and awaits the actual tracked background
+task before asserting200 replay and one generation. Waits have bounded failure deadlines;
+request timeouts, runtime behavior, replay assertions and CI gates remain unchanged.
+The failed main log is preserved; the follow-up's complete CI must pass before merge.
+
 The model regression is synthetic and does not establish broad quality or authorize a
 production cluster. Remaining acceptance gates above remain independent. Continue with:
 

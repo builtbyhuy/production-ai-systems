@@ -1,8 +1,9 @@
 """Actual FastAPI + RAG + SQLite contracts; no real-model quality claim."""
 from __future__ import annotations
 
+import asyncio
 import json
-import time
+import threading
 from concurrent.futures import ThreadPoolExecutor
 
 import pytest
@@ -199,16 +200,27 @@ def test_request_timeout_keeps_generation_claim_and_replays_finished_result(tmp_
     rag = RAGService(tmp_path / "timeout.db", profile="fixture")
     original = rag.answer
     calls = []
+    entered, release = threading.Event(), threading.Event()
     def delayed(*args, **kwargs):
         calls.append(1)
-        time.sleep(0.18)
+        entered.set()
+        assert release.wait(timeout=5)
         return original(*args, **kwargs)
     monkeypatch.setattr(rag, "answer", delayed)
     body = {"question": QUESTION, "message_id": "slow-request"}
-    with TestClient(create_app(tmp_path / "timeout.db", rag=rag, allow_fixture_auth=True)) as client:
-        assert client.post("/api/chat", headers=ADMIN, json=body).status_code == 504
-        assert client.post("/api/chat", headers=ADMIN, json=body).status_code == 409
-        time.sleep(0.2)
+    application = create_app(tmp_path / "timeout.db", rag=rag, allow_fixture_auth=True)
+    async def finished_generation():
+        # Include output validation, durable completion and admission release.
+        await asyncio.wait_for(asyncio.gather(*application.state.background_tasks), timeout=5)
+    with TestClient(application) as client:
+        try:
+            assert client.post("/api/chat", headers=ADMIN, json=body).status_code == 504
+            assert entered.wait(timeout=2)
+            assert client.post("/api/chat", headers=ADMIN, json=body).status_code == 409
+            assert len(calls) == 1
+        finally:
+            release.set()
+            client.portal.call(finished_generation)
         assert client.post("/api/chat", headers=ADMIN, json=body).status_code == 200
         assert len(calls) == 1
 
